@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -6,15 +6,16 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './input-date-and-time.component.html',
   styleUrls: ['./input-date-and-time.component.css']
 })
-export class InputDateAndTimeComponent implements OnInit {
+export class InputDateAndTimeComponent {
   constructor(private http: HttpClient) { }
 
   //Ważne!! Gdy zaczniesz exportować dane dalej, to pamiętaj, żeby
   //nie przesyłać timeOfStart2 i timeOfFinish2 , gdy showNewTimeRange == false
 
+  inputedDate: Date = new Date();
+
   timeOfStart: number = 0;
-  timeOfFinish: number = 1260;
-  inputedDate: Date;
+  timeOfFinish: number = 1260;  
 
   timeOfStartHolder: number;
   timeOfFinishHolder: number;
@@ -22,7 +23,9 @@ export class InputDateAndTimeComponent implements OnInit {
   notStartedTodayInput: boolean = false;
   notFinishedTodayInput: boolean = false;
 
-  notFinishedTodayInput2: boolean = false;
+  isDayWorkedTimeCorrect: boolean = true;
+
+  dayWorkedTime: { hour: number, minute: number } = { hour: 0, minute: 0 };
 
   timeOfStart2 = 0;
   timeOfFinish2 = 1260;
@@ -30,18 +33,51 @@ export class InputDateAndTimeComponent implements OnInit {
   timeOfStartHolder2: number;
   timeOfFinishHolder2: number;
 
-  dayWorkedTime: { hour: number, minute: number } = { hour: 0, minute: 0 };
-  dayWorkedTime2: { hour: number, minute: number } = { hour: 0, minute: 0 };
-  isDayWorkedTimeCorrect: boolean = true;
+  notFinishedTodayInput2: boolean = false;
+
   isDayWorkedTimeCorrect2: boolean = true;
+  
+  dayWorkedTime2: { hour: number, minute: number } = { hour: 0, minute: 0 };  
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
 
-  dataToBePostedMorning: { TimeOfStart: number, TimeOfFinish: number, AddAfternoonTime: boolean } = { TimeOfStart: this.timeOfStart, TimeOfFinish: this.timeOfFinish, AddAfternoonTime: this.showNewTimeRange };
-  dataToBePostedAfternoon: { timeOfStart: number, timeOfFinish: number} = { timeOfStart: this.timeOfStart2, timeOfFinish: this.timeOfFinish2 };
+  dataToBePostedMorning: {
+    TimeOfStart: number,
+    TimeOfFinish: number,
+    AddAfternoonTime: boolean,
+    DayOfWeek: number,
+    Day: number,
+    Month: number,
+    Year: number
+  } = {
+      TimeOfStart : this.timeOfStart,
+      TimeOfFinish: this.timeOfFinish,
+      AddAfternoonTime: this.showNewTimeRange,
+      DayOfWeek: this.inputedDate.getDay(),
+      Day: this.inputedDate.getDate(),
+      Month: this.inputedDate.getMonth(),
+      Year: this.inputedDate.getFullYear()
+    };
+  dataToBePostedAfternoon: {
+    TimeOfStart: number,
+    TimeOfFinish: number,
+    DayOfWeek: number,
+    Day: number,
+    Month: number,
+    Year: number
+  };
 
-  ngOnInit(): void {
+  updateMorningDate() {
+    this.dataToBePostedMorning.Day = this.inputedDate.getDate();
+    this.dataToBePostedMorning.DayOfWeek = this.inputedDate.getDay();
+    this.dataToBePostedMorning.Month = this.inputedDate.getMonth();
+    this.dataToBePostedMorning.Year = this.inputedDate.getFullYear();
+  }
+
+  updateMorningTime() {
+    this.dataToBePostedMorning.TimeOfStart = this.timeOfStart;
+    this.dataToBePostedMorning.TimeOfFinish = this.timeOfFinish;
   }
 
   onStartedChecked() {
@@ -124,11 +160,14 @@ export class InputDateAndTimeComponent implements OnInit {
       this.isDayWorkedTimeCorrect = false;
     }
     else {
+      this.updateMorningDate();
+      this.updateMorningTime();
       this.dayWorkedTime = this.toNormalTime(this.timeOfFinish - this.timeOfStart);
       this.isDayWorkedTimeCorrect = true;
-      this.http.post('https://localhost:44396/api/values', this.dataToBePostedMorning).subscribe();
-      //this.http.post('https://testfortruckapp-default-rtdb.firebaseio.com/posts.json', this.dataToBePostedMorning).subscribe();
-      if (this.showNewTimeRange) {
+      if (!this.showNewTimeRange) {
+        this.http.post('https://localhost:44396/api/values', this.dataToBePostedMorning).subscribe();
+      }
+      else {
         this.getDayWorkedTime2();
       }
     }    

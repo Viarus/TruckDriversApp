@@ -10,10 +10,10 @@ import { DatePickerComponent } from './input-date-and-time/date-picker/date-pick
 import { TimePickerComponent } from './input-date-and-time/time-picker/time-picker.component';
 import { OutputDataComponent } from './output-data/output-data.component';
 import { GraphComponent } from './output-data/graph/graph.component';
-import { TextComponent } from './input-date-and-time/text/text.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { TimePickerSecondComponent } from './input-date-and-time/time-picker-second/time-picker-second.component';
+import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-day/summary-of-the-day.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +23,8 @@ import { TimePickerSecondComponent } from './input-date-and-time/time-picker-sec
     TimePickerComponent,
     OutputDataComponent,
     GraphComponent,
-    TextComponent,
-    TimePickerSecondComponent
+    TimePickerSecondComponent,
+    SummaryOfTheDayComponent
   ],
   imports: [
     BrowserModule,

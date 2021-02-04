@@ -1,0 +1,10 @@
+.pageHolder {
+  overflow: auto;
+  width: 100%;
+}
+.page {
+  float: left;
+}
+.span-graph {
+  display: inline-block;
+}

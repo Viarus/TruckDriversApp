@@ -1,5 +1,25 @@
+.top-text {
+  padding-top: 10px;
+  font-family: 'roboto';
+  margin-top: 15px;
+  text-align: center;
+}
+#left-top {
+  margin-bottom: 60px;
+  margin-top: 33px;
+}
+#date-picker {
+    margin-left: 56px;
+}
+#button-top{
+    margin-left: 120px;
+}
+/*#temporary-text {
+  margin-left: 56px;
+  margin-top: 15px;
+}*/
 .checkbox-1 {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 .checkbox-2 {
   margin-right: 16px;

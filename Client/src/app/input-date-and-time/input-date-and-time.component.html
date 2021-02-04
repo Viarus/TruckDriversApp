@@ -1,14 +1,8 @@
 <div class="row">
   <div class="col-sm mx-auto">
-    <app-text></app-text>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm mx-auto">
-    <app-date-picker (eventHandler)="saveDate($event)"></app-date-picker>
-    <hr />
-    <button class="btn btn-primary" (click)="getDayWorkedTime()">Oblicz czas pracy</button>
+    <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
+    <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
+    <button class="btn btn-primary" (click)="getDayWorkedTime()" id="button-top">Dodaj dzień</button>
     <h3 *ngIf="isDayWorkedTimeCorrect">Przepracowano {{dayWorkedTime.hour}} godzin i {{dayWorkedTime.minute}} minut.</h3>
     <h3 *ngIf="!(isDayWorkedTimeCorrect)">Wprowadzono błędny czas pracy.</h3>
     <h3 *ngIf="isDayWorkedTimeCorrect2 && showNewTimeRange">Przepracowano {{dayWorkedTime2.hour}} godzin i {{dayWorkedTime2.minute}} minut po południu</h3>
@@ -16,6 +10,7 @@
 
   </div>
   <div class="col-sm mx-auto">
+    <h1 class="top-text">Wprowadź czas pracy (wybranego dnia):</h1>
     <app-time-picker (eventHandler)="saveTime($event)" [disableStartTime]="notStartedTodayInput" [disableFinishTime]="notFinishedTodayInput"></app-time-picker>
     <div class="row">
       <div class="col-sm checkbox-1">
@@ -61,10 +56,6 @@
     </div>
   </div>
 </div>
-{{notStartedTodayInput}}
-{{notFinishedTodayInput}}
-tf1--{{timeOfFinish}}--
-ts1--{{timeOfStart}}--
-
-tf2--{{timeOfFinish2}}--
-ts2--{{timeOfStart2}}
+<div>
+  No hej
+</div>
