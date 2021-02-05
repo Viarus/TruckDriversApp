@@ -62,11 +62,24 @@ export class InputDateAndTimeComponent {
   dataToBePostedAfternoon: {
     TimeOfStart: number,
     TimeOfFinish: number,
+    TimeOfStart2: number,
+    TimeOfFinish2: number,
     DayOfWeek: number,
     Day: number,
     Month: number,
-    Year: number
-  };
+    Year: number,
+    AddAfternoonTime: boolean
+  } = {
+      TimeOfStart: this.timeOfStart,
+      TimeOfStart2: this.timeOfStart2,
+      TimeOfFinish: this.timeOfFinish,
+      TimeOfFinish2: this.timeOfFinish2,
+      DayOfWeek: this.inputedDate.getDay(),
+      Day: this.inputedDate.getDate(),
+      Month: this.inputedDate.getMonth(),
+      Year: this.inputedDate.getFullYear(),
+      AddAfternoonTime: this.showNewTimeRange
+    };
 
   updateMorningDate() {
     this.dataToBePostedMorning.Day = this.inputedDate.getDate();
@@ -75,9 +88,24 @@ export class InputDateAndTimeComponent {
     this.dataToBePostedMorning.Year = this.inputedDate.getFullYear();
   }
 
+  updateAfternoonDate() {
+    this.dataToBePostedAfternoon.Day = this.dataToBePostedMorning.Day;
+    this.dataToBePostedAfternoon.DayOfWeek = this.dataToBePostedMorning.DayOfWeek;
+    this.dataToBePostedAfternoon.Month = this.dataToBePostedMorning.Month;
+    this.dataToBePostedAfternoon.Year = this.dataToBePostedMorning.Year;
+    this.dataToBePostedAfternoon.AddAfternoonTime = this.dataToBePostedMorning.AddAfternoonTime;
+  }
+
   updateMorningTime() {
     this.dataToBePostedMorning.TimeOfStart = this.timeOfStart;
     this.dataToBePostedMorning.TimeOfFinish = this.timeOfFinish;
+  }
+
+  updateAfternooonTime() {
+    this.dataToBePostedAfternoon.TimeOfStart = this.timeOfStart;
+    this.dataToBePostedAfternoon.TimeOfFinish = this.timeOfFinish;
+    this.dataToBePostedAfternoon.TimeOfStart2 = this.timeOfStart2;
+    this.dataToBePostedAfternoon.TimeOfFinish2 = this.timeOfFinish2;
   }
 
   onStartedChecked() {
@@ -174,20 +202,16 @@ export class InputDateAndTimeComponent {
   }
 
   getDayWorkedTime2() {
-    if ((this.timeOfStart > this.timeOfStart2) || (this.timeOfStart2 < this.timeOfFinish)) {
+    if ((this.timeOfStart > this.timeOfStart2) || (this.timeOfStart2 < this.timeOfFinish) || ((this.timeOfFinish2 - this.timeOfStart2) < 0)) {
       this.isDayWorkedTimeCorrect2 = false;
     }
     else {
       this.isDayWorkedTimeCorrect2 = true;
+      this.updateAfternoonDate();
+      this.updateAfternooonTime();
       this.dayWorkedTime2 = this.toNormalTime(this.timeOfFinish2 - this.timeOfStart2);
-      if ((this.timeOfFinish2 - this.timeOfStart2) < 0) {
-        this.isDayWorkedTimeCorrect2 = false;
+        this.http.post('https://localhost:44396/api/afternoondata', this.dataToBePostedAfternoon).subscribe();
       }
-      else {
-        this.isDayWorkedTimeCorrect2 = true;
-        this.http.post('https://localhost:44396/api/values', this.dataToBePostedAfternoon).subscribe();
-      }
-    }
   }
 
   onShowNewTimeRange() {

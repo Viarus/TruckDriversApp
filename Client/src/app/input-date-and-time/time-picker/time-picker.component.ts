@@ -1,11 +1,12 @@
-import { Component, Output, EventEmitter, Input, DoCheck } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
   styleUrls: ['./time-picker.component.css']
 })
-export class TimePickerComponent implements DoCheck {
+export class TimePickerComponent implements OnInit {
   timeOfStart = { hour: 0, minute: 0 };
   timeOfFinish = { hour: 21, minute: 0 };
 
@@ -15,8 +16,13 @@ export class TimePickerComponent implements DoCheck {
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
   constructor() { }
 
-  ngDoCheck() {
-    this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
+  ngOnInit() {
+    const myNumber = interval(10);
+    myNumber.subscribe(val => this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish }));
   }
+
+  //ngDoCheck() {
+  //  this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
+  //}
 
 }

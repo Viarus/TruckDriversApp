@@ -18,5 +18,9 @@ namespace TruckCalculatorAppAPI.Models
         {
             Id += 1;
         }
+        public void IncrementId2()
+        {
+            Id += 10;
+        }
     }
 }
