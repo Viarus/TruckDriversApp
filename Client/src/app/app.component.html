@@ -1,12 +1,30 @@
-<div class="container border border-primary">
-  <div class="row  ">
-    <div class="col-8 mx-auto border border-success">
-      <app-input-date-and-time></app-input-date-and-time>
+<div *ngIf="isEnterDataMenuActive" class="container to-the-left">
+  <div class="row">
+    <div class="col-2 list-group sidebar-menu">
+      <button type="button" class="list-group-item list-group-item-action active" (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
+      <button type="button" class="list-group-item list-group-item-action" (click)="ShowAllDaysMenuClick()">Wyświetl wszystkie</button>
+    </div>
+    <div class="col-8 border">
+      <app-input-date-and-time (dataHandler)="SaveAllData($event)"></app-input-date-and-time>
     </div>
   </div>
+  <div class="row ">
+    <div class="col-8 border margin-for-output">
+      <app-output-data [dayInfo]="dayInfo"></app-output-data>
+    </div>
+  </div>
+</div>
+<div *ngIf="isShowAllDaysMenuActive" class="container to-the-left">
   <div class="row">
-    <div class="col-8 mx-auto border border-success">
-      <app-output-data></app-output-data>
+    <div class="col-2 list-group sidebar-menu">
+      <button type="button" class="list-group-item list-group-item-action" (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
+      <button type="button" class="list-group-item list-group-item-action active" (click)="ShowAllDaysMenuClick()">Wyświetl wszystkie</button>
+    </div>
+    <div class="col-8 border">
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-8 border margin-for-output">
     </div>
   </div>
 </div>

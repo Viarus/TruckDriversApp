@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Output, EventEmitter } from '@angular/core';
+import { interval } from 'rxjs';
+import { DayInfo } from '../../../Models/DayInfo';
+
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -9,13 +13,16 @@ import { HttpClient } from '@angular/common/http';
 export class InputDateAndTimeComponent {
   constructor(private http: HttpClient) { }
 
-  //Ważne!! Gdy zaczniesz exportować dane dalej, to pamiętaj, żeby
-  //nie przesyłać timeOfStart2 i timeOfFinish2 , gdy showNewTimeRange == false
+  //teraz pora na rysowanie grafu.Zczytać dane i narysować po kliknięciu guzika.
+  //Nie lepiej jeden guzik na rysowanie, drugi na wysłanie do bazy ?
+  //Albo rysowanie dynamiczne? Naucz się animacji?
+
+  //@Output() wacek = new EventEmitter<string>();
 
   inputedDate: Date = new Date();
 
   timeOfStart: number = 0;
-  timeOfFinish: number = 1260;  
+  timeOfFinish: number = 1260;
 
   timeOfStartHolder: number;
   timeOfFinishHolder: number;
@@ -24,8 +31,6 @@ export class InputDateAndTimeComponent {
   notFinishedTodayInput: boolean = false;
 
   isDayWorkedTimeCorrect: boolean = true;
-
-  dayWorkedTime: { hour: number, minute: number } = { hour: 0, minute: 0 };
 
   timeOfStart2 = 0;
   timeOfFinish2 = 1260;
@@ -36,64 +41,28 @@ export class InputDateAndTimeComponent {
   notFinishedTodayInput2: boolean = false;
 
   isDayWorkedTimeCorrect2: boolean = true;
-  
-  dayWorkedTime2: { hour: number, minute: number } = { hour: 0, minute: 0 };  
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
 
-  dataToBePostedMorning: {
-    TimeOfStart: number,
-    TimeOfFinish: number,
-    AddAfternoonTime: boolean,
-    DayOfWeek: number,
-    Day: number,
-    Month: number,
-    Year: number
-  } = {
-      TimeOfStart : this.timeOfStart,
-      TimeOfFinish: this.timeOfFinish,
-      AddAfternoonTime: this.showNewTimeRange,
-      DayOfWeek: this.inputedDate.getDay(),
-      Day: this.inputedDate.getDate(),
-      Month: this.inputedDate.getMonth(),
-      Year: this.inputedDate.getFullYear()
-    };
-  dataToBePostedAfternoon: {
-    TimeOfStart: number,
-    TimeOfFinish: number,
-    TimeOfStart2: number,
-    TimeOfFinish2: number,
-    DayOfWeek: number,
-    Day: number,
-    Month: number,
-    Year: number,
-    AddAfternoonTime: boolean
-  } = {
-      TimeOfStart: this.timeOfStart,
-      TimeOfStart2: this.timeOfStart2,
-      TimeOfFinish: this.timeOfFinish,
-      TimeOfFinish2: this.timeOfFinish2,
-      DayOfWeek: this.inputedDate.getDay(),
-      Day: this.inputedDate.getDate(),
-      Month: this.inputedDate.getMonth(),
-      Year: this.inputedDate.getFullYear(),
-      AddAfternoonTime: this.showNewTimeRange
-    };
+  @Output() dataHandler = new EventEmitter<DayInfo>();
+
+  dataToBePostedMorning: DayInfo = new DayInfo();
+  dataToBePostedAfternoon: DayInfo = new DayInfo();
 
   updateMorningDate() {
     this.dataToBePostedMorning.Day = this.inputedDate.getDate();
     this.dataToBePostedMorning.DayOfWeek = this.inputedDate.getDay();
-    this.dataToBePostedMorning.Month = this.inputedDate.getMonth();
+    this.dataToBePostedMorning.Month = (this.inputedDate.getMonth() + 1);
     this.dataToBePostedMorning.Year = this.inputedDate.getFullYear();
   }
 
   updateAfternoonDate() {
-    this.dataToBePostedAfternoon.Day = this.dataToBePostedMorning.Day;
-    this.dataToBePostedAfternoon.DayOfWeek = this.dataToBePostedMorning.DayOfWeek;
-    this.dataToBePostedAfternoon.Month = this.dataToBePostedMorning.Month;
-    this.dataToBePostedAfternoon.Year = this.dataToBePostedMorning.Year;
-    this.dataToBePostedAfternoon.AddAfternoonTime = this.dataToBePostedMorning.AddAfternoonTime;
+    this.dataToBePostedAfternoon.Day = this.inputedDate.getDate();
+    this.dataToBePostedAfternoon.DayOfWeek = this.inputedDate.getDay();
+    this.dataToBePostedAfternoon.Month = (this.inputedDate.getMonth() + 1);
+    this.dataToBePostedAfternoon.Year = this.inputedDate.getFullYear();
+    this.dataToBePostedAfternoon.AddAfternoonTime = this.showNewTimeRange;
   }
 
   updateMorningTime() {
@@ -152,6 +121,12 @@ export class InputDateAndTimeComponent {
     else if (this.notStartedTodayInput) {
       this.timeOfStart = 0;
     }
+    if (!this.showNewTimeRange) {
+      this.updateMorningDate();
+      this.updateMorningTime();
+      this.dataToBePostedMorning.AddAfternoonTime = this.showNewTimeRange;
+      this.dataHandler.emit(this.dataToBePostedMorning);
+    }    
   }
 
   saveTime2(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
@@ -165,6 +140,12 @@ export class InputDateAndTimeComponent {
     }
     if (this.notFinishedTodayInput2) {
       this.timeOfFinish2 = 1440;
+    }
+    if (this.showNewTimeRange) {
+      this.updateAfternooonTime();
+      this.updateAfternoonDate();
+      this.dataToBePostedAfternoon.AddAfternoonTime = this.showNewTimeRange;
+      this.dataHandler.emit(this.dataToBePostedAfternoon);
     }
   }
 
@@ -183,22 +164,21 @@ export class InputDateAndTimeComponent {
     return time;
   }
 
-  getDayWorkedTime() {    
+  getDayWorkedTime() {
     if ((this.timeOfFinish - this.timeOfStart) < 0) {
       this.isDayWorkedTimeCorrect = false;
     }
     else {
-      this.updateMorningDate();
-      this.updateMorningTime();
-      this.dayWorkedTime = this.toNormalTime(this.timeOfFinish - this.timeOfStart);
-      this.isDayWorkedTimeCorrect = true;
       if (!this.showNewTimeRange) {
+        this.updateMorningDate();
+        this.updateMorningTime();
+        this.isDayWorkedTimeCorrect = true;
         this.http.post('https://localhost:44396/api/values', this.dataToBePostedMorning).subscribe();
       }
       else {
         this.getDayWorkedTime2();
       }
-    }    
+    }
   }
 
   getDayWorkedTime2() {
@@ -209,9 +189,8 @@ export class InputDateAndTimeComponent {
       this.isDayWorkedTimeCorrect2 = true;
       this.updateAfternoonDate();
       this.updateAfternooonTime();
-      this.dayWorkedTime2 = this.toNormalTime(this.timeOfFinish2 - this.timeOfStart2);
-        this.http.post('https://localhost:44396/api/afternoondata', this.dataToBePostedAfternoon).subscribe();
-      }
+      this.http.post('https://localhost:44396/api/afternoondata', this.dataToBePostedAfternoon).subscribe();
+    }
   }
 
   onShowNewTimeRange() {

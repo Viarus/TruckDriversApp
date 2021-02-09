@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using TruckCalculatorAppAPI.Models;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TruckCalculatorAppAPI.Controllers
@@ -17,7 +16,6 @@ namespace TruckCalculatorAppAPI.Controllers
     {
         List<DataToBePosted> timeInDay = new List<DataToBePosted>();
         IdCounter lastId = new IdCounter();
-        string pathToData = @"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\";
 
         // GET: api/<AfternoonDataController>
         [HttpGet]
@@ -28,23 +26,70 @@ namespace TruckCalculatorAppAPI.Controllers
 
         // GET api/<AfternoonDataController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public DataToBePostedAfternoon Get(string dayRequired)
         {
-            return "value";
+            DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
+            if (System.IO.File.Exists(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"))
+            {
+                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + dayRequired + ".txt"));
+                return dayInfo;
+            }
+            else
+            {
+                return dayInfo;
+            }
+            
         }
 
         // POST api/<AfternoonDataController>
         [HttpPost]
         public void Post([FromBody] DataToBePostedAfternoon value)
         {
-            string fileTitle = value.Year.ToString() + '-' + value.Month.ToString() + '-' + value.Day.ToString();
-            lastId = JsonConvert.DeserializeObject<IdCounter>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\Id.txt"));
-            lastId.IncrementId2();
-            string presentId = JsonConvert.SerializeObject(lastId);
-            System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\Id.txt", presentId);
+            EnteredDay enteredDay = new EnteredDay();
+            enteredDay.Day = value.Day;
+            enteredDay.Month = value.Month;
+            enteredDay.Year = value.Year;
 
-            string json = JsonConvert.SerializeObject(value);
-            System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + fileTitle + ".txt", json);
+            string fileTitle = value.Year.ToString() + '-' + value.Month.ToString() + '-' + value.Day.ToString();
+
+            string specificDayInfoJSON = JsonConvert.SerializeObject(value);
+            System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + fileTitle + ".txt", specificDayInfoJSON);
+
+            List<EnteredDay> listOfAllDaysJSON = new List<EnteredDay>();
+            if (System.IO.File.Exists(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"))
+            {
+                bool isDayTheSame = false;
+                bool isMonthTheSame = false;
+                bool isYearTheSame = false;
+                listOfAllDaysJSON = JsonConvert.DeserializeObject<List<EnteredDay>>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"));
+                foreach (var element in listOfAllDaysJSON)
+                {
+                    if (element.Day == enteredDay.Day)
+                    {
+                        isDayTheSame = true;
+                    }
+                    if (element.Month == enteredDay.Month)
+                    {
+                        isMonthTheSame = true;
+                    }
+                    if (element.Year == enteredDay.Year)
+                    {
+                        isYearTheSame = true;
+                    }
+                }
+                if (!(isDayTheSame && isMonthTheSame && isYearTheSame))
+                {
+                    listOfAllDaysJSON.Add(enteredDay);
+                    string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
+                    System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt", uniqueListOfAllDaysJSON);
+                }
+            }
+            else
+            {
+                listOfAllDaysJSON.Add(enteredDay);
+                string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
+                System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt", uniqueListOfAllDaysJSON);
+            }
         }
 
         // PUT api/<AfternoonDataController>/5

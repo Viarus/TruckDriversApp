@@ -1,0 +1,16 @@
+.to-the-left {
+  margin-left: 0;
+}
+
+.sidebar-menu {
+  margin-left: 3%;
+  margin-right: 3%;
+  padding-left: 1.1%;
+  padding-top: 1%;
+  margin-top: 2%;
+  background-color: grey;
+  height: 120px;
+}
+.margin-for-output {
+  margin-left: 22.7%;
+}

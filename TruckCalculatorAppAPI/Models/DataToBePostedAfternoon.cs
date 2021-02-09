@@ -16,5 +16,17 @@ namespace TruckCalculatorAppAPI.Models
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public DataToBePostedAfternoon()
+        {
+            TimeOfStart = 2000;
+            TimeOfStart2 = 2000;
+            TimeOfFinish = 2000;
+            TimeOfFinish2 = 2000;
+            AddAfternoonTime = true;
+            DayOfWeek = 0;
+            Day = 0;
+            Month = 0;
+            Year = 0;
+        }
     }
 }

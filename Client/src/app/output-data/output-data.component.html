@@ -1,1 +1,2 @@
-<app-graph></app-graph>
+<app-graph *ngIf="isDayInfoCorrect" [dayInfo]="dayInfo"></app-graph>
+<h1 *ngIf="!isDayInfoCorrect">Nieprawidłowe dane wejściowe</h1>

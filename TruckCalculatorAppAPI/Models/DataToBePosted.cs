@@ -18,5 +18,15 @@ public class DataToBePosted
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public DataToBePosted()
+        {
+            TimeOfStart = 2000;
+            TimeOfFinish = 2000;
+            AddAfternoonTime = false;
+            DayOfWeek = 0;
+            Day = 0;
+            Month = 0;
+            Year = 0;
+        }
     }
 }

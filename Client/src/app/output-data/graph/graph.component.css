@@ -8,3 +8,39 @@
 .span-graph {
   display: inline-block;
 }
+.non-working-time-span {
+    background-color: lightgreen;
+}
+
+.working-time-span {
+  background-color: Highlight;
+}
+.span-time {
+  display: inline-block;
+  width: 12.5%;
+  text-align: left;
+}
+.last-time-span {
+  display: inline-block;
+  width: 12.51%;
+  text-align: right;
+}
+.second-last-time-span {
+  display: inline-block;
+  width: 5%;
+  text-align: left;
+}
+.border-left {
+  border-width: 1.5px !important;
+  border-color: #AAAAAA !important;
+}
+.border-right {
+  border-width: 1.5px !important;
+  border-color: #AAAAAA !important;
+}
+.text-under-span-graph-1{
+    text-align: right;
+}
+.center-button {
+    margin: auto;
+}

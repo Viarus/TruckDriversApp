@@ -1,9 +1,42 @@
 <!--Dzien ma 1440 minut-->
 <div class="container">
-  <h1 class="top-text" id="left-top">Dzień: Poniedziałek 01/02/2021</h1>
-  <!--<div>-->
-    <span [ngStyle]="{backgroundColor: getColor(), width: getWidth(exampleOfWidth), height: '20px'}" class="span-graph"></span>
-    <span [ngStyle]="{backgroundColor: getColor(), width: getWidth(exampleOfWidth), height: '20px'}" class="span-graph"></span>
-    <span [ngStyle]="{backgroundColor: getColor(), width: getWidth(exampleOfWidth), height: '20px'}" class="span-graph"></span>
-  <!--</div>-->
+  <h1 class="top-text" id="left-top">Dzień: {{dateToBeShown}}</h1>
+  <span class="span-time border-left">00:00</span>
+  <span class="span-time border-left">03:00</span>
+  <span class="span-time border-left">06:00</span>
+  <span class="span-time border-left">09:00</span>
+  <span class="span-time border-left">12:00</span>
+  <span class="span-time border-left">15:00</span>
+  <span class="span-time border-left">18:00</span>
+  <span class="last-time-span border-right">00:00</span>
 </div>
+<div class="container">
+  <span [ngStyle]="{width: getFirstNonWorkingTimeWidth(), height: '20px'}" class="span-graph non-working-time-span"></span>
+  <span [ngStyle]="{width: getFirstWorkingTimeWidth(), height: '20px'}" class="span-graph working-time-span"></span>
+  <span [ngStyle]="{width: getSecondNonWorkingTimeWidth(), height: '20px'}" class="span-graph non-working-time-span"></span>
+  <span [ngStyle]="{width: getSecondWorkingTimeWidth(), height: '20px'}" class="span-graph working-time-span"></span>
+  <span [ngStyle]="{width: getThirdNonWorkingTimeWidth(), height: '20px'}" class="span-graph non-working-time-span"></span>
+</div>
+<div class="container">
+  <span [ngStyle]="{width: getFirstNonWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1">{{timeOfStartClockTime}}</span>
+  <span *ngIf ="!doStart1andFinish1Collide()" [ngStyle]="{width: getFirstWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1">{{timeOfFinishClockTime}}</span>
+  <span [ngStyle]="{width: getSecondNonWorkingTimeWidth(), height: '20px'}" class="span-graph"></span>
+  <span *ngIf ="dayInfo.AddAfternoonTime" [ngStyle]="{width: getSecondWorkingTimeWidthForText(), height: '20px'}" class="span-graph">{{timeOfStart2ClockTime}}</span>
+  <span *ngIf="showFinishTime2()" [ngStyle]="{width: getSecondWorkingTimeWidthForText(), height: '20px'}" class="span-graph text-under-span-graph-1">{{timeOfFinish2ClockTime}}</span>
+</div>
+<div class="container">
+  <span *ngIf="doStart1andFinish1Collide()" [ngStyle]="{width: getFirstNonWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1"></span>
+  <span *ngIf="doStart1andFinish1Collide()" [ngStyle]="{width: getFirstWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1">{{timeOfFinishClockTime}}</span>
+</div>
+<div class="container">
+  <span *ngIf="doStart2andFinish2Collide()" [ngStyle]="{width: getFirstNonWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1"></span>
+  <span *ngIf="doStart2andFinish2Collide()" [ngStyle]="{width: getFirstWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1"></span>
+  <span *ngIf="doStart2andFinish2Collide()" [ngStyle]="{width: getSecondNonWorkingTimeWidth(), height: '20px'}" class="span-graph"></span>
+  <span *ngIf="doStart2andFinish2Collide()" [ngStyle]="{width: getSecondWorkingTimeWidth(), height: '20px'}" class="span-graph text-under-span-graph-1">{{timeOfFinish2ClockTime}}</span>
+  <span *ngIf="doStart2andFinish2Collide()" [ngStyle]="{width: getThirdNonWorkingTimeWidth(), height: '20px'}" class="span-graph"></span>
+</div>
+<!--<div class="container">
+  <div class="row">
+    <button type="button" class="btn btn-primary center-button">Aktualizuj/Dodaj Dzień</button>
+  </div>
+</div>-->

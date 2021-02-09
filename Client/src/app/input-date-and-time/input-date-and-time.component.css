@@ -9,7 +9,8 @@
   margin-top: 33px;
 }
 #date-picker {
-    margin-left: 56px;
+  margin-left: 56px;
+  position: relative
 }
 #button-top{
     margin-left: 120px;
@@ -37,4 +38,9 @@
 }
 .new-time-range-div {
   margin-left: 0px;
+}
+.center-button {
+  position: absolute;
+  bottom: 10px;
+  left: 110px;
 }

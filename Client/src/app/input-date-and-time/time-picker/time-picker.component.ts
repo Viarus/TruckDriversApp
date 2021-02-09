@@ -21,6 +21,8 @@ export class TimePickerComponent implements OnInit {
     myNumber.subscribe(val => this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish }));
   }
 
+  blankFunction() {}
+
   //ngDoCheck() {
   //  this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
   //}
