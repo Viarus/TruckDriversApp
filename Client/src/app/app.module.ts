@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { TimePickerSecondComponent } from './input-date-and-time/time-picker-second/time-picker-second.component';
 import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-day/summary-of-the-day.component';
+import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-d
     OutputDataComponent,
     GraphComponent,
     TimePickerSecondComponent,
-    SummaryOfTheDayComponent
+    SummaryOfTheDayComponent,
+    ListOfAllDaysComponent
   ],
   imports: [
     BrowserModule,

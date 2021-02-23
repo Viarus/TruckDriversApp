@@ -16,6 +16,7 @@ namespace TruckCalculatorAppAPI.Controllers
     {
         List<DataToBePosted> timeInDay = new List<DataToBePosted>();
         IdCounter lastId = new IdCounter();
+        GetHeader getHeader = new GetHeader();
 
         // GET: api/<AfternoonDataController>
         [HttpGet]
@@ -26,12 +27,12 @@ namespace TruckCalculatorAppAPI.Controllers
 
         // GET api/<AfternoonDataController>/5
         [HttpGet("{id}")]
-        public DataToBePostedAfternoon Get(string dayRequired)
+        public DataToBePostedAfternoon Get(string id)
         {
             DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
             if (System.IO.File.Exists(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"))
             {
-                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + dayRequired + ".txt"));
+                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + id + ".txt"));
                 return dayInfo;
             }
             else
