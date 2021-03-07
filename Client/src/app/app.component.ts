@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { DayInfo } from '../../Models/DayInfo';
 
 
@@ -19,6 +20,11 @@ export class AppComponent {
 
   SwitchLoginMode() {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit(form : NgForm){
+    console.log(form.value)
+    form.reset();
   }
 
   EnterDataMenuClick() {
