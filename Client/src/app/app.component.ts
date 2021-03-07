@@ -55,4 +55,5 @@ export class AppComponent {
     this.dayInfo.AddAfternoonTime = AddAfternoonTime;
     this.dayInfo.DayOfWeek = DayOfWeek;
   }
+  //just test
 }
