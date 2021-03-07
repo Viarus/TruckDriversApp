@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { DayInfo } from '../../Models/DayInfo';
 
 
@@ -14,14 +15,33 @@ export class AppComponent {
 
   isEnterDataMenuActive: boolean = true;
   isShowAllDaysMenuActive: boolean = false;
+  isLoginMenuActive: boolean = false;
+
+  isLoginMode: boolean = true;
+
+  SwitchLoginMode() {
+    this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit(form : NgForm){
+    console.log(form.value)
+    form.reset();
+  }
 
   EnterDataMenuClick() {
     this.isEnterDataMenuActive = true;
     this.isShowAllDaysMenuActive = false;
+    this.isLoginMenuActive = false;
   }
   ShowAllDaysMenuClick() {
     this.isEnterDataMenuActive = false;
     this.isShowAllDaysMenuActive = true;
+    this.isLoginMenuActive = false;
+  }
+  LoginMenuClick() {
+    this.isEnterDataMenuActive = false;
+    this.isShowAllDaysMenuActive = false;
+    this.isLoginMenuActive = true;
   }
 
   SaveAllData({ TimeOfStart, TimeOfFinish, TimeOfStart2, TimeOfFinish2, DayOfWeek, Day, Month, Year, AddAfternoonTime }) {
