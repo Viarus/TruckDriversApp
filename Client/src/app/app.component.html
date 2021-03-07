@@ -3,6 +3,7 @@
     <div class="col-2 list-group sidebar-menu">
       <button type="button" class="list-group-item list-group-item-action active" (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
       <button type="button" class="list-group-item list-group-item-action" (click)="ShowAllDaysMenuClick()">Wyświetl wszystkie</button>
+      <!-- <button type="button" class="list-group-item list-group-item-action active" (click)="ShowAllDaysMenuClick()">Zaloguj się</button> -->
     </div>
     <div class="col-8 border">
       <app-input-date-and-time (dataHandler)="SaveAllData($event)"></app-input-date-and-time>
@@ -19,6 +20,7 @@
     <div class="col-2 list-group sidebar-menu">
       <button type="button" class="list-group-item list-group-item-action" (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
       <button type="button" class="list-group-item list-group-item-action active" (click)="ShowAllDaysMenuClick()">Wyświetl wszystkie</button>
+      <!-- <button type="button" class="list-group-item list-group-item-action active" (click)="ShowAllDaysMenuClick()">Zaloguj się</button> -->
     </div>
     <div class="col-8 border">
       <app-list-of-all-days></app-list-of-all-days>

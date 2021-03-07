@@ -9,6 +9,7 @@ import { DayInfo } from '../../Models/DayInfo';
 
 })
 export class AppComponent {
+  title = '';
   dayInfo: DayInfo = new DayInfo();
 
   isEnterDataMenuActive: boolean = true;

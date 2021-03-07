@@ -22,9 +22,4 @@ export class TimePickerComponent implements OnInit {
   }
 
   blankFunction() {}
-
-  //ngDoCheck() {
-  //  this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
-  //}
-
 }

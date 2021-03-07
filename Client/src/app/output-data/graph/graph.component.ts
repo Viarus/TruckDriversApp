@@ -15,12 +15,12 @@ export class GraphComponent implements DoCheck, OnInit {
 
   @Input() dayInfo: DayInfo = new DayInfo();
   clockTime: ClockTime = new ClockTime();
-  timeOfStartClockTime: string;
-  timeOfStart2ClockTime: string;
-  timeOfFinishClockTime: string;
-  timeOfFinish2ClockTime: string;
-  dateToBeShown: string;
-  dayOfWeek: string;
+  timeOfStartClockTime: string ='';
+  timeOfStart2ClockTime: string ='';
+  timeOfFinishClockTime: string ='';
+  timeOfFinish2ClockTime: string ='';
+  dateToBeShown: string ='';
+  dayOfWeek: string ='';
 
 
   ngDoCheck() {

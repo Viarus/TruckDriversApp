@@ -11,7 +11,7 @@ export class OutputDataComponent implements OnInit, DoCheck {
 
   constructor() { }
 
-  isDayInfoCorrect: boolean;
+  isDayInfoCorrect: boolean = false;
 
   ngDoCheck() {
     if (this.dayInfo.TimeOfStart >= this.dayInfo.TimeOfFinish) {

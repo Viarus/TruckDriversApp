@@ -24,8 +24,8 @@ export class InputDateAndTimeComponent {
   timeOfStart: number = 0;
   timeOfFinish: number = 1260;
 
-  timeOfStartHolder: number;
-  timeOfFinishHolder: number;
+  timeOfStartHolder: number = 0;
+  timeOfFinishHolder: number = 0;
 
   notStartedTodayInput: boolean = false;
   notFinishedTodayInput: boolean = false;
@@ -35,8 +35,8 @@ export class InputDateAndTimeComponent {
   timeOfStart2 = 0;
   timeOfFinish2 = 1260;
 
-  timeOfStartHolder2: number;
-  timeOfFinishHolder2: number;
+  timeOfStartHolder2: number = 0;
+  timeOfFinishHolder2: number = 0;
 
   notFinishedTodayInput2: boolean = false;
 
