@@ -17,6 +17,7 @@ namespace TruckCalculatorAppAPI.Controllers
         List<DataToBePosted> timeInDay = new List<DataToBePosted>();
         IdCounter lastId = new IdCounter();
         GetHeader getHeader = new GetHeader();
+        string pathToData = @"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\";
 
         // GET: api/<AfternoonDataController>
         [HttpGet]
@@ -30,9 +31,9 @@ namespace TruckCalculatorAppAPI.Controllers
         public DataToBePostedAfternoon Get(string id)
         {
             DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
-            if (System.IO.File.Exists(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"))
+            if (System.IO.File.Exists(pathToData + "ListOfAllDays.txt"))
             {
-                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + id + ".txt"));
+                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(pathToData + id + ".txt"));
                 return dayInfo;
             }
             else
@@ -51,18 +52,20 @@ namespace TruckCalculatorAppAPI.Controllers
             enteredDay.Month = value.Month;
             enteredDay.Year = value.Year;
 
-            string fileTitle = value.Year.ToString() + '-' + value.Month.ToString() + '-' + value.Day.ToString();
+            List<EnteredDay> listOfAllDaysJSON = new List<EnteredDay>();
+
+            string fileTitle = value.Year.ToString() + '-' + value.Month.ToString() + '-' + value.Day.ToString() + ".txt";
 
             string specificDayInfoJSON = JsonConvert.SerializeObject(value);
-            System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\" + fileTitle + ".txt", specificDayInfoJSON);
-
-            List<EnteredDay> listOfAllDaysJSON = new List<EnteredDay>();
-            if (System.IO.File.Exists(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"))
+            System.IO.File.WriteAllText(pathToData + fileTitle, specificDayInfoJSON);
+            
+            if (System.IO.File.Exists(pathToData + "ListOfAllDays.txt"))
             {
                 bool isDayTheSame = false;
                 bool isMonthTheSame = false;
                 bool isYearTheSame = false;
-                listOfAllDaysJSON = JsonConvert.DeserializeObject<List<EnteredDay>>(System.IO.File.ReadAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt"));
+                listOfAllDaysJSON = JsonConvert.DeserializeObject<List<EnteredDay>>(System.IO.File.ReadAllText(pathToData + "ListOfAllDays.txt"));
+                //mozna zrobić ładniej
                 foreach (var element in listOfAllDaysJSON)
                 {
                     if (element.Day == enteredDay.Day)
@@ -82,14 +85,14 @@ namespace TruckCalculatorAppAPI.Controllers
                 {
                     listOfAllDaysJSON.Add(enteredDay);
                     string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
-                    System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt", uniqueListOfAllDaysJSON);
+                    System.IO.File.WriteAllText(pathToData + "ListOfAllDays.txt", uniqueListOfAllDaysJSON);
                 }
             }
             else
             {
                 listOfAllDaysJSON.Add(enteredDay);
                 string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
-                System.IO.File.WriteAllText(@"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\ListOfAllDays.txt", uniqueListOfAllDaysJSON);
+                System.IO.File.WriteAllText(pathToData + "ListOfAllDays.txt", uniqueListOfAllDaysJSON);
             }
         }
 

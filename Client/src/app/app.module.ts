@@ -15,6 +15,18 @@ import { FormsModule } from '@angular/forms';
 import { TimePickerSecondComponent } from './input-date-and-time/time-picker-second/time-picker-second.component';
 import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-day/summary-of-the-day.component';
 import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.component';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+
+var config = {
+  apiKey: "AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA",
+  authDomain: "truckapp-6433b.firebaseapp.com",
+  projectId: "truckapp-6433b",
+  storageBucket: "truckapp-6433b.appspot.com",
+  messagingSenderId: "797184390532",
+  appId: "1:797184390532:web:22cdaffe0f38c27154d9d1",
+  measurementId: "G-2P4J278DQ2"
+};
 
 @NgModule({
   declarations: [
@@ -34,7 +46,9 @@ import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.comp
     MaterialModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(config),
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

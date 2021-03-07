@@ -173,7 +173,7 @@ export class InputDateAndTimeComponent {
         this.updateMorningDate();
         this.updateMorningTime();
         this.isDayWorkedTimeCorrect = true;
-        this.http.post('https://localhost:44396/api/values', this.dataToBePostedMorning).subscribe();
+        this.http.post('https://localhost:44396/api/daysdata', this.dataToBePostedMorning).subscribe();
       }
       else {
         this.getDayWorkedTime2();
@@ -189,7 +189,7 @@ export class InputDateAndTimeComponent {
       this.isDayWorkedTimeCorrect2 = true;
       this.updateAfternoonDate();
       this.updateAfternooonTime();
-      this.http.post('https://localhost:44396/api/afternoondata', this.dataToBePostedAfternoon).subscribe();
+      this.http.post('https://localhost:44396/api/daysdata', this.dataToBePostedAfternoon).subscribe();
     }
   }
 
