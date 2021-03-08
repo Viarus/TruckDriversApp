@@ -17,17 +17,6 @@ export class AppComponent {
   isShowAllDaysMenuActive: boolean = false;
   isLoginMenuActive: boolean = false;
 
-  isLoginMode: boolean = true;
-
-  SwitchLoginMode() {
-    this.isLoginMode = !this.isLoginMode;
-  }
-
-  onSubmit(form : NgForm){
-    console.log(form.value)
-    form.reset();
-  }
-
   EnterDataMenuClick() {
     this.isEnterDataMenuActive = true;
     this.isShowAllDaysMenuActive = false;
