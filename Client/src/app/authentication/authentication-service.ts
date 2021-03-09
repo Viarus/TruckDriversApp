@@ -11,7 +11,7 @@ interface AuthResponseData {
 }
 
 @Injectable({providedIn: "root"})
-export class AppService {
+export class AuthService {
     constructor(private http: HttpClient) {}
     
     signup(email: string, password:string) {

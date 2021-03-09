@@ -1,4 +1,11 @@
-<form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+<div class="alert alert-danger" *ngIf='error'>
+  <p>{{error}}</p>
+</div>
+<div *ngIf="isLoading" style="text-align: center;">
+  <app-loading-circle></app-loading-circle>
+</div>
+<div *ngIf="!isLoading">
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
     <div class="form-group">
       <label for="email">E-Mail</label>
       <input type="email" id="email" class="form-control" ngModel name="email" required email>
@@ -18,3 +25,4 @@
         'Zaloguj się'}}</button>
     </div>
   </form>
+</div>

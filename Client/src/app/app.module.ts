@@ -16,6 +16,7 @@ import { TimePickerSecondComponent } from './input-date-and-time/time-picker-sec
 import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-day/summary-of-the-day.component';
 import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
+import { LoadingCircleComponent } from './shared/loading-circle/loading-circle/loading-circle.component';
 /*import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 
@@ -41,6 +42,7 @@ var config = {
     SummaryOfTheDayComponent,
     ListOfAllDaysComponent,
     AuthenticationComponent,
+    LoadingCircleComponent,
   ],
   imports: [
     BrowserModule,
