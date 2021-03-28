@@ -17,6 +17,17 @@ import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-d
 import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { LoadingCircleComponent } from './shared/loading-circle/loading-circle/loading-circle.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  {path: "login", component: AuthenticationComponent},
+  {path: "register", component: AuthenticationComponent},
+  {path: "input", component: InputDateAndTimeComponent},
+  {path: "list-of-days", component: ListOfAllDaysComponent},
+];
+
+
+
 /*import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 
@@ -50,7 +61,8 @@ var config = {
     MaterialModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
     //AngularFireModule.initializeApp(config),
     //AngularFireAuthModule
   ],

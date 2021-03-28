@@ -1,52 +1,46 @@
-<div *ngIf="isLoginMenuActive" class="container to-the-left">
-  <div class="row">
-    <div class="col-2 list-group sidebar-menu">
-      <button type="button" class="list-group-item list-group-item-action active"
-        (click)="LoginMenuClick()">Logowanie</button>
-      <button type="button" class="list-group-item list-group-item-action"
-        (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
-      <button type="button" class="list-group-item list-group-item-action" (click)="ShowAllDaysMenuClick()">Wyświetl
-        wszystkie</button>
-    </div>
-    <div class="col-6">
-    <app-authentication></app-authentication>
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ZianiaApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Zaloguj się</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Zarejestruj się</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Aktualizuj/Dodaj dzień</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Zobacz listę dni</a>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
+<div class="col-6">
+  <app-authentication></app-authentication>
 </div>
-<div *ngIf="isEnterDataMenuActive" class="container to-the-left">
+<div class="container to-the-left">
   <div class="row">
-    <div class="col-2 list-group sidebar-menu">
-      <button type="button" class="list-group-item list-group-item-action" (click)="LoginMenuClick()">Logowanie</button>
-      <button type="button" class="list-group-item list-group-item-action active"
-        (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
-      <button type="button" class="list-group-item list-group-item-action" (click)="ShowAllDaysMenuClick()">Wyświetl
-        wszystkie</button>
-    </div>
     <div class="col-8 border">
       <app-input-date-and-time (dataHandler)="SaveAllData($event)"></app-input-date-and-time>
+      <div class="row ">
+        <div class="col-8 border margin-for-output">
+          <app-output-data [dayInfo]="dayInfo"></app-output-data>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row ">
-    <div class="col-8 border margin-for-output">
-      <app-output-data [dayInfo]="dayInfo"></app-output-data>
-    </div>
-  </div>
-</div>
-<div *ngIf="isShowAllDaysMenuActive" class="container to-the-left">
-  <div class="row">
-    <div class="col-2 list-group sidebar-menu">
-      <button type="button" class="list-group-item list-group-item-action" (click)="LoginMenuClick()">Logowanie</button>
-      <button type="button" class="list-group-item list-group-item-action"
-        (click)="EnterDataMenuClick()">Aktualizuj/Dodaj</button>
-      <button type="button" class="list-group-item list-group-item-action active"
-        (click)="ShowAllDaysMenuClick()">Wyświetl wszystkie</button>
-    </div>
-    <div class="col-8 border">
-      <app-list-of-all-days></app-list-of-all-days>
-    </div>
-  </div>
-  <div class="row ">
-    <div class="col-8 border margin-for-output">
-    </div>
-  </div>
-</div>
+    <div class="container to-the-left">
+      <div class="col-8 border">
+        <app-list-of-all-days></app-list-of-all-days>
+        <div class="row ">
+          <div class="col-8 border margin-for-output">
+          </div>
+        </div>
+      </div>
