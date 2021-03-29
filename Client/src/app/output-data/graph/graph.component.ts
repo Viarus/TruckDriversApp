@@ -1,4 +1,5 @@
 import { Component, Input, DoCheck, OnInit } from '@angular/core';
+import { DataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from '../../../../Models/ClockTime';
 import { DayInfo } from '../../../../Models/DayInfo';
 
@@ -9,18 +10,23 @@ import { DayInfo } from '../../../../Models/DayInfo';
 })
 export class GraphComponent implements DoCheck, OnInit {
 
-  constructor() { };
+  constructor(private dataService: DataService) { };
 
-  ngOnInit(): void { };
+  ngOnInit() {
+    this.dataService.newDayInputEmmiter.subscribe(data => {
+      this.dayInfo = data;
+    });
+  }
 
-  @Input() dayInfo: DayInfo = new DayInfo();
+  dayInfo: DayInfo = new DayInfo();
   clockTime: ClockTime = new ClockTime();
-  timeOfStartClockTime: string ='';
-  timeOfStart2ClockTime: string ='';
-  timeOfFinishClockTime: string ='';
-  timeOfFinish2ClockTime: string ='';
-  dateToBeShown: string ='';
-  dayOfWeek: string ='';
+  timeOfStartClockTime: string = '';
+  timeOfStart2ClockTime: string = '';
+  timeOfFinishClockTime: string = '';
+  timeOfFinish2ClockTime: string = '';
+  dateToBeShown: string = '';
+  dayOfWeek: string = '';
+
 
 
   ngDoCheck() {
@@ -60,7 +66,7 @@ export class GraphComponent implements DoCheck, OnInit {
   }
 
   showFinishTime2BottomRight(): boolean {
-    if (((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 80) && this.dayInfo.AddAfternoonTime && ((1440 - this.dayInfo.TimeOfFinish2) > 60 )) {
+    if (((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 80) && this.dayInfo.AddAfternoonTime && ((1440 - this.dayInfo.TimeOfFinish2) > 60)) {
       return true;
     }
     else {
@@ -96,7 +102,7 @@ export class GraphComponent implements DoCheck, OnInit {
 
   getSecondWorkingTimeWidthForText(): string {
     if (this.dayInfo.AddAfternoonTime) {
-      return ((((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) / (14.4))/2).toString() + '%');
+      return ((((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) / (14.4)) / 2).toString() + '%');
     }
     else {
       return ('0%');

@@ -1,8 +1,8 @@
-import { Component} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Output, EventEmitter } from '@angular/core';
-import { interval } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
+import { DataService } from '../shared/data/data.service';
 
 
 @Component({
@@ -10,14 +10,25 @@ import { DayInfo } from '../../../Models/DayInfo';
   templateUrl: './input-date-and-time.component.html',
   styleUrls: ['./input-date-and-time.component.css']
 })
-export class InputDateAndTimeComponent {
-  constructor(private http: HttpClient) { }
+export class InputDateAndTimeComponent implements OnInit, OnDestroy {
+  constructor(private http: HttpClient, private dataService: DataService) { }
 
-  //teraz pora na rysowanie grafu.Zczytać dane i narysować po kliknięciu guzika.
-  //Nie lepiej jeden guzik na rysowanie, drugi na wysłanie do bazy ?
-  //Albo rysowanie dynamiczne? Naucz się animacji?
+  ngOnInit() {
 
-  //@Output() wacek = new EventEmitter<string>();
+  }
+  ngOnDestroy() {
+    this.dataToBePostedAfternoonSubscription.unsubscribe();
+  }
+
+  dataToBePostedAfternoonSubject: Subject<DayInfo> = new Subject<DayInfo>();
+  dataToBePostedAfternoonSubscription: Subscription = this.dataToBePostedAfternoonSubject.subscribe(data => {
+    if (this.showNewTimeRange) {
+      this.dataService.newDayInputEmmiter.next(this.dataToBePostedAfternoon);
+    }
+    else {
+      this.dataService.newDayInputEmmiter.next(this.dataToBePostedMorning);
+    }
+  })
 
   inputedDate: Date = new Date();
 
@@ -44,8 +55,6 @@ export class InputDateAndTimeComponent {
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
-
-  @Output() dataHandler = new EventEmitter<DayInfo>();
 
   dataToBePostedMorning: DayInfo = new DayInfo();
   dataToBePostedAfternoon: DayInfo = new DayInfo();
@@ -125,8 +134,8 @@ export class InputDateAndTimeComponent {
       this.updateMorningDate();
       this.updateMorningTime();
       this.dataToBePostedMorning.AddAfternoonTime = this.showNewTimeRange;
-      this.dataHandler.emit(this.dataToBePostedMorning);
-    }    
+      this.dataToBePostedAfternoonSubject.next(this.dataToBePostedMorning);
+    }
   }
 
   saveTime2(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
@@ -145,7 +154,7 @@ export class InputDateAndTimeComponent {
       this.updateAfternooonTime();
       this.updateAfternoonDate();
       this.dataToBePostedAfternoon.AddAfternoonTime = this.showNewTimeRange;
-      this.dataHandler.emit(this.dataToBePostedAfternoon);
+      this.dataToBePostedAfternoonSubject.next(this.dataToBePostedAfternoon);
     }
   }
 

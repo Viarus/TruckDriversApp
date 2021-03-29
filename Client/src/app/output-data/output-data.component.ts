@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { DayInfo } from '../../../Models/DayInfo';
+import { DataService } from '../shared/data/data.service';
 
 @Component({
   selector: 'app-output-data',
@@ -7,13 +8,14 @@ import { DayInfo } from '../../../Models/DayInfo';
   styleUrls: ['./output-data.component.css']
 })
 export class OutputDataComponent implements OnInit, DoCheck {
-  @Input() dayInfo: DayInfo = new DayInfo();
+  dayInfo: DayInfo = new DayInfo();
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   isDayInfoCorrect: boolean = false;
 
   ngDoCheck() {
+
     if (this.dayInfo.TimeOfStart >= this.dayInfo.TimeOfFinish) {
       this.isDayInfoCorrect = false;
     }
@@ -26,9 +28,12 @@ export class OutputDataComponent implements OnInit, DoCheck {
     else {
       this.isDayInfoCorrect = true;
     }
-}
+  }
 
   ngOnInit(): void {
+    this.dataService.newDayInputEmmiter.subscribe(data => {
+      this.dayInfo = data;
+    });
   }
 
 }
