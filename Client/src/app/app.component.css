@@ -1,16 +1,9 @@
-.to-the-left {
-  margin-left: 0;
+.center {
+  text-align: center;
 }
-
-.sidebar-menu {
-  margin-left: 3%;
-  margin-right: 3%;
-  padding-left: 1.1%;
-  padding-top: 1%;
-  margin-top: 2%;
-  background-color: grey;
-  height: 158px;
+.margin-top {
+  margin-top: 30px;
 }
-.margin-for-output {
-  margin-left: 22.7%;
+.padding-top {
+  padding-top: 30px;
 }

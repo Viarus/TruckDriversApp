@@ -1,46 +1,19 @@
-<nav class="navbar navbar-expand navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">ZianiaApp</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Zaloguj się</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Zarejestruj się</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Aktualizuj/Dodaj dzień</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Zobacz listę dni</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-<div class="col-6">
-  <app-authentication></app-authentication>
+<div class="container-fluid">
+  <app-navbar></app-navbar>
 </div>
-<div class="container to-the-left">
+<div class="container-sm">
   <div class="row">
-    <div class="col-8 border">
-      <app-input-date-and-time (dataHandler)="SaveAllData($event)"></app-input-date-and-time>
-      <div class="row ">
-        <div class="col-8 border margin-for-output">
-          <app-output-data></app-output-data>
-        </div>
-      </div>
+    <div class="col-1"></div>
+    <div class="col-8 margin-top">
+      <router-outlet></router-outlet>
     </div>
-    <div class="container to-the-left">
-      <div class="col-8 border">
-        <app-list-of-all-days></app-list-of-all-days>
-        <div class="row ">
-          <div class="col-8 border margin-for-output">
-          </div>
-        </div>
-      </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row">
+    <div class="col-1"></div>
+    <div class="col-8 padding-top">
+      <router-outlet name="secondary"></router-outlet>
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

@@ -18,12 +18,16 @@ import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.comp
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { LoadingCircleComponent } from './shared/loading-circle/loading-circle/loading-circle.component';
 import { RouterModule, Routes } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
+  {path: "", redirectTo: "/input", pathMatch: "full"},
   {path: "login", component: AuthenticationComponent},
   {path: "register", component: AuthenticationComponent},
   {path: "input", component: InputDateAndTimeComponent},
-  {path: "list-of-days", component: ListOfAllDaysComponent},
+  {path: "input", component: OutputDataComponent, outlet: 'secondary'},
+  {path: "", component: OutputDataComponent, outlet: 'secondary'},
+  {path: "list-of-days", component: ListOfAllDaysComponent}
 ];
 
 
@@ -54,6 +58,7 @@ var config = {
     ListOfAllDaysComponent,
     AuthenticationComponent,
     LoadingCircleComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
