@@ -3,7 +3,7 @@
     <div class="col-sm mx-auto">
       <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
       <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
-      <button type="button" class="btn btn-primary center-button" (click)="getDayWorkedTime()">Aktualizuj/Dodaj
+      <button type="button" class="btn btn-primary center-button" (click)="getDayWorkedTime2()">Aktualizuj/Dodaj
         Dzień</button>
 
     </div>
@@ -72,22 +72,7 @@
   </div>
 </div>
 
-<!--<div>
-  TimeOfFinish: {{timeOfFinish}},
-  TimeOfStart: {{timeOfStart}},
-  TimeOfFinish2: {{timeOfFinish2}},
-  TimeOfStart2: {{timeOfStart2}}, <br />
-
-  AfternoonFinish: {{dataToBePostedAfternoon.TimeOfFinish}},
-  AfternoonFinish2: {{dataToBePostedAfternoon.TimeOfFinish2}},
-  AfternoonStart: {{dataToBePostedAfternoon.TimeOfStart}},
-  AfternoonStart2: {{dataToBePostedAfternoon.TimeOfStart2}}, <br />
-
-  MorningFinish: {{dataToBePostedMorning.TimeOfFinish}}, 
-  MorningFinish2: {{dataToBePostedMorning.TimeOfFinish2}}, 
-  MorningStart: {{dataToBePostedMorning.TimeOfStart}}, 
-  MorningStart2: {{dataToBePostedMorning.TimeOfStart2}}, <br />
-
-  ShowNewTimeRange: {{showNewTimeRange}}
-
-</div>-->
+{{newDayInfo.TimeOfStart}}
+{{newDayInfo.TimeOfStart2}}
+{{newDayInfo.TimeOfFinish}}
+{{newDayInfo.TimeOfFinish2}}

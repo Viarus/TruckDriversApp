@@ -10,10 +10,10 @@ export class DayInfo {
   AddAfternoonTime: boolean
 
   constructor() {
-    this.TimeOfStart = 2000;
-    this.TimeOfFinish = 2000;
-    this.TimeOfStart2 = 2000;
-    this.TimeOfFinish2 = 2000;
+    this.TimeOfStart = 0;
+    this.TimeOfFinish = 720;
+    this.TimeOfStart2 = 900;
+    this.TimeOfFinish2 = 1260;
     this.DayOfWeek = 2000;
     this.Day = 2000;
     this.Month = 2000;
