@@ -21,12 +21,12 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
   newDayInfoSubscription: Subscription = this.newDayInfoSubject.subscribe(data => {
     if (this.showNewTimeRange) {
-      this.dataService.newDayInputEmmiter.next(this.dataToBePostedAfternoon);
+      this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
     else {
-      this.dataToBePostedAfternoon.TimeOfStart2 = 2000;
-      this.dataToBePostedAfternoon.TimeOfFinish2 = 2000;
-      this.dataService.newDayInputEmmiter.next(this.dataToBePostedAfternoon);
+      this.newDayInfo.TimeOfStart2 = 2000;
+      this.newDayInfo.TimeOfFinish2 = 2000;
+      this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
   })
 
@@ -133,12 +133,13 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     if (!this.showNewTimeRange) {
       this.newDayInfo.TimeOfStart2 = 2000;
       this.newDayInfo.TimeOfFinish2 = 2000;
+      this.newDayInfo.AddAfternoonTime = false;
       this.newDayInfoSubject.next(this.newDayInfo);
     }
   }
 
   saveTime2(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
-    this.isDayWorkedTimeCorrect2 = true;
+    //this.isDayWorkedTimeCorrect2 = true;
     this.newDayInfo.TimeOfStart2 = this.toMinutesOnly(timeHolder.timeOfStart);
     if ((timeHolder.timeOfFinish.minute == 0) && (timeHolder.timeOfFinish.hour == 0)) {
       this.newDayInfo.TimeOfFinish2 = 1440;
@@ -150,6 +151,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       this.newDayInfo.TimeOfFinish2 = 1440;
     }
     if (this.showNewTimeRange) {
+      this.newDayInfo.AddAfternoonTime = true;
       this.newDayInfoSubject.next(this.newDayInfo);
     }
   }
@@ -201,11 +203,13 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   onShowNewTimeRange() {
     this.showNewTimeRange = true;
     this.showNewTimeRangeButton = false;
+    this.newDayInfoSubject.next(this.newDayInfo);
   }
 
   onHideNewTimeRange() {
     this.showNewTimeRange = false;
     this.showNewTimeRangeButton = true;
+    this.newDayInfoSubject.next(this.newDayInfo);
   }
 
 }

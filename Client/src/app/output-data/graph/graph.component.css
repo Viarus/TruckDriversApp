@@ -12,6 +12,10 @@
     background-color: lightgreen;
 }
 
+.algin-span-to-left {
+  float:left;
+}
+
 .working-time-span {
   background-color: Highlight;
 }
@@ -43,4 +47,7 @@
 }
 .center-button {
     margin: auto;
+}
+.text-algin-left{
+  text-align: left;
 }
