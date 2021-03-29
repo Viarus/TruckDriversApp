@@ -20,7 +20,7 @@
     </div>
     <div>
       <br />
-      <p>{{isLoginMode ? 'Dołącz do nas!' : 'Masz już konto?'}}</p>
+      <h2>{{isLoginMode ? 'Nie masz konta? Dołącz do nas!' : 'Masz już konto? Zaloguj się!'}}</h2>
       <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button">{{isLoginMode ? 'Rejestracja' :
         'Zaloguj się'}}</button>
     </div>

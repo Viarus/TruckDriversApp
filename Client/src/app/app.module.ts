@@ -21,13 +21,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 
 const appRoutes: Routes = [
-  {path: "", redirectTo: "/input", pathMatch: "full"},
-  {path: "login", component: AuthenticationComponent},
-  {path: "register", component: AuthenticationComponent},
-  {path: "input", component: InputDateAndTimeComponent},
-  {path: "input", component: OutputDataComponent, outlet: 'secondary'},
-  {path: "", component: OutputDataComponent, outlet: 'secondary'},
-  {path: "list-of-days", component: ListOfAllDaysComponent}
+  { path: "", redirectTo: "/input", pathMatch: "full" },
+  { path: "login", component: AuthenticationComponent },
+  { path: "register", component: AuthenticationComponent },
+  {
+    path: "input", component: InputDateAndTimeComponent, children: [
+      { path: "", component: OutputDataComponent },
+    ]
+  },
+  { path: "list-of-days", component: ListOfAllDaysComponent }
 ];
 
 

@@ -1,57 +1,77 @@
-<div class="row">
-  <div class="col-sm mx-auto">
-    <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
-    <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
-    <button type="button" class="btn btn-primary center-button" (click)="getDayWorkedTime()">Aktualizuj/Dodaj Dzień</button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm mx-auto">
+      <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
+      <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
+      <button type="button" class="btn btn-primary center-button" (click)="getDayWorkedTime()">Aktualizuj/Dodaj
+        Dzień</button>
 
-  </div>
-  <div class="col-sm mx-auto">
-    <h1 class="top-text">Wprowadź czas pracy (wybranego dnia):</h1>
-    <app-time-picker (eventHandler)="saveTime($event)" [disableStartTime]="notStartedTodayInput" [disableFinishTime]="notFinishedTodayInput"></app-time-picker>
-    <div class="row">
-      <div class="col-sm checkbox-1">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="notStartedTodayInput" (change)="onStartedChecked()" [disabled]="notFinishedTodayInput">
-        <label class="form-check-label" for="defaultCheck1">
-          Nie rozpocząłem <br /> pracy w tym dniu
-        </label>
-      </div>
-      <div class="col-sm checkbox-2">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" [(ngModel)]="notFinishedTodayInput" (change)="onFinishedChecked()" [disabled]="notStartedTodayInput || showNewTimeRange">
-          <label class="form-check-label" for="defaultCheck2">
-            Nie zakończyłem pracy w tym dniu
-          </label>
-        </div>
-      </div>
     </div>
-
-    <div class="row" *ngIf="showNewTimeRangeButton">
-      <button class="btn btn-success btn-margin-top-bot" (click)="onShowNewTimeRange()" [disabled]="notFinishedTodayInput">Dodaj drugi przedział czasowy*</button>
-      <label class="under-button-label">*Jeżeli skończyłeś pracę rano, <br /> i po pauzie zacząłeś nowy czas pracy <br /> jeszcze tego samego dnia.</label>
-    </div>
-
-    <div class="row new-time-range-div" *ngIf="showNewTimeRange">
-      <app-time-picker-second (eventHandler)="saveTime2($event)" [disableStartTime]="false" [disableFinishTime]="notFinishedTodayInput2"></app-time-picker-second>
+    <div class="col-sm mx-auto">
+      <h1 class="top-text">Wprowadź czas pracy (wybranego dnia):</h1>
+      <app-time-picker (eventHandler)="saveTime($event)" [disableStartTime]="notStartedTodayInput"
+        [disableFinishTime]="notFinishedTodayInput"></app-time-picker>
       <div class="row">
         <div class="col-sm checkbox-1">
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" [disabled]="true">
-          <label class="form-check-label" for="defaultCheck3">
+          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="notStartedTodayInput"
+            (change)="onStartedChecked()" [disabled]="notFinishedTodayInput">
+          <label class="form-check-label" for="defaultCheck1">
             Nie rozpocząłem <br /> pracy w tym dniu
           </label>
         </div>
         <div class="col-sm checkbox-2">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" [(ngModel)]="notFinishedTodayInput2" (change)="onFinishedChecked2()">
-            <label class="form-check-label" for="defaultCheck4">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2"
+              [(ngModel)]="notFinishedTodayInput" (change)="onFinishedChecked()"
+              [disabled]="notStartedTodayInput || showNewTimeRange">
+            <label class="form-check-label" for="defaultCheck2">
               Nie zakończyłem pracy w tym dniu
             </label>
           </div>
         </div>
       </div>
-      <button class="btn btn-danger btn-margin-top-bot" (click)="onHideNewTimeRange()">Anuluj drugi przedział czasowy</button>
+
+      <div class="row" *ngIf="showNewTimeRangeButton">
+        <button class="btn btn-success btn-margin-top-bot" (click)="onShowNewTimeRange()"
+          [disabled]="notFinishedTodayInput">Dodaj drugi przedział czasowy*</button>
+        <label class="under-button-label">*Jeżeli skończyłeś pracę rano, <br /> i po pauzie zacząłeś nowy czas pracy
+          <br /> jeszcze tego samego dnia.</label>
+      </div>
+
+      <div class="row new-time-range-div" *ngIf="showNewTimeRange">
+        <app-time-picker-second (eventHandler)="saveTime2($event)" [disableStartTime]="false"
+          [disableFinishTime]="notFinishedTodayInput2"></app-time-picker-second>
+        <div class="row">
+          <div class="col-sm checkbox-1">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" [disabled]="true">
+            <label class="form-check-label" for="defaultCheck3">
+              Nie rozpocząłem <br /> pracy w tym dniu
+            </label>
+          </div>
+          <div class="col-sm checkbox-2">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck4"
+                [(ngModel)]="notFinishedTodayInput2" (change)="onFinishedChecked2()">
+              <label class="form-check-label" for="defaultCheck4">
+                Nie zakończyłem pracy w tym dniu
+              </label>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-danger btn-margin-top-bot" (click)="onHideNewTimeRange()">Anuluj drugi przedział
+          czasowy</button>
+      </div>
+    </div>
+  </div>
+  <!-- I spent the whole day trying to do it the right way (with outlet names), but it didn't work no matter what.
+  I will fix it later, but just for now, it works without problem in a bit non-conventional way. -->
+  <div class="row">
+    <div class="col padding-top">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
 <!--<div>
   TimeOfFinish: {{timeOfFinish}},
   TimeOfStart: {{timeOfStart}},
