@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
+import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
   selector: 'app-time-picker',
@@ -16,7 +17,7 @@ export class TimePickerComponent implements OnInit, OnDestroy {
   @Input() disableFinishTime: boolean = true;
 
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     const myNumber = interval(30);
@@ -28,6 +29,6 @@ export class TimePickerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.numberSubscription.unsubscribe();
   }
-  //timepicker needs to trigger something
+  //timepicker needs to trigger something, but I used interval insted. Otherwise timepicker doesn't see maunaly entered data - just the one you "click/tap".
   blankFunction() { }
 }

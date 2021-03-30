@@ -43,8 +43,13 @@
 .new-time-range-div {
   margin-left: 0px;
 }
-.center-button {
+.center-button-down {
   position: absolute;
   bottom: 10px;
-  left: 110px;
+  left: 105px;
+}
+
+.center-button {
+  position: absolute;
+  left: 130px;
 }

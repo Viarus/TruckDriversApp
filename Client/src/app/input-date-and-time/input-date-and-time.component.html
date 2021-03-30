@@ -3,7 +3,9 @@
     <div class="col-sm mx-auto">
       <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
       <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
-      <button type="button" class="btn btn-primary center-button" (click)="getDayWorkedTime2()">Aktualizuj/Dodaj
+      <hr>
+      <button type="button" class="btn btn-primary center-button" (click)="setToday()">Dzisiejsza Data</button>
+      <button type="button" class="btn btn-primary center-button-down" (click)="getDayWorkedTime2()">Aktualizuj/Dodaj
         Dzień</button>
 
     </div>
@@ -40,7 +42,7 @@
 
       <div class="row new-time-range-div" *ngIf="showNewTimeRange">
         <app-time-picker-second (eventHandler)="saveTime2($event)" [disableStartTime]="false"
-          [disableFinishTime]="notFinishedTodayInput2"></app-time-picker-second>
+          [disableFinishTime]="notFinishedTodayInput2" [timeOfStartFromHolder]="timeOfStartHolder2ForTimePicker" [timeOfFinishFromHolder] = "timeOfFinishHolder2ForTimePicker"></app-time-picker-second>
         <div class="row">
           <div class="col-sm checkbox-1">
             <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" [disabled]="true">
@@ -71,8 +73,13 @@
     </div>
   </div>
 </div>
-
+<!-- 
 {{newDayInfo.TimeOfStart}}
 {{newDayInfo.TimeOfStart2}}
 {{newDayInfo.TimeOfFinish}}
 {{newDayInfo.TimeOfFinish2}}
+
+TIME HOLDER START2: {{timeOfStartHolder2}}
+TIME HOLDER Finish2: {{timeOfFinishHolder2}}
+
+{{timeOfStartHolder2ForTimePicker.hour}} {{timeOfStartHolder2ForTimePicker.minute}} -->

@@ -15,16 +15,25 @@ export class TimePickerSecondComponent implements OnInit, OnDestroy {
   @Input() disableStartTime: boolean = true;
   @Input() disableFinishTime: boolean = true;
 
+  @Input() timeOfStartFromHolder = { hour: 2000, minute: 2000 };
+  @Input() timeOfFinishFromHolder = { hour: 2000, minute: 2000 };
+
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
   constructor() { }
 
   ngOnInit() {
+    if (!((this.timeOfStartFromHolder.hour == 2000) || (this.timeOfStartFromHolder.minute == 2000))) {
+      this.timeOfStart = this.timeOfStartFromHolder;
+    }
+    if (!((this.timeOfFinishFromHolder.hour == 2000) || (this.timeOfFinishFromHolder.minute == 2000))) {
+      this.timeOfFinish = this.timeOfFinishFromHolder;
+    }
     const myNumber = interval(30);
     this.numberSubscription = myNumber.subscribe(val => this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish }));
   }
   ngOnDestroy() {
     this.numberSubscription.unsubscribe();
   }
-  //timepicker needs to trigger something
+  //timepicker needs to trigger something, but I used interval insted. Otherwise timepicker doesn't see maunaly entered data - just the one you "click" or "tap".
   blankFunction() { }
 }

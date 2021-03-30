@@ -11,9 +11,12 @@ import { DataService } from '../shared/data/data.service';
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   constructor(private http: HttpClient, private dataService: DataService) { }
+
   ngOnInit() {
     this.newDayInfo = this.getNewDayInfo();
+    this.dataService.setTodayDate();
   }
+
   ngOnDestroy() {
     this.newDayInfoSubscription.unsubscribe();
   }
@@ -40,20 +43,26 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   notStartedTodayInput: boolean = false;
   notFinishedTodayInput: boolean = false;
 
-  isDayWorkedTimeCorrect: boolean = true;
-
-  timeOfStartHolder2: number = 0;
-  timeOfFinishHolder2: number = 0;
-
   notFinishedTodayInput2: boolean = false;
-
   isDayWorkedTimeCorrect2: boolean = true;
+
+  //isDayWorkedTimeCorrect: boolean = true;
+
+  timeOfStartHolder2: number = 2000;
+  timeOfFinishHolder2: number = 2000;
+
+  timeOfStartHolder2ForTimePicker = { hour: 2000, minute: 2000 };
+  timeOfFinishHolder2ForTimePicker = { hour: 2000, minute: 2000 };
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
 
   //dataToBePostedMorning: DayInfo = new DayInfo();
   dataToBePostedAfternoon: DayInfo = new DayInfo();
+
+  setToday() {
+    this.dataService.setTodayDate();
+  }
 
   getNewDayInfo(): DayInfo {
     return this.dataService.getNewDayInfo()
@@ -116,7 +125,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
   }
 
-   saveTime(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
+  saveTime(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
     this.newDayInfo.TimeOfStart = this.toMinutesOnly(timeHolder.timeOfStart);
     if ((timeHolder.timeOfFinish.minute == 0) && (timeHolder.timeOfFinish.hour == 0)) {
       this.newDayInfo.TimeOfFinish = 1440;
@@ -157,7 +166,10 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   saveDate(dateHolder: Date) {
-    this.inputedDate = dateHolder;
+    this.newDayInfo.Day = dateHolder.getDate();
+    this.newDayInfo.DayOfWeek = dateHolder.getDay();
+    this.newDayInfo.Month = (dateHolder.getMonth() + 1);
+    this.newDayInfo.Year = dateHolder.getFullYear();
   }
 
   toMinutesOnly(timeHolder: { hour: number, minute: number }) {
@@ -203,13 +215,20 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   onShowNewTimeRange() {
     this.showNewTimeRange = true;
     this.showNewTimeRangeButton = false;
-    this.newDayInfoSubject.next(this.newDayInfo);
   }
 
   onHideNewTimeRange() {
     this.showNewTimeRange = false;
     this.showNewTimeRangeButton = true;
-    this.newDayInfoSubject.next(this.newDayInfo);
+    this.timeOfStartHolder2 = this.newDayInfo.TimeOfStart2;
+    this.timeOfFinishHolder2 = this.newDayInfo.TimeOfFinish2;
+    if (this.timeOfStartHolder2 != 2000) {
+      this.timeOfStartHolder2ForTimePicker = this.toNormalTime(this.timeOfStartHolder2);
+    }
+    if (this.timeOfFinishHolder2 != 2000) {
+      this.timeOfFinishHolder2ForTimePicker = this.toNormalTime(this.timeOfFinishHolder2);
+    }
+
   }
 
 }
