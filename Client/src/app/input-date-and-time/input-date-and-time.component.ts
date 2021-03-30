@@ -46,8 +46,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   notFinishedTodayInput2: boolean = false;
   isDayWorkedTimeCorrect2: boolean = true;
 
-  //isDayWorkedTimeCorrect: boolean = true;
-
   timeOfStartHolder2: number = 2000;
   timeOfFinishHolder2: number = 2000;
 
@@ -57,42 +55,12 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
 
-  //dataToBePostedMorning: DayInfo = new DayInfo();
-  dataToBePostedAfternoon: DayInfo = new DayInfo();
-
   setToday() {
     this.dataService.setTodayDate();
   }
 
   getNewDayInfo(): DayInfo {
     return this.dataService.getNewDayInfo()
-  }
-
-  /* updateMorningDate() {
-    this.dataToBePostedMorning.Day = this.inputedDate.getDate();
-    this.dataToBePostedMorning.DayOfWeek = this.inputedDate.getDay();
-    this.dataToBePostedMorning.Month = (this.inputedDate.getMonth() + 1);
-    this.dataToBePostedMorning.Year = this.inputedDate.getFullYear();
-  } */
-
-  updateAfternoonDate() {
-    this.dataToBePostedAfternoon.Day = this.inputedDate.getDate();
-    this.dataToBePostedAfternoon.DayOfWeek = this.inputedDate.getDay();
-    this.dataToBePostedAfternoon.Month = (this.inputedDate.getMonth() + 1);
-    this.dataToBePostedAfternoon.Year = this.inputedDate.getFullYear();
-    this.dataToBePostedAfternoon.AddAfternoonTime = this.showNewTimeRange;
-  }
-
-  /* updateMorningTime() {
-    this.dataToBePostedMorning.TimeOfStart = this.newDayInfo.TimeOfStart;
-    this.dataToBePostedMorning.TimeOfFinish = this.newDayInfo.TimeOfFinish;
-  } */
-
-  updateAfternooonTime() {
-    this.dataToBePostedAfternoon.TimeOfStart = this.newDayInfo.TimeOfStart;
-    this.dataToBePostedAfternoon.TimeOfFinish = this.newDayInfo.TimeOfFinish;
-    this.dataToBePostedAfternoon.TimeOfStart2 = this.newDayInfo.TimeOfStart2;
-    this.dataToBePostedAfternoon.TimeOfFinish2 = this.newDayInfo.TimeOfFinish2;
   }
 
   onStartedChecked() {
@@ -148,7 +116,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   saveTime2(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
-    //this.isDayWorkedTimeCorrect2 = true;
     this.newDayInfo.TimeOfStart2 = this.toMinutesOnly(timeHolder.timeOfStart);
     if ((timeHolder.timeOfFinish.minute == 0) && (timeHolder.timeOfFinish.hour == 0)) {
       this.newDayInfo.TimeOfFinish2 = 1440;
@@ -183,32 +150,12 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     return time;
   }
 
-  /* getDayWorkedTime() {
-    if ((this.newDayInfo.TimeOfFinish - this.newDayInfo.TimeOfStart) < 0) {
-      this.isDayWorkedTimeCorrect = false;
-    }
-    else {
-      if (!this.showNewTimeRange) {
-        this.updateMorningDate();
-        this.updateMorningTime();
-        this.isDayWorkedTimeCorrect = true;
-        this.http.post('https://localhost:44396/api/daysdata', this.dataToBePostedMorning).subscribe();
-      }
-      else {
-        this.getDayWorkedTime2();
-      }
-    }
-  } */
-
-  getDayWorkedTime2() {
+  postNewDay() {
     if ((this.newDayInfo.TimeOfStart > this.newDayInfo.TimeOfStart2) || (this.newDayInfo.TimeOfStart2 < this.newDayInfo.TimeOfFinish) || ((this.newDayInfo.TimeOfFinish2 - this.newDayInfo.TimeOfStart2) < 0)) {
-      this.isDayWorkedTimeCorrect2 = false;
+      console.log("ERROR - Wrong data entered")
     }
     else {
-      this.isDayWorkedTimeCorrect2 = true;
-      this.updateAfternoonDate();
-      this.updateAfternooonTime();
-      this.http.post('https://localhost:44396/api/daysdata', this.dataToBePostedAfternoon).subscribe();
+      this.http.post('https://localhost:44396/api/daysdata', this.newDayInfo).subscribe();
     }
   }
 

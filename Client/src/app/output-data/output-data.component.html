@@ -1,2 +1,3 @@
 <app-graph *ngIf="isDayInfoCorrect"></app-graph>
+<button type="button" class="btn btn-danger center-button" [routerLink]="['/input']" (click) = "resetTime()">Resetuj czas</button>
 <h1 *ngIf="!isDayInfoCorrect">Nieprawidłowe dane wejściowe</h1>

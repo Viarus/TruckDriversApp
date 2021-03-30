@@ -36,4 +36,7 @@ export class OutputDataComponent implements OnInit, DoCheck {
     });
   }
 
+  resetTime(){
+    window.location.reload();
+  }
 }
