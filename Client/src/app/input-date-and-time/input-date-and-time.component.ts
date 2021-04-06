@@ -155,7 +155,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       console.log("ERROR - Wrong data entered")
     }
     else {
-      this.http.post('https://localhost:44396/api/daysdata', this.newDayInfo).subscribe();
+      this.http.post('https://localhost:44396/api/afternoondata', this.newDayInfo).subscribe();
     }
   }
 

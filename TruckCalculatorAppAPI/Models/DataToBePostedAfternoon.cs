@@ -28,5 +28,21 @@ namespace TruckCalculatorAppAPI.Models
             Month = 0;
             Year = 0;
         }
+        public Dictionary<string, object> ConvertToFirestoreObject(DataToBePostedAfternoon value)
+        {
+            Dictionary<string, object> dayInfo = new Dictionary<string, object>
+            {
+                { "timeOfStart", value.TimeOfStart },
+                { "timeOfStart2", value.TimeOfStart2 },
+                { "timeOfFinish", value.TimeOfFinish },
+                { "timeOfFinish2", value.TimeOfFinish2 },
+                { "addAfternoonTime", value.AddAfternoonTime },
+                { "dayOfWeek", value.DayOfWeek },
+                { "day", value.Day },
+                { "month", value.Month },
+                { "year", value.Year }
+            };
+            return dayInfo;
+        }
     }
 }

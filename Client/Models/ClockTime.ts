@@ -1,4 +1,3 @@
-
 export class ClockTime {
   minutes: number;
   hours: number;

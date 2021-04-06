@@ -7,7 +7,7 @@ export class DayInfo {
   Day: number;
   Month: number;
   Year: number;
-  AddAfternoonTime: boolean
+  AddAfternoonTime: boolean;
 
   constructor() {
     this.TimeOfStart = 0;
