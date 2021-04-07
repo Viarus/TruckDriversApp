@@ -28,11 +28,6 @@ export class ListOfAllDaysComponent implements OnInit {
   dayInfo: DayInfo = new DayInfo();
 
   ngOnInit(): void {
-    this.http.get<DayInfo>('https://localhost:44396/api/afternoondata/' + this.dayRequired).
-      subscribe(p => this.dayInfo = p)
-  }
-  showSomething(): void {
-    console.log(this.dayInfo);
-  }
 
+  }
 }

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { User } from "Models/user.model";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
+import { SecretConstants } from "../shared/secret.constants";
 
 export interface AuthResponseData {
     kind: string;
@@ -21,7 +22,7 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     signup(email: string, password: string) {
-        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA",
+        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
             {
                 email: email,
                 password: password,
@@ -33,7 +34,7 @@ export class AuthService {
 
 
     login(email: string, password: string) {
-        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA",
+        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + SecretConstants.webApiKey,
             {
                 email: email,
                 password: password,

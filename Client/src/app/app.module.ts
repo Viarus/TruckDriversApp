@@ -20,6 +20,11 @@ import { LoadingCircleComponent } from './shared/loading-circle/loading-circle/l
 import { RouterModule, Routes } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 
+import { environment } from "src/environments/environment";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+
+
 const appRoutes: Routes = [
   { path: "", redirectTo: "/input", pathMatch: "full" },
   { path: "login", component: AuthenticationComponent },
@@ -32,21 +37,6 @@ const appRoutes: Routes = [
   { path: "list-of-days", component: ListOfAllDaysComponent }
 ];
 
-
-
-/*import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-
-var config = {
-  apiKey: "AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA",
-  authDomain: "truckapp-6433b.firebaseapp.com",
-  projectId: "truckapp-6433b",
-  storageBucket: "truckapp-6433b.appspot.com",
-  messagingSenderId: "797184390532",
-  appId: "1:797184390532:web:22cdaffe0f38c27154d9d1",
-  measurementId: "G-2P4J278DQ2"
-};
-*/
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,9 +59,9 @@ var config = {
     NgbModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
-    //AngularFireModule.initializeApp(config),
-    //AngularFireAuthModule
+    RouterModule.forRoot(appRoutes),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

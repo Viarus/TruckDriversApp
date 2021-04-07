@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 /TruckCalculatorAppAPI/firebaseCred.json
 /TruckCalculatorAppAPI/Models/TemporarySecretClass.cs
+Client/src/app/shared/secret.constants.ts
