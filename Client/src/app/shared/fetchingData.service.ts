@@ -27,11 +27,11 @@ export class FetchingDataService {
     dayInfosample = new DayInfo();
 
     getCollectionDataSnapshot(path: string) {
-        return this.db.collection("users/pablo/savedDays").snapshotChanges();
+        return this.db.collection(path).snapshotChanges();
     }
 
-    getFetchedDataArrayFromCollection(path: string) {
-        this.getCollectionDataSnapshot(path).pipe(take(1)).subscribe(data => {
+    getFetchedDataArrayFromCollection(pathToCollection: string) {
+        this.getCollectionDataSnapshot(pathToCollection).pipe(take(1)).subscribe(data => {
             this.anyData = data.map(e => {
                 return {
                     docId: e.payload.doc.id,

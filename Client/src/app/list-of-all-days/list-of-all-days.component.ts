@@ -23,7 +23,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   anyData: any;
   dayInfoFetchedDataArray: Array<FetchedData> = new Array<FetchedData>();
 
-  constructor(private db: AngularFirestore, private user: AuthService, private fetchingDataService: FetchingDataService) { }
+  constructor(private fetchingDataService: FetchingDataService) { }
 
   token: string = null;
 
@@ -34,7 +34,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
       this.dayInfoFetchedDataArray = resData;
 
       // I want to specify lenght of the array in here, to avoid outOfScope error. I think it will be improved in the future.
-      this.dayInfoFetchedDataArray.forEach(element => {
+      this.dayInfoFetchedDataArray.forEach(() => {
         this.dayInfoArray.push(this.dayInfo);
       });
 
