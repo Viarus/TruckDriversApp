@@ -70,6 +70,19 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   showWeekBackOnly() {
     this.dayInfoArrayToShow = this.dayInfoArray;
-    this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 7);
+    if (this.dayInfoArrayToShow.length > 7){
+      this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 7);
+    }
+  }
+
+  showMonthBackOnly() {
+    this.dayInfoArrayToShow = this.dayInfoArray;
+    if (this.dayInfoArrayToShow.length > 28){
+      this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 28);
+    }
+  }
+
+  showEverything() {
+    this.dayInfoArrayToShow = this.dayInfoArray;
   }
 }

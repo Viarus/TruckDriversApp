@@ -28,7 +28,7 @@ export class AuthService {
                 password: password,
                 returnSecureToken: true
             }).pipe(tap(resData => {
-                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
 
@@ -40,7 +40,7 @@ export class AuthService {
                 password: password,
                 returnSecureToken: true
             }).pipe(tap(resData => {
-                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
 

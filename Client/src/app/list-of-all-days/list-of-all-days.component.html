@@ -1,24 +1,35 @@
-<h2>Ostatni tydzień:</h2>
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">Data:</th>
-            <th scope="col">Dzień tygodnia:</th>
-            <th scope="col">Czas pracy od:</th>
-            <th scope="col">Czas pracy do:</th>
-            <th scope="col">Czas pracy od:</th>
-            <th scope="col">Czas pracy do:</th>
-        </tr>
-    </thead>
+<div class="container">
+    <div class="row">
+        <div class="col-sm mx-auto">
+            <button type="button" class="btn btn-primary margin-right" (click)="showWeekBackOnly()">Ostatni tydzień</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showMonthBackOnly()">Ostatnie 4 tygodnie</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showEverything()">Wszystko</button>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Data:</th>
+                    <th scope="col">Dzień tygodnia:</th>
+                    <th scope="col">Czas pracy od:</th>
+                    <th scope="col">Czas pracy do:</th>
+                    <th scope="col">Czas pracy od:</th>
+                    <th scope="col">Czas pracy do:</th>
+                </tr>
+            </thead>
 
-    <tbody>
-        <tr scope="row" *ngFor="let info of dayInfoArrayToShow">
-            <td> {{ info.DocId }} </td>
-            <td>{{ info.DayOfWeek }}</td>
-            <td>{{ info.TimeOfStart }}</td>
-            <td>{{ info.TimeOfFinish }}</td>
-            <td>{{ info.TimeOfStart2 }}</td>
-            <td>{{ info.TimeOfFinish2 }}</td>
-        </tr>
-    </tbody>
-</table>
+            <tbody>
+                <tr scope="row" *ngFor="let info of dayInfoArrayToShow">
+                    <td> {{ info.DocId }} </td>
+                    <td>{{ info.DayOfWeek }}</td>
+                    <td>{{ info.TimeOfStart }}</td>
+                    <td>{{ info.TimeOfFinish }}</td>
+                    <td>{{ info.TimeOfStart2 }}</td>
+                    <td>{{ info.TimeOfFinish2 }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
