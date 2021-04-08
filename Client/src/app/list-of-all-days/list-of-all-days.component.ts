@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
-import { AngularFirestore, DocumentData } from '@angular/fire/firestore';
-import { AuthService } from '../authentication/authentication-service';
 import { FetchedData, FetchingDataService } from '../shared/fetchingData.service';
 
 @Injectable()
@@ -16,21 +15,21 @@ export class ConfigService {
 })
 
 export class ListOfAllDaysComponent implements OnInit, OnDestroy {
-  username: string = "pablo";
+  firstFetch: boolean = true;
+  fetchingObs = new Subscription();
   dayInfo: DayInfo = new DayInfo();
-  dayInfoArray = new Array<DayInfo>();
-  dayInfoDoc: DocumentData;
-  anyData: any;
   dayInfoFetchedDataArray: Array<FetchedData> = new Array<FetchedData>();
+
+  dayInfoArray = new Array<DayInfo>();
+
+  dayInfoArrayToShow = new Array<DayInfo>();
 
   constructor(private fetchingDataService: FetchingDataService) { }
 
-  token: string = null;
-
-  dayRequired: string = '2021-4-15';
+  dayRequired: string = '';
 
   ngOnInit(): void {
-    this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
+    this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
       this.dayInfoFetchedDataArray = resData;
 
       // I want to specify lenght of the array in here, to avoid outOfScope error. I think it will be improved in the future.
@@ -39,9 +38,25 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
       });
 
       this.dayInfoArray = this.fetchingDataService.convertFetchedDataArrayToDayInfoArray(this.dayInfoFetchedDataArray);
-      console.log('from component:');
-      console.log(this.dayInfoArray);
+
+      //remember to fix c# backend to add additional 0 for one-digit days
+      this.dayInfoArray.sort((n1, n2) => {
+        if (n1.DocId < n2.DocId) {
+          return 1;
+        }
+
+        if (n1.DocId > n2.DocId) {
+          return -1;
+        }
+        return 0;
+      });
+      this.dayInfoArrayToShow = this.dayInfoArray;
+      if (this.firstFetch) {
+        this.showWeekBackOnly();
+        this.firstFetch = false;
+      }
     })
+    this.getCollectionOfDays();
   }
 
   getCollectionOfDays() {
@@ -49,6 +64,12 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.fetchingDataService.dayInfoArraySub.unsubscribe();
+    //GENERATES AN ERROR WHILE LEAVING THE COMPONENT AND THEN COMING BACK TO IT
+    this.fetchingObs.unsubscribe();
+  }
+
+  showWeekBackOnly() {
+    this.dayInfoArrayToShow = this.dayInfoArray;
+    this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 7);
   }
 }

@@ -1,3 +1,24 @@
-<p>list-of-all-days works!</p>
-<button type="button" class="btn btn-primary" (click)="getCollectionOfDays()">Fetch Some Data</button>
-<p>Day info: {{dayInfo.TimeOfStart}}</p>
+<h2>Ostatni tydzień:</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Data:</th>
+            <th scope="col">Dzień tygodnia:</th>
+            <th scope="col">Czas pracy od:</th>
+            <th scope="col">Czas pracy do:</th>
+            <th scope="col">Czas pracy od:</th>
+            <th scope="col">Czas pracy do:</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr scope="row" *ngFor="let info of dayInfoArrayToShow">
+            <td> {{ info.DocId }} </td>
+            <td>{{ info.DayOfWeek }}</td>
+            <td>{{ info.TimeOfStart }}</td>
+            <td>{{ info.TimeOfFinish }}</td>
+            <td>{{ info.TimeOfStart2 }}</td>
+            <td>{{ info.TimeOfFinish2 }}</td>
+        </tr>
+    </tbody>
+</table>
