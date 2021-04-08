@@ -8,6 +8,7 @@ export class DayInfo {
   Month: number;
   Year: number;
   AddAfternoonTime: boolean;
+  DocId?: any;
 
   constructor() {
     this.TimeOfStart = 0;
@@ -23,40 +24,31 @@ export class DayInfo {
   getDayOfWeekInPolish(d: number): string {
     switch (d) {
       case 1: {
-        return 'Poniedziałek'
-        break;
+        return 'Poniedziałek';
       }
       case 2: {
-        return 'Wtorek'
-        break;
+        return 'Wtorek';
       }
       case 3: {
-        return 'Środa'
-        break;
+        return 'Środa';
       }
       case 4: {
-        return 'Czwartek'
-        break;
+        return 'Czwartek';
       }
       case 5: {
-        return 'Piątek'
-        break;
+        return 'Piątek';
       }
       case 6: {
-        return 'Sobota'
-        break;
+        return 'Sobota';
       }
       case 0: {
-        return 'Niedziela'
-        break;
+        return 'Niedziela';
       }
       case 2000: {
-        return 'Wprowadź dzień'
-        break;
+        return 'Wprowadź dzień';
       }
       default: {
-        return 'Błąd'
-        break;
+        return 'Błąd';
       }
     } 
   }
