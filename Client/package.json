@@ -28,6 +28,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-icons": "^1.1.0",
     "firebase": "^8.3.2",
+    "firebase-tools": "^9.9.0",
     "firebaseui": "^4.7.3",
     "moment": "^2.29.1",
     "rxjs": "~6.6.6",
