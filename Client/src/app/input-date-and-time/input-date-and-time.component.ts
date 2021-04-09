@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DataService } from '../shared/data/data.service';
+import { AuthService } from '../authentication/authentication-service';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -10,7 +11,7 @@ import { DataService } from '../shared/data/data.service';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private http: HttpClient, private dataService: DataService) { }
+  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService) { }
 
   ngOnInit() {
     this.newDayInfo = this.getNewDayInfo();

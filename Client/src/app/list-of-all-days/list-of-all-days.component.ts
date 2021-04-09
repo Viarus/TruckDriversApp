@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
+import { User } from 'Models/user.model';
 import { Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
+import { AuthService } from '../authentication/authentication-service';
 import { FetchedData, FetchingDataService } from '../shared/fetchingData.service';
 
 @Injectable()
@@ -15,6 +17,7 @@ export class ConfigService {
 })
 
 export class ListOfAllDaysComponent implements OnInit, OnDestroy {
+  user: User = new User();
   firstFetch: boolean = true;
   fetchingObs = new Subscription();
   dayInfo: DayInfo = new DayInfo();
@@ -24,11 +27,14 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   dayInfoArrayToShow = new Array<DayInfo>();
 
-  constructor(private fetchingDataService: FetchingDataService) { }
+  constructor(private fetchingDataService: FetchingDataService, private authService: AuthService) { }
 
   dayRequired: string = '';
 
   ngOnInit(): void {
+    //persistance storage to do
+    // or create a button - otherwise you will have milion reads if someone will refresh the page few times
+    this.user = this.authService.user;
     this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
       this.dayInfoFetchedDataArray = resData;
 
@@ -60,29 +66,33 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   }
 
   getCollectionOfDays() {
-    this.fetchingDataService.getFetchedDataArrayFromCollection("users/pablo/savedDays");
+    if (!(this.user.email == 'notValid')) {
+      this.fetchingDataService.getFetchedDataArrayFromCollection(`users/${this.user.id}/savedDays`);
+    }
+    else {
+      console.log("no User logged in");
+    }
   }
 
   ngOnDestroy() {
-    //GENERATES AN ERROR WHILE LEAVING THE COMPONENT AND THEN COMING BACK TO IT
     this.fetchingObs.unsubscribe();
   }
 
   showWeekBackOnly() {
     this.dayInfoArrayToShow = this.dayInfoArray;
-    if (this.dayInfoArrayToShow.length > 7){
+    if (this.dayInfoArrayToShow.length > 7) {
       this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 7);
     }
   }
 
   showMonthBackOnly() {
     this.dayInfoArrayToShow = this.dayInfoArray;
-    if (this.dayInfoArrayToShow.length > 28){
+    if (this.dayInfoArrayToShow.length > 28) {
       this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 28);
     }
   }
 
   showEverything() {
-    this.dayInfoArrayToShow = this.dayInfoArray;
+    // SORRY - TOO MANY READS
   }
 }

@@ -17,7 +17,8 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-    user = new Subject<User>();
+    userSub = new Subject<User>();
+    user = new User();
 
     constructor(private http: HttpClient) { }
 
@@ -46,7 +47,12 @@ export class AuthService {
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
-        const user = new User(email, userId, token, expirationDate);
-        this.user.next(user);
+        var user = new User();
+        user.email = email;
+        user.id = userId;
+        user._token = token;
+        user._tokenExpirationDate = expirationDate;
+        this.userSub.next(user);
+        this.user = user;
     }
 }
