@@ -44,5 +44,31 @@ namespace TruckCalculatorAppAPI.Models
             };
             return dayInfo;
         }
+        public string GetFileName(DataToBePostedAfternoon value)
+        {
+            string dayString;
+            string monthString;
+            string yearString = value.Year.ToString();
+
+            if (value.Day < 10)
+            {
+                dayString = "0" + value.Day.ToString();
+            }
+            else
+            {
+                dayString = value.Day.ToString();
+            }
+            if (value.Month < 10)
+            {
+                monthString = "0" + value.Month.ToString();
+            }
+            else
+            {
+                monthString = value.Month.ToString();
+            }
+
+            string fileTitle = yearString + "-" + monthString + "-" + dayString;
+            return fileTitle;
+        }
     }
 }

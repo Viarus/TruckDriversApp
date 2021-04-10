@@ -30,13 +30,13 @@ namespace TruckCalculatorAppAPI.Models
     public class User
     {
         public string Email { get; set; }
-        public string Id { get; set; }
+        public string Uid { get; set; }
         public string Token { get; set; }
         public DateTime? TokenExpirationDate { get; set; }
         public User()
         {
             this.Email = "notValid";
-            this.Id = "notValid";
+            this.Uid = "notValid";
             this.Token = "notValid";
             TokenExpirationDate = null;
         }

@@ -14,12 +14,6 @@ namespace TruckCalculatorAppAPI.Controllers
     [ApiController]
     public class AfternoonDataController : ControllerBase
     {
-        FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);        
-
-        List<DataToBePosted> timeInDay = new List<DataToBePosted>();
-        IdCounter lastId = new IdCounter();
-        GetHeader getHeader = new GetHeader();
-
         // GET: api/<AfternoonDataController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -37,32 +31,46 @@ namespace TruckCalculatorAppAPI.Controllers
         // POST api/<AfternoonDataController>
         [HttpPost]
         public async void Post([FromBody] PostedData value)
-
         {
+            FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+            DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
+            List<DataToBePosted> timeInDay = new List<DataToBePosted>();
+            IdCounter lastId = new IdCounter();
+            GetHeader getHeader = new GetHeader();
+            PostedData postedData = new PostedData();
+
+
             FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
             if (firebaseApp == null)
             {
                 string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
                 string projectId = TemporarySecretClass.project;
-
                 firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
             }
-
             FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
             FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(value.Token);
+
             string tokenUid = decodedToken.Uid;
+            User currentUser = new User();
+            currentUser.Uid = value.Uid;
 
-            //User currentUser = new User();
+            if (currentUser.Uid == tokenUid)
+            {
+                postedData = value;
+                dayInfo = postedData.ExtractDayInfo(postedData);
+                string savedDayDocId = dayInfo.GetFileName(dayInfo);
 
-            //DataToBePostedAfternoon converter = new DataToBePostedAfternoon();
-            //EnteredDay enteredDay = new EnteredDay();
+                DocumentReference savedDayDocPath = db.Document("users/" + currentUser.Uid + "/savedDays/" + savedDayDocId);
 
+                Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
+                await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
+            }
             //string fileTitle = enteredDay.GetFileName(value.Day, value.Month, value.Year);
 
-            //DocumentReference saveDataPath = db.Document("users/pablo/savedDays/" + fileTitle);
+            
 
             //Dictionary<string, object> dayInfo = converter.ConvertToFirestoreObject(value);
-            //await saveDataPath.SetAsync(dayInfo);
+            //
 
         }
 

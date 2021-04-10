@@ -53,7 +53,7 @@ namespace TruckCalculatorAppAPI.Models
         {
             User user = new User();
             user.Email = value.Email;
-            user.Id = value.Uid;
+            user.Uid = value.Uid;
             user.Token = value.Token;
             return user;
         }

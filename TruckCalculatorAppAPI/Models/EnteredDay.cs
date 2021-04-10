@@ -18,32 +18,7 @@ namespace TruckCalculatorAppAPI.Models
             Year = 0;
         }
 
-        public string GetFileName(int day, int month, int year)
-        {
-            string dayString;
-            string monthString;
-            string yearString = year.ToString();
-
-            if (day < 10)
-            {
-                dayString = "0" + day.ToString();
-            }
-            else
-            {
-                dayString = day.ToString();
-            }
-            if (month < 10)
-            {
-                monthString = "0" + month.ToString();
-            }
-            else
-            {
-                monthString = month.ToString();
-            }
-
-            string fileTitle = dayString + monthString + yearString;
-            return fileTitle;
-        }
+        
     }
 
 }
