@@ -52,6 +52,18 @@ namespace TruckCalculatorAppAPI.Controllers
             FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(value.Token);
             string tokenUid = decodedToken.Uid;
 
+            //User currentUser = new User();
+
+            //DataToBePostedAfternoon converter = new DataToBePostedAfternoon();
+            //EnteredDay enteredDay = new EnteredDay();
+
+            //string fileTitle = enteredDay.GetFileName(value.Day, value.Month, value.Year);
+
+            //DocumentReference saveDataPath = db.Document("users/pablo/savedDays/" + fileTitle);
+
+            //Dictionary<string, object> dayInfo = converter.ConvertToFirestoreObject(value);
+            //await saveDataPath.SetAsync(dayInfo);
+
         }
 
         // PUT api/<AfternoonDataController>/5
