@@ -1,1 +1,0 @@
-{"Id":0, "TimeOfStart":0,"TimeOfFinish":1260,"AddAfternoonTime":false}

@@ -5,8 +5,6 @@ using Google.Cloud.Firestore;
 using FirebaseAdmin.Auth;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Hosting;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TruckCalculatorAppAPI.Controllers
 {

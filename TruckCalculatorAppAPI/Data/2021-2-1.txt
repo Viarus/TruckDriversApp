@@ -1,1 +1,0 @@
-{"TimeOfStart":0,"TimeOfFinish":1260,"AddAfternoonTime":false,"DayOfWeek":1,"Day":1,"Month":2,"Year":2021}
