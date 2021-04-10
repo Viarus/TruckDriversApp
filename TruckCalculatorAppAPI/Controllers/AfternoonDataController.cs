@@ -12,20 +12,6 @@ namespace TruckCalculatorAppAPI.Controllers
     [ApiController]
     public class AfternoonDataController : ControllerBase
     {
-        // GET: api/<AfternoonDataController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<AfternoonDataController>/5
-        [HttpGet("{id}")]
-        public string Get(string id)
-        {
-            return "value";
-        }
-
         // POST api/<AfternoonDataController>
         [HttpPost]
         public async void Post([FromBody] PostedData value)
@@ -59,19 +45,6 @@ namespace TruckCalculatorAppAPI.Controllers
                 Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
                 await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
             }
-        }
-
-        // PUT api/<AfternoonDataController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-
-        }
-
-        // DELETE api/<AfternoonDataController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
