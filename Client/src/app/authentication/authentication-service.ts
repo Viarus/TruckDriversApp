@@ -23,6 +23,30 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router) { }
 
+    autoLogin() {
+        const userData: {
+            email: string;
+            id: string;
+            token: string;
+            tokenExpirationDate: string
+        } = JSON.parse(localStorage.getItem('userData'));
+        if (!userData) {
+            return;
+        }
+        let loadedUser = new User();
+        loadedUser.email = userData.email;
+        loadedUser.id = userData.id;
+        loadedUser.token = userData.token;
+        loadedUser.tokenExpirationDate = new Date(userData.token);
+        console.log("IsTokenValid?");
+        console.log(loadedUser.tokenValid);
+        if (loadedUser.tokenValid) {
+            this.userSub.next(loadedUser);
+            this.user = loadedUser;
+            console.log("shouldBeWorking");
+        }
+    }
+
     signup(email: string, password: string) {
         return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
             {
@@ -46,10 +70,11 @@ export class AuthService {
             }));
     }
 
-    logout(){
+    logout() {
         let emptyUser = new User();
         this.userSub.next(emptyUser);
         this.router.navigate(['/login']);
+        localStorage.removeItem('userData');
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {
@@ -61,5 +86,6 @@ export class AuthService {
         user.tokenExpirationDate = expirationDate;
         this.userSub.next(user);
         this.user = user;
+        localStorage.setItem('userData', JSON.stringify(this.user));
     }
 }

@@ -9,7 +9,7 @@ export class User {
         this.token = "notValid",
         this.tokenExpirationDate = new Date();
     }
-    get tokenValue() {
+    get tokenValid() {
         if (!this.tokenExpirationDate || new Date() > this.tokenExpirationDate) {
             return null;
         }

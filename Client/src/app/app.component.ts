@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DayInfo } from '../../Models/DayInfo';
+import { AuthService } from './authentication/authentication-service';
 
 
 @Component({
@@ -8,11 +9,18 @@ import { DayInfo } from '../../Models/DayInfo';
   styleUrls: ['./app.component.css']
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(private authService: AuthService) { };
+  ngOnInit() {
+    this.authService.autoLogin();
+  }
   title = '';
   dayInfo: DayInfo = new DayInfo();
 
   isEnterDataMenuActive: boolean = true;
   isShowAllDaysMenuActive: boolean = false;
   isLoginMenuActive: boolean = false;
+
+
 }
