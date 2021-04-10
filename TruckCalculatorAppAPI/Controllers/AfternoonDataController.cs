@@ -33,12 +33,9 @@ namespace TruckCalculatorAppAPI.Controllers
         public async void Post([FromBody] PostedData value)
         {
             FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
-            DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
-            List<DataToBePosted> timeInDay = new List<DataToBePosted>();
-            IdCounter lastId = new IdCounter();
-            GetHeader getHeader = new GetHeader();
-            PostedData postedData = new PostedData();
-
+            DataToBePostedAfternoon dayInfo;
+            PostedData postedData;
+            User currentUser = new User();
 
             FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
             if (firebaseApp == null)
@@ -49,29 +46,21 @@ namespace TruckCalculatorAppAPI.Controllers
             }
             FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
             FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(value.Token);
-
-            string tokenUid = decodedToken.Uid;
-            User currentUser = new User();
+            string tokenUid = decodedToken.Uid;            
             currentUser.Uid = value.Uid;
 
+            //I think this validation isn't necessary. Just get UID from the token.
             if (currentUser.Uid == tokenUid)
             {
                 postedData = value;
                 dayInfo = postedData.ExtractDayInfo(postedData);
-                string savedDayDocId = dayInfo.GetFileName(dayInfo);
 
+                string savedDayDocId = dayInfo.GetFileName(dayInfo);
                 DocumentReference savedDayDocPath = db.Document("users/" + currentUser.Uid + "/savedDays/" + savedDayDocId);
 
                 Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
                 await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
             }
-            //string fileTitle = enteredDay.GetFileName(value.Day, value.Month, value.Year);
-
-            
-
-            //Dictionary<string, object> dayInfo = converter.ConvertToFirestoreObject(value);
-            //
-
         }
 
         // PUT api/<AfternoonDataController>/5

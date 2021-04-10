@@ -17,7 +17,7 @@
             <a class="nav-link" routerLink="/list-of-days" *ngIf="isAuthenticated">Zobacz listę dni</a>
           </li>
           <li class="nav-item" routerLinkActive = 'active'>
-            <a class="nav-link" routerLink="/logout" *ngIf="isAuthenticated">Wyloguj się</a>
+            <a class="nav-link" style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogout()">Wyloguj się</a>
           </li>
         </ul>
       </div>

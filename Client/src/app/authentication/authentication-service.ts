@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { User } from "Models/user.model";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
@@ -20,7 +21,7 @@ export class AuthService {
     userSub = new Subject<User>();
     user = new User();
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
 
     signup(email: string, password: string) {
         return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
@@ -43,6 +44,12 @@ export class AuthService {
             }).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
+    }
+
+    logout(){
+        let emptyUser = new User();
+        this.userSub.next(emptyUser);
+        this.router.navigate(['/login']);
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {
