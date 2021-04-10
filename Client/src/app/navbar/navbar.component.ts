@@ -20,14 +20,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadedUser = this.authService.user;
-    if (this.loadedUser){
       if (this.loadedUser.email == "notValid" || this.loadedUser.token == "notValid" || this.loadedUser.id == "notValid") {
         this.isAuthenticated = false;
       }
       else {
         this.isAuthenticated = true;
       }
-    }
 
     this.userSub = this.authService.userSub.subscribe(user => {
       if (user.email == "notValid" || user.token == "notValid" || user.id == "notValid") {

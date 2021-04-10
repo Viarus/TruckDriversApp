@@ -23,18 +23,20 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { environment } from "src/environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AuthGuard } from './authentication/authentication.guard';
+import { UnAuthGuard } from './authentication/unauthentication.guard';
 
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "/input", pathMatch: "full" },
-  { path: "login", component: AuthenticationComponent },
+  { path: "login", component: AuthenticationComponent, canActivate: [UnAuthGuard] },
   { path: "register", component: AuthenticationComponent },
   {
     path: "input", component: InputDateAndTimeComponent, children: [
       { path: "", component: OutputDataComponent },
     ]
   },
-  { path: "list-of-days", component: ListOfAllDaysComponent }
+  { path: "list-of-days", component: ListOfAllDaysComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

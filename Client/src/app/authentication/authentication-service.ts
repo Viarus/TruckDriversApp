@@ -39,13 +39,12 @@ export class AuthService {
         loadedUser.id = userData.id;
         loadedUser.token = userData.token;
         loadedUser.tokenExpirationDate = new Date(userData.token);
-        console.log("IsTokenValid?");
-        console.log(loadedUser.tokenValid);
         if (loadedUser.tokenValid) {
             this.userSub.next(loadedUser);
             this.user = loadedUser;
             const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
-            this.autoLogout(expirationDuration);
+            //something is wrong - need to be fixed
+            //this.autoLogout(expirationDuration);
         }
     }
 
@@ -73,19 +72,19 @@ export class AuthService {
     }
 
     logout() {
-        let emptyUser = new User();
+        var emptyUser: User = new User();
         this.userSub.next(emptyUser);
         this.router.navigate(['/login']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer){
             clearTimeout(this.tokenExpirationTimer);
         }
+        this.tokenExpirationTimer = null;
+        window.location.reload();
     }
 
     autoLogout(expirationDuration: number) {
-        this.tokenExpirationTimer = setTimeout(() => {
-            this.logout();
-        }, expirationDuration);
+        this.tokenExpirationTimer = setTimeout(this.logout, expirationDuration);
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {
@@ -95,7 +94,7 @@ export class AuthService {
         user.id = userId;
         user.token = token;
         user.tokenExpirationDate = expirationDate;
-        this.autoLogout(expiresIn);
+        this.autoLogout(expiresIn * 1000);
         this.userSub.next(user);
         this.user = user;
         localStorage.setItem('userData', JSON.stringify(this.user));
