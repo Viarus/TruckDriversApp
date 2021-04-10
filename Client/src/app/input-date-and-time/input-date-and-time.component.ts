@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DataService } from '../shared/data/data.service';
 import { AuthService } from '../authentication/authentication-service';
+import { Firestore } from '@google-cloud/firestore';
+import { User } from 'Models/user.model';
+import { PostData } from 'Models/PostData';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -13,16 +16,8 @@ import { AuthService } from '../authentication/authentication-service';
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService) { }
 
-  ngOnInit() {
-    this.newDayInfo = this.getNewDayInfo();
-    this.dataService.setTodayDate();
-  }
-
-  ngOnDestroy() {
-    this.newDayInfoSubscription.unsubscribe();
-  }
-
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
+
   newDayInfoSubscription: Subscription = this.newDayInfoSubject.subscribe(data => {
     if (this.showNewTimeRange) {
       this.dataService.newDayInputEmmiter.next(this.newDayInfo);
@@ -35,6 +30,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   })
 
   newDayInfo: DayInfo = new DayInfo();
+
+  user: User = new User();
 
   inputedDate: Date = new Date();
 
@@ -55,6 +52,17 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
+
+  ngOnInit() {
+    this.newDayInfo = this.getNewDayInfo();
+    this.dataService.setTodayDate();
+    this.user = this.authService.user;
+    console.log(this.user.token);
+  }
+
+  ngOnDestroy() {
+    this.newDayInfoSubscription.unsubscribe();
+  }
 
   setToday() {
     this.dataService.setTodayDate();
@@ -156,7 +164,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       console.log("ERROR - Wrong data entered")
     }
     else {
-      this.http.post('https://localhost:44396/api/afternoondata', this.newDayInfo).subscribe();
+      let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
+      this.http.post('https://localhost:44396/api/afternoondata', postData).subscribe();
     }
   }
 

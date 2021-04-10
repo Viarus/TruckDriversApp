@@ -50,8 +50,8 @@ export class AuthService {
         var user = new User();
         user.email = email;
         user.id = userId;
-        user._token = token;
-        user._tokenExpirationDate = expirationDate;
+        user.token = token;
+        user.tokenExpirationDate = expirationDate;
         this.userSub.next(user);
         this.user = user;
     }

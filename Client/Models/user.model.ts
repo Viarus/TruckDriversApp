@@ -1,20 +1,20 @@
 export class User {
     public email: string;
     public id: string;
-    public _token: string;
-    public _tokenExpirationDate: Date;
+    public token: string;
+    public tokenExpirationDate: Date;
     constructor() { 
         this.email = "notValid",
         this.id = "notValid",
-        this._token = "notValid",
-        this._tokenExpirationDate = new Date();
+        this.token = "notValid",
+        this.tokenExpirationDate = new Date();
     }
-    get token() {
-        if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+    get tokenValue() {
+        if (!this.tokenExpirationDate || new Date() > this.tokenExpirationDate) {
             return null;
         }
         else {
-            return this._token;
+            return this.token;
         }
     }
 }

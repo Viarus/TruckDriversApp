@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using TruckCalculatorAppAPI.Models;
 using Google.Cloud.Firestore;
+using FirebaseAdmin.Auth;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Hosting;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace TruckCalculatorAppAPI.Controllers
@@ -11,12 +14,11 @@ namespace TruckCalculatorAppAPI.Controllers
     [ApiController]
     public class AfternoonDataController : ControllerBase
     {
-        FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+        FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);        
 
         List<DataToBePosted> timeInDay = new List<DataToBePosted>();
         IdCounter lastId = new IdCounter();
         GetHeader getHeader = new GetHeader();
-        string pathToData = @"C:\Programowanie C sharp\TruckCalculatorApp\TruckCalculatorApp\TruckCalculatorAppAPI\Data\";
 
         // GET: api/<AfternoonDataController>
         [HttpGet]
@@ -27,86 +29,36 @@ namespace TruckCalculatorAppAPI.Controllers
 
         // GET api/<AfternoonDataController>/5
         [HttpGet("{id}")]
-        public DataToBePostedAfternoon Get(string id)
+        public string Get(string id)
         {
-            DataToBePostedAfternoon dayInfo = new DataToBePostedAfternoon();
-            if (System.IO.File.Exists(pathToData + "ListOfAllDays.txt"))
-            {
-                dayInfo = JsonConvert.DeserializeObject<DataToBePostedAfternoon>(System.IO.File.ReadAllText(pathToData + id + ".txt"));
-                return dayInfo;
-            }
-            else
-            {
-                return dayInfo;
-            }
-            
+            return "value";
         }
 
         // POST api/<AfternoonDataController>
         [HttpPost]
-        public async void Post([FromBody] DataToBePostedAfternoon value)
+        public async void Post([FromBody] PostedData value)
+
         {
-            DataToBePostedAfternoon converter = new DataToBePostedAfternoon();
-            EnteredDay enteredDay = new EnteredDay();
-            enteredDay.Day = value.Day;
-            enteredDay.Month = value.Month;
-            enteredDay.Year = value.Year;
+            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+            if (firebaseApp == null)
+            {
+                string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
+                string projectId = TemporarySecretClass.project;
 
-            //List<EnteredDay> listOfAllDaysJSON = new List<EnteredDay>();
+                firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
+            }
 
-            string fileTitle = value.Year.ToString() + '-' + value.Month.ToString() + '-' + value.Day.ToString();
+            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+            FirebaseToken decodedToken = await auth.VerifyIdTokenAsync(value.Token);
+            string tokenUid = decodedToken.Uid;
 
-            //string specificDayInfoJSON = JsonConvert.SerializeObject(value);
-            //System.IO.File.WriteAllText(pathToData + fileTitle, specificDayInfoJSON);
-
-            DocumentReference saveDataPath = db.Document("users/pablo/savedDays/" + fileTitle);
-
-            Dictionary<string, object> dayInfo = converter.ConvertToFirestoreObject(value);
-            await saveDataPath.SetAsync(dayInfo);
-
-
-
-            //if (System.IO.File.Exists(pathToData + "ListOfAllDays.txt"))
-            //{
-            //    bool isDayTheSame = false;
-            //    bool isMonthTheSame = false;
-            //    bool isYearTheSame = false;
-            //    listOfAllDaysJSON = JsonConvert.DeserializeObject<List<EnteredDay>>(System.IO.File.ReadAllText(pathToData + "ListOfAllDays.txt"));
-            //    //mozna zrobić ładniej
-            //    foreach (var element in listOfAllDaysJSON)
-            //    {
-            //        if (element.Day == enteredDay.Day)
-            //        {
-            //            isDayTheSame = true;
-            //        }
-            //        if (element.Month == enteredDay.Month)
-            //        {
-            //            isMonthTheSame = true;
-            //        }
-            //        if (element.Year == enteredDay.Year)
-            //        {
-            //            isYearTheSame = true;
-            //        }
-            //    }
-            //    if (!(isDayTheSame && isMonthTheSame && isYearTheSame))
-            //    {
-            //        listOfAllDaysJSON.Add(enteredDay);
-            //        string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
-            //        System.IO.File.WriteAllText(pathToData + "ListOfAllDays.txt", uniqueListOfAllDaysJSON);
-            //    }
-            //}
-            //else
-            //{
-            //    listOfAllDaysJSON.Add(enteredDay);
-            //    string uniqueListOfAllDaysJSON = JsonConvert.SerializeObject(listOfAllDaysJSON);
-            //    System.IO.File.WriteAllText(pathToData + "ListOfAllDays.txt", uniqueListOfAllDaysJSON);
-            //}
         }
 
         // PUT api/<AfternoonDataController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+
         }
 
         // DELETE api/<AfternoonDataController>/5

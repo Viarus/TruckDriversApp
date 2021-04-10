@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { User } from 'Models/user.model';
+import { Observable, Subscription } from 'rxjs';
 import { AuthResponseData, AuthService } from './authentication-service';
 
 @Component({
@@ -9,9 +10,24 @@ import { AuthResponseData, AuthService } from './authentication-service';
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.css']
 })
-export class AuthenticationComponent {
+export class AuthenticationComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService, private router: Router) { }
+
+  user = new User();
+
+  userSubs = new Subscription();
+  authObsSubs = new Subscription();
+
+  ngOnInit() {
+    this.userSubs = this.authService.userSub.subscribe(resData => {
+      this.user = resData;
+    });
+  }
+  ngOnDestroy() {
+    this.userSubs.unsubscribe();
+    this.authObsSubs.unsubscribe();
+  }
 
   isLoginMode: boolean = true;
   isLoading: boolean = false;
@@ -37,7 +53,7 @@ export class AuthenticationComponent {
     else {
       authObs = this.authService.signup(email, password);
     }
-    authObs.subscribe(
+    this.authObsSubs = authObs.subscribe(
       resData => {
         console.log(resData);
         this.error = null;
