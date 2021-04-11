@@ -34,7 +34,7 @@ export class FetchingDataService {
         this.getCollectionDataSnapshot(pathToCollection).pipe(take(1)).subscribe(data => {
             this.anyData = data.map(e => {
                 return {
-                    docId: e.payload.doc.id,
+                    docId: e.payload.doc['id'],
                     timeOfStart: e.payload.doc.data()['timeOfStart'],
                     timeOfStart2: e.payload.doc.data()['timeOfStart2'],
                     timeOfFinish: e.payload.doc.data()['timeOfFinish'],

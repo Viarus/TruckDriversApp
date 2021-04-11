@@ -55,7 +55,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
     this.authObsSubs = authObs.subscribe(
       resData => {
-        console.log(resData);
         this.error = null;
         this.isLoading = false;
         this.router.navigate(['/input'])

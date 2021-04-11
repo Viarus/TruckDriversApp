@@ -4,7 +4,6 @@ import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DataService } from '../shared/data/data.service';
 import { AuthService } from '../authentication/authentication-service';
-import { Firestore } from '@google-cloud/firestore';
 import { User } from 'Models/user.model';
 import { PostData } from 'Models/PostData';
 
@@ -57,7 +56,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.newDayInfo = this.getNewDayInfo();
     this.dataService.setTodayDate();
     this.user = this.authService.user;
-    console.log(this.user.token);
   }
 
   ngOnDestroy() {
