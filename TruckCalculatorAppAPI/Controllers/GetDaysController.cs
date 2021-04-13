@@ -17,6 +17,11 @@ namespace TruckCalculatorAppAPI.Controllers
         [HttpGet]
         public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
         {
+            FirebaseToken decodedToken;
+            bool isTokenValid = false;
+            string userToken = Request.Headers["token"];
+            string tokenUid = "notValid";
+
             FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
             FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
             if (firebaseApp == null)
@@ -27,20 +32,39 @@ namespace TruckCalculatorAppAPI.Controllers
             }
             FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
 
-            List<FetchedData> allFetchedData = new List<FetchedData>();
-            FetchedData fetchedData = new FetchedData();
-            Query allDaysQuery = db.Collection("users/pablo/savedDays");
-            QuerySnapshot allDaysQuerySnapshot = await allDaysQuery.GetSnapshotAsync();
-            foreach (DocumentSnapshot documentSnapshot in allDaysQuerySnapshot.Documents)
+            try
             {
-                Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
-                fetchedData = fetchedData.ToFetchedData(documentDictionary, documentSnapshot.Id);
-                allFetchedData.Add(fetchedData);
+                decodedToken = await auth.VerifyIdTokenAsync(userToken);
+                isTokenValid = true;
+                tokenUid = decodedToken.Uid;
             }
-            allFetchedData.Sort((p, q) => p.DocId.CompareTo(q.DocId));
-            FetchedData[] allFetchedDataArray = allFetchedData.ToArray();
+            catch (Exception e)
+            {
+                isTokenValid = false;
+                Console.WriteLine(e.Message);
+            }
 
-            return allFetchedDataArray;
+            if (isTokenValid)
+            {
+                List<FetchedData> allFetchedData = new List<FetchedData>();
+                FetchedData fetchedData = new FetchedData();
+                Query allDaysQuery = db.Collection("users/"+ tokenUid + "/savedDays");
+                QuerySnapshot allDaysQuerySnapshot = await allDaysQuery.GetSnapshotAsync();
+                foreach (DocumentSnapshot documentSnapshot in allDaysQuerySnapshot.Documents)
+                {
+                    Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
+                    fetchedData = fetchedData.ToFetchedData(documentDictionary, documentSnapshot.Id);
+                    allFetchedData.Add(fetchedData);
+                }
+                allFetchedData.Sort((p, q) => p.DocId.CompareTo(q.DocId));
+                FetchedData[] allFetchedDataArray = allFetchedData.ToArray();
+
+                return allFetchedDataArray;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

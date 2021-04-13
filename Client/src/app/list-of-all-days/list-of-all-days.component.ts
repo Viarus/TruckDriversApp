@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { User } from 'Models/user.model';
@@ -35,7 +35,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   // ngOnInit(): void {
   //   //persistance storage to do
   //   // or create a button - otherwise you will have milion reads if someone will refresh the page few times
-  //   this.user = this.authService.user;
+  //   
   //   this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
   //     this.dayInfoFetchedDataArray = resData;
 
@@ -67,7 +67,16 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
-    this.http.get('https://localhost:44396/api/getdays').subscribe(response => {
+    this.user = this.authService.user;
+    const headerDict = {
+      'token': this.user.token,
+    }
+    
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+    };
+
+    this.http.get('https://localhost:44396/api/getdays', requestOptions).subscribe(response => {
       console.log(response);
     });
 
@@ -102,9 +111,5 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   showEverything() {
     // SORRY - TOO MANY READS
-  }
-
-  getPabloDays() {
-
   }
 }
