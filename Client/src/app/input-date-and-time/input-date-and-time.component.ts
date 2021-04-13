@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DataService } from '../shared/data/data.service';
@@ -163,7 +163,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
     else {
       let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post('https://localhost:44396/api/afternoondata', postData).subscribe();
+      this.http.post('https://localhost:44396/api/savedays', postData).subscribe();
     }
   }
 

@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { User } from 'Models/user.model';
@@ -27,42 +28,49 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   dayInfoArrayToShow = new Array<DayInfo>();
 
-  constructor(private fetchingDataService: FetchingDataService, private authService: AuthService) { }
+  constructor(private fetchingDataService: FetchingDataService, private authService: AuthService, private http: HttpClient) { }
 
   dayRequired: string = '';
 
-  ngOnInit(): void {
-    //persistance storage to do
-    // or create a button - otherwise you will have milion reads if someone will refresh the page few times
-    this.user = this.authService.user;
-    this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
-      this.dayInfoFetchedDataArray = resData;
+  // ngOnInit(): void {
+  //   //persistance storage to do
+  //   // or create a button - otherwise you will have milion reads if someone will refresh the page few times
+  //   this.user = this.authService.user;
+  //   this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
+  //     this.dayInfoFetchedDataArray = resData;
 
-      // I want to specify lenght of the array in here, to avoid outOfScope error. I think it will be improved in the future.
-      this.dayInfoFetchedDataArray.forEach(() => {
-        this.dayInfoArray.push(this.dayInfo);
-      });
+  //     // I want to specify lenght of the array in here, to avoid outOfScope error. I think it will be improved in the future.
+  //     this.dayInfoFetchedDataArray.forEach(() => {
+  //       this.dayInfoArray.push(this.dayInfo);
+  //     });
 
-      this.dayInfoArray = this.fetchingDataService.convertFetchedDataArrayToDayInfoArray(this.dayInfoFetchedDataArray);
+  //     this.dayInfoArray = this.fetchingDataService.convertFetchedDataArrayToDayInfoArray(this.dayInfoFetchedDataArray);
 
-      //remember to fix c# backend to add additional 0 for one-digit days
-      this.dayInfoArray.sort((n1, n2) => {
-        if (n1.DocId < n2.DocId) {
-          return 1;
-        }
+  //     //remember to fix c# backend to add additional 0 for one-digit days
+  //     this.dayInfoArray.sort((n1, n2) => {
+  //       if (n1.DocId < n2.DocId) {
+  //         return 1;
+  //       }
 
-        if (n1.DocId > n2.DocId) {
-          return -1;
-        }
-        return 0;
-      });
-      this.dayInfoArrayToShow = this.dayInfoArray;
-      if (this.firstFetch) {
-        this.showWeekBackOnly();
-        this.firstFetch = false;
-      }
-    })
-    this.getCollectionOfDays();
+  //       if (n1.DocId > n2.DocId) {
+  //         return -1;
+  //       }
+  //       return 0;
+  //     });
+  //     this.dayInfoArrayToShow = this.dayInfoArray;
+  //     if (this.firstFetch) {
+  //       this.showWeekBackOnly();
+  //       this.firstFetch = false;
+  //     }
+  //   })
+  //   this.getCollectionOfDays();
+  // }
+
+  ngOnInit() {
+    this.http.get('https://localhost:44396/api/getdays').subscribe(response => {
+      console.log(response);
+    });
+
   }
 
   getCollectionOfDays() {
@@ -94,5 +102,9 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   showEverything() {
     // SORRY - TOO MANY READS
+  }
+
+  getPabloDays() {
+
   }
 }
