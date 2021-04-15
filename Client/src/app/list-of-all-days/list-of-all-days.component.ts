@@ -1,11 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { User } from 'Models/user.model';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { DayInfo } from '../../../Models/DayInfo';
-import { AuthService } from '../authentication/authentication-service';
-import { FetchedData, FetchingDataService } from '../shared/fetchingData.service';
+import { FetchingDataService } from '../shared/fetchingData.service';
 
 @Injectable()
 export class ConfigService {
@@ -18,81 +16,34 @@ export class ConfigService {
 })
 
 export class ListOfAllDaysComponent implements OnInit, OnDestroy {
-  user: User = new User();
-  firstFetch: boolean = true;
-  fetchingObs = new Subscription();
-  dayInfo: DayInfo = new DayInfo();
-  dayInfoFetchedDataArray: Array<FetchedData> = new Array<FetchedData>();
 
-  dayInfoArray = new Array<DayInfo>();
+  dayInfoArray: Array<DayInfo>;
+  dayInfoArrayToShow: Array<DayInfo>;
 
-  dayInfoArrayToShow = new Array<DayInfo>();
+  dayInfoArraySubscribtion: Subscription = new Subscription();
 
-  constructor(private fetchingDataService: FetchingDataService, private authService: AuthService, private http: HttpClient) { }
-
-  dayRequired: string = '';
-
-  // ngOnInit(): void {
-  //   //persistance storage to do
-  //   // or create a button - otherwise you will have milion reads if someone will refresh the page few times
-  //   
-  //   this.fetchingObs = this.fetchingDataService.dayInfoArraySub.subscribe(resData => {
-  //     this.dayInfoFetchedDataArray = resData;
-
-  //     // I want to specify lenght of the array in here, to avoid outOfScope error. I think it will be improved in the future.
-  //     this.dayInfoFetchedDataArray.forEach(() => {
-  //       this.dayInfoArray.push(this.dayInfo);
-  //     });
-
-  //     this.dayInfoArray = this.fetchingDataService.convertFetchedDataArrayToDayInfoArray(this.dayInfoFetchedDataArray);
-
-  //     //remember to fix c# backend to add additional 0 for one-digit days
-  //     this.dayInfoArray.sort((n1, n2) => {
-  //       if (n1.DocId < n2.DocId) {
-  //         return 1;
-  //       }
-
-  //       if (n1.DocId > n2.DocId) {
-  //         return -1;
-  //       }
-  //       return 0;
-  //     });
-  //     this.dayInfoArrayToShow = this.dayInfoArray;
-  //     if (this.firstFetch) {
-  //       this.showWeekBackOnly();
-  //       this.firstFetch = false;
-  //     }
-  //   })
-  //   this.getCollectionOfDays();
-  // }
+  constructor(private fetchingDataService: FetchingDataService) { }
 
   ngOnInit() {
-    this.user = this.authService.user;
-    const headerDict = {
-      'token': this.user.token,
-    }
-    
-    const requestOptions = {                                                                                                                                                                                 
-      headers: new HttpHeaders(headerDict), 
-    };
-
-    this.http.get('https://localhost:44396/api/getdays', requestOptions).subscribe(response => {
-      console.log(response);
-    });
-
-  }
-
-  getCollectionOfDays() {
-    if (!(this.user.email == 'notValid')) {
-      this.fetchingDataService.getFetchedDataArrayFromCollection(`users/${this.user.id}/savedDays`);
+    if (this.fetchingDataService.dayInfoArray.length == 0) {
+      this.dayInfoArraySubscribtion = this.fetchingDataService.dayInfoSub.subscribe(resData => {
+        this.dayInfoArray = resData;
+        this.dayInfoArrayToShow = resData;
+        this.showMonthBackOnly();
+      });
+      this.fetchingDataService.getUserSavedDays();
     }
     else {
-      console.log("no User logged in");
+      this.dayInfoArray = this.fetchingDataService.dayInfoArray;
+      this.dayInfoArrayToShow = this.fetchingDataService.dayInfoArray;
+      this.showMonthBackOnly();
     }
-  }
 
+  }
   ngOnDestroy() {
-    this.fetchingObs.unsubscribe();
+    console.log(this.dayInfoArraySubscribtion);
+    this.dayInfoArraySubscribtion.unsubscribe();
+    console.log(this.dayInfoArraySubscribtion);
   }
 
   showWeekBackOnly() {
@@ -107,6 +58,12 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
     if (this.dayInfoArrayToShow.length > 28) {
       this.dayInfoArrayToShow = this.dayInfoArray.slice(0, 28);
     }
+  }
+
+  onRefresh() {
+    this.fetchingDataService.isRefreshed = true;
+    this.fetchingDataService.getUserSavedDays();
+    this.fetchingDataService.isRefreshed = false;
   }
 
   showEverything() {

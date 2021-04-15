@@ -8,7 +8,7 @@ export class DayInfo {
   Month: number;
   Year: number;
   AddAfternoonTime: boolean;
-  DocId?: any;
+  DocId?: string;
 
   constructor() {
     this.TimeOfStart = 0;
@@ -20,6 +20,7 @@ export class DayInfo {
     this.Month = 2000;
     this.Year = 2000;
     this.AddAfternoonTime = false;
+    this.DocId = "notValid";
   }
   getDayOfWeekInPolish(d: number): string {
     switch (d) {

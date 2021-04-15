@@ -1,77 +1,54 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
 import { DayInfo } from "Models/DayInfo";
+import { User } from "Models/user.model";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
-
-export interface FetchedData {
-    timeOfStart: number;
-    timeOfFinish: number;
-    timeOfStart2: number;
-    timeOfFinish2: number;
-    dayOfWeek: number;
-    day: number;
-    month: number;
-    year: number;
-    addAfternoonTime: boolean;
-    docId: string;
-}
+import { AuthService } from "../authentication/authentication-service";
 
 @Injectable({ providedIn: 'root' })
 export class FetchingDataService {
-    constructor(private db: AngularFirestore) { }
-    anyData: any;
+    constructor(private http: HttpClient, private authService: AuthService) { }
+
+    user: User = new User();
+    public isRefreshed = false;
+
+    dayInfoSub = new Subject<Array<DayInfo>>();
+    dayInfoToShowSub = new Subject<Array<DayInfo>>();
+
     dayInfoArray = new Array<DayInfo>();
-    dayInfoFetchedDataArray: Array<FetchedData> = new Array<FetchedData>();
-    dayInfoArraySub: Subject<Array<FetchedData>> = new Subject();
-    dayInfosample = new DayInfo();
 
-    getCollectionDataSnapshot(path: string) {
-        return this.db.collection(path).snapshotChanges();
-    }
+    getUserSavedDays() {
+        //make the same validation for backend
+        if (this.isRefreshed || (this.dayInfoArray.length == 0)) {
+            this.user = this.authService.user;
+            const headerDict = {
+                'token': this.user.token,
+            }
 
-    getFetchedDataArrayFromCollection(pathToCollection: string) {
-        this.getCollectionDataSnapshot(pathToCollection).pipe(take(1)).subscribe(data => {
-            this.anyData = data.map(e => {
-                return {
-                    docId: e.payload.doc['id'],
-                    timeOfStart: e.payload.doc.data()['timeOfStart'],
-                    timeOfStart2: e.payload.doc.data()['timeOfStart2'],
-                    timeOfFinish: e.payload.doc.data()['timeOfFinish'],
-                    timeOfFinish2: e.payload.doc.data()['timeOfFinish2'],
-                    day: e.payload.doc.data()['day'],
-                    dayOfWeek: e.payload.doc.data()['dayOfWeek'],
-                    month: e.payload.doc.data()['month'],
-                    year: e.payload.doc.data()['year'],
-                    addAfternoonTime: e.payload.doc.data()['addAfternoonTime']
-                };
-            })
-            let x = 0;
-            this.anyData.forEach(element => {
-                this.dayInfoFetchedDataArray[x] = element;
-                x++;
-            })
-            this.dayInfoArraySub.next(this.dayInfoFetchedDataArray);
-        });
+            const requestOptions = {
+                headers: new HttpHeaders(headerDict),
+            };
 
-    }
-
-    convertFetchedDataArrayToDayInfoArray(array: Array<FetchedData>): Array<DayInfo> {
-        let dayInfoArray: Array<DayInfo> = new Array<DayInfo>();
-        array.forEach(element => {
-            let dayInfoHolder = new DayInfo();
-            dayInfoHolder.AddAfternoonTime = element.addAfternoonTime;
-            dayInfoHolder.TimeOfStart = element.timeOfStart;
-            dayInfoHolder.TimeOfFinish = element.timeOfFinish;
-            dayInfoHolder.Day = element.day;
-            dayInfoHolder.DayOfWeek = element.dayOfWeek;
-            dayInfoHolder.Month = element.month;
-            dayInfoHolder.Year = element.year;
-            dayInfoHolder.TimeOfStart2 = element.timeOfStart2;
-            dayInfoHolder.TimeOfFinish2 = element.timeOfFinish2;
-            dayInfoHolder.DocId = element.docId;
-            dayInfoArray.push(dayInfoHolder);
-        })
-        return dayInfoArray;
+            this.http.get<Array<object>>('https://localhost:44396/api/getdays', requestOptions).pipe(take(1)).subscribe(response => {
+                let dayInfoArrayHolder = new Array<DayInfo>();
+                response.forEach(element => {
+                    let dayInfo = new DayInfo();
+                    dayInfo.DocId = element['docId'];
+                    dayInfo.TimeOfStart = element['timeOfStart'];
+                    dayInfo.TimeOfStart2 = element['timeOfStart2'];
+                    dayInfo.TimeOfFinish = element['timeOfFinish'];
+                    dayInfo.TimeOfFinish2 = element['timeOfFinish2'];
+                    dayInfo.Day = element['day'];
+                    dayInfo.DayOfWeek = element['dayOfWeek'];
+                    dayInfo.Month = element['month'];
+                    dayInfo.Year = element['year'];
+                    dayInfo.AddAfternoonTime = element['addAfternoonTime'];
+                    dayInfoArrayHolder.push(dayInfo);
+                });
+                this.dayInfoArray = dayInfoArrayHolder;
+                this.dayInfoSub.next(this.dayInfoArray);
+            });
+        }
     }
 }
