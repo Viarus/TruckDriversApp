@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { FetchingDataService } from '../shared/fetchingData.service';
 
@@ -17,6 +16,8 @@ export class ConfigService {
 
 export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
+  isLoading = false;
+
   dayInfoArray: Array<DayInfo>;
   dayInfoArrayToShow: Array<DayInfo>;
 
@@ -26,11 +27,17 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.fetchingDataService.dayInfoArray.length == 0) {
+      this.isLoading = true;
       this.dayInfoArraySubscribtion = this.fetchingDataService.dayInfoSub.subscribe(resData => {
         this.dayInfoArray = resData;
         this.dayInfoArrayToShow = resData;
         this.showMonthBackOnly();
-      });
+        this.isLoading = false;
+      },
+        error => {
+          console.log(error);
+          this.isLoading = false;
+        });
       this.fetchingDataService.getUserSavedDays();
     }
     else {

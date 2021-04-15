@@ -165,7 +165,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
     else {
       let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post(this.secretConstants.pathToSavingDataApi, postData).subscribe();
+      this.http.post(this.secretConstants.pathToDaysApi, postData).subscribe();
     }
   }
 

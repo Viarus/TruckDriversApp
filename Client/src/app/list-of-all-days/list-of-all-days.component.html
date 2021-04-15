@@ -19,6 +19,7 @@
                     <th scope="col">{{'timeOfFinish' | translate}}</th>
                 </tr>
             </thead>
+            
 
             <tbody>
                 <tr scope="row" *ngFor="let info of dayInfoArrayToShow">
@@ -31,5 +32,9 @@
                 </tr>
             </tbody>
         </table>
+        
     </div>
+    <div *ngIf="isLoading" style="text-align: center;">
+        <app-loading-circle></app-loading-circle>
+      </div>
 </div>

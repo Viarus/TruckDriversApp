@@ -32,7 +32,7 @@ export class FetchingDataService {
                 headers: new HttpHeaders(headerDict),
             };
 
-            this.http.get<Array<object>>(this.secretConstants.pathToGetDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
+            this.http.get<Array<object>>(this.secretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
                 let dayInfoArrayHolder = new Array<DayInfo>();
                 response.forEach(element => {
                     let dayInfo = new DayInfo();
