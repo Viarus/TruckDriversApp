@@ -7,22 +7,25 @@
 <div *ngIf="!isLoading">
   <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
     <div class="form-group">
-      <label for="email">E-Mail</label>
+      <label for="email">{{'email' | translate}}</label>
       <input type="email" id="email" class="form-control" ngModel name="email" required email>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
+      <label for="password">{{'password' | translate}}</label>
       <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6">
     </div>
     <div>
-      <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{isLoginMode ? 'Zaloguj się' :
-        'Zarejestruj się'}}</button>
+      <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid" *ngIf="isLoginMode">{{'login' | translate}}</button>
+      <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid" *ngIf="!isLoginMode">{{'register' | translate}}</button>
     </div>
     <div>
       <br />
-      <h2>{{isLoginMode ? 'Nie masz konta? Dołącz do nas!' : 'Masz już konto? Zaloguj się!'}}</h2>
-      <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button">{{isLoginMode ? 'Rejestracja' :
-        'Logowanie'}}</button>
+      <h2 *ngIf="isLoginMode">{{'createAnAccount' | translate}}</h2>
+      <h2 *ngIf="!isLoginMode">{{'alreadyHaveAccount' | translate}}</h2>
+      <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button" *ngIf="!isLoginMode">{{'login' |
+        translate}}</button>
+      <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button" *ngIf="isLoginMode">{{'register' |
+        translate}}</button>
     </div>
   </form>
 </div>

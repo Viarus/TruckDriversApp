@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
         <div class="col-sm mx-auto">
-            <button type="button" class="btn btn-primary margin-right" (click)="showWeekBackOnly()">Ostatni tydzień</button>
-            <button type="button" class="btn btn-primary margin-right" (click)="showMonthBackOnly()">Ostatnie 4 tygodnie</button>
-            <button type="button" class="btn btn-primary margin-right" (click)="onRefresh()">Odśwież</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showWeekBackOnly()">{{'lastWeek' | translate}}</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showMonthBackOnly()">{{'last4Weeks' | translate}}</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="onRefresh()">{{'refresh' | translate}}</button>
         </div>
     </div>
     <hr />
@@ -11,12 +11,12 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Data:</th>
-                    <th scope="col">Dzień tygodnia:</th>
-                    <th scope="col">Czas pracy od:</th>
-                    <th scope="col">Czas pracy do:</th>
-                    <th scope="col">Czas pracy od:</th>
-                    <th scope="col">Czas pracy do:</th>
+                    <th scope="col">{{'date' | translate}}</th>
+                    <th scope="col">{{'dayOfWeek' | translate}}</th>
+                    <th scope="col">{{'timeOfStart' | translate}}</th>
+                    <th scope="col">{{'timeOfFinish' | translate}}</th>
+                    <th scope="col">{{'timeOfStartAfterBreak' | translate}}</th>
+                    <th scope="col">{{'timeOfFinish' | translate}}</th>
                 </tr>
             </thead>
 

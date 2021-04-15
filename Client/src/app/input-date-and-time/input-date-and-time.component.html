@@ -1,16 +1,15 @@
 <div class="container">
   <div class="row">
     <div class="col-sm mx-auto">
-      <h1 class="top-text" id="left-top">Wybierz dzień roboczy:</h1>
+      <h1 class="top-text" id="left-top">{{'chooseWorkingDay' | translate}}</h1>
       <app-date-picker (eventHandler)="saveDate($event)" id="date-picker"></app-date-picker>
       <hr>
-      <button type="button" class="btn btn-primary center-button" (click)="setToday()">Dzisiejsza Data</button>
-      <button type="button" class="btn btn-primary center-button-down" (click)="postNewDay()">Aktualizuj/Dodaj
-        Dzień</button>
+      <button type="button" class="btn btn-primary center-button" (click)="setToday()">{{'todayDate' | translate}}</button>
+      <button type="button" class="btn btn-primary center-button-down" (click)="postNewDay()">{{'updateOrAddDay' | translate}}</button>
 
     </div>
     <div class="col-sm mx-auto">
-      <h1 class="top-text">Wprowadź czas pracy (wybranego dnia):</h1>
+      <h1 class="top-text">{{'enterWorkingTimeOfEnteredDay1' | translate}}<br />{{'enterWorkingTimeOfEnteredDay2' | translate}}</h1>
       <app-time-picker (eventHandler)="saveTime($event)" [disableStartTime]="notStartedTodayInput"
         [disableFinishTime]="notFinishedTodayInput"></app-time-picker>
       <div class="row">
@@ -18,7 +17,7 @@
           <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" [(ngModel)]="notStartedTodayInput"
             (change)="onStartedChecked()" [disabled]="notFinishedTodayInput">
           <label class="form-check-label" for="defaultCheck1">
-            Nie rozpocząłem <br /> pracy w tym dniu
+            {{'haveNotStartedToday1' | translate}} <br /> {{'haveNotStartedToday2' | translate}}
           </label>
         </div>
         <div class="col-sm checkbox-2">
@@ -27,7 +26,7 @@
               [(ngModel)]="notFinishedTodayInput" (change)="onFinishedChecked()"
               [disabled]="notStartedTodayInput || showNewTimeRange">
             <label class="form-check-label" for="defaultCheck2">
-              Nie zakończyłem pracy w tym dniu
+              {{'haveNotFinishedToday' | translate}}
             </label>
           </div>
         </div>
@@ -35,9 +34,9 @@
 
       <div class="row" *ngIf="showNewTimeRangeButton">
         <button class="btn btn-success btn-margin-top-bot" (click)="onShowNewTimeRange()"
-          [disabled]="notFinishedTodayInput">Dodaj drugi przedział czasowy*</button>
-        <label class="under-button-label">*Jeżeli skończyłeś pracę rano, <br /> i po pauzie zacząłeś nowy czas pracy
-          <br /> jeszcze tego samego dnia.</label>
+          [disabled]="notFinishedTodayInput">{{'addSecondTimeRange' | translate}}</button>
+        <label class="under-button-label">{{'ifYouFinishedWorkingEarly1' | translate}} <br /> {{'ifYouFinishedWorkingEarly2' | translate}}
+          <br /> {{'ifYouFinishedWorkingEarly3' | translate}}</label>
       </div>
 
       <div class="row new-time-range-div" *ngIf="showNewTimeRange">
@@ -47,7 +46,7 @@
           <div class="col-sm checkbox-1">
             <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" [disabled]="true">
             <label class="form-check-label" for="defaultCheck3">
-              Nie rozpocząłem <br /> pracy w tym dniu
+              {{'haveNotStartedToday1' | translate}} <br /> {{'haveNotStartedToday2' | translate}}
             </label>
           </div>
           <div class="col-sm checkbox-2">
@@ -55,13 +54,12 @@
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck4"
                 [(ngModel)]="notFinishedTodayInput2" (change)="onFinishedChecked2()">
               <label class="form-check-label" for="defaultCheck4">
-                Nie zakończyłem pracy w tym dniu
+                {{'haveNotFinishedToday' | translate}}
               </label>
             </div>
           </div>
         </div>
-        <button class="btn btn-danger btn-margin-top-bot" (click)="onHideNewTimeRange()">Anuluj drugi przedział
-          czasowy</button>
+        <button class="btn btn-danger btn-margin-top-bot" (click)="onHideNewTimeRange()">{{'removeSecondTimeRange' | translate}}</button>
       </div>
     </div>
   </div>
