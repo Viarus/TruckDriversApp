@@ -34,7 +34,7 @@ export class GraphComponent implements DoCheck, OnInit {
     this.timeOfStart2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
     this.timeOfFinishClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
     this.timeOfFinish2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish2);
-    this.dayOfWeek = this.dayInfo.getDayOfWeekInPolish(this.dayInfo.DayOfWeek);
+    this.dayOfWeek = this.dayInfo.getDayOfWeek(this.dayInfo.DayOfWeek);
     this.dateToBeShown = this.dayOfWeek + ': ' + this.dayInfo.getDate(this.dayInfo.Day, this.dayInfo.Month, this.dayInfo.Year)
   }
 

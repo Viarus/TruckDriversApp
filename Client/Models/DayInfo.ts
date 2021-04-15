@@ -22,34 +22,45 @@ export class DayInfo {
     this.AddAfternoonTime = false;
     this.DocId = "notValid";
   }
-  getDayOfWeekInPolish(d: number): string {
+  getDayOfWeek(d: number): string {
+
+    //I think there is a better approach
+    let lang = localStorage.getItem('lang') || 'en';
+    let daysOfWeek = new Array<string>();
+    if (lang == 'en'){
+      daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Please Enter a Day', 'Error'];
+    }
+    else if (lang == 'pl') {
+      daysOfWeek = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela', 'Wprowadź dzień', 'Błąd'];
+    }
+
     switch (d) {
       case 1: {
-        return 'Poniedziałek';
+        return daysOfWeek[0];
       }
       case 2: {
-        return 'Wtorek';
+        return daysOfWeek[1];
       }
       case 3: {
-        return 'Środa';
+        return daysOfWeek[2];
       }
       case 4: {
-        return 'Czwartek';
+        return daysOfWeek[3];
       }
       case 5: {
-        return 'Piątek';
+        return daysOfWeek[4];
       }
       case 6: {
-        return 'Sobota';
+        return daysOfWeek[5];
       }
       case 0: {
-        return 'Niedziela';
+        return daysOfWeek[6];
       }
       case 2000: {
-        return 'Wprowadź dzień';
+        return daysOfWeek[7];
       }
       default: {
-        return 'Błąd';
+        return daysOfWeek[8];
       }
     } 
   }
