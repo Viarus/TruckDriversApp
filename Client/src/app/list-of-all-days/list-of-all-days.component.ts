@@ -21,23 +21,26 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   dayInfoArray: Array<DayInfo>;
   dayInfoArrayToShow: Array<DayInfo>;
 
-  dayInfoArraySubscribtion: Subscription = new Subscription();
+  dayInfoArraySubscription: Subscription = new Subscription();
+  isLoadingSubscription: Subscription = new Subscription();
 
   constructor(private fetchingDataService: FetchingDataService) { }
 
   ngOnInit() {
+    this.isLoadingSubscription = this.fetchingDataService.isLoadingSub.subscribe(resData => {
+      this.isLoading = resData;
+      console.log(this.isLoading);
+    });
+    this.dayInfoArraySubscription = this.fetchingDataService.dayInfoSub.subscribe(resData => {
+      this.dayInfoArray = resData;
+      this.dayInfoArrayToShow = resData;
+      this.showMonthBackOnly();
+    },
+    error => {
+      console.log(error);
+      this.isLoading = false;
+    });
     if (this.fetchingDataService.dayInfoArray.length == 0) {
-      this.isLoading = true;
-      this.dayInfoArraySubscribtion = this.fetchingDataService.dayInfoSub.subscribe(resData => {
-        this.dayInfoArray = resData;
-        this.dayInfoArrayToShow = resData;
-        this.showMonthBackOnly();
-        this.isLoading = false;
-      },
-        error => {
-          console.log(error);
-          this.isLoading = false;
-        });
       this.fetchingDataService.getUserSavedDays();
     }
     else {
@@ -48,7 +51,8 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    this.dayInfoArraySubscribtion.unsubscribe();
+    this.dayInfoArraySubscription.unsubscribe();
+    this.isLoadingSubscription.unsubscribe();
   }
 
   showWeekBackOnly() {
@@ -68,6 +72,5 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.fetchingDataService.isRefreshed = true;
     this.fetchingDataService.getUserSavedDays();
-    this.fetchingDataService.isRefreshed = false;
   }
 }

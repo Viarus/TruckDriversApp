@@ -5,7 +5,6 @@ import { User } from "Models/user.model";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 import { AuthService } from "../authentication/authentication-service";
-import { PublicConstants } from "./public.constants";
 import { SecretConstants } from "./secret.constants";
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +12,10 @@ export class FetchingDataService {
     constructor(private http: HttpClient, private authService: AuthService, private secretConstants: SecretConstants) { }
 
     user: User = new User();
+
     public isRefreshed = false;
+
+    isLoadingSub: Subject<boolean> = new Subject<boolean>();
 
     dayInfoSub = new Subject<Array<DayInfo>>();
     dayInfoToShowSub = new Subject<Array<DayInfo>>();
@@ -31,7 +33,7 @@ export class FetchingDataService {
             const requestOptions = {
                 headers: new HttpHeaders(headerDict),
             };
-
+            this.isLoadingSub.next(true);
             this.http.get<Array<object>>(this.secretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
                 let dayInfoArrayHolder = new Array<DayInfo>();
                 response.forEach(element => {
@@ -52,5 +54,7 @@ export class FetchingDataService {
                 this.dayInfoSub.next(this.dayInfoArray);
             });
         }
+        this.isLoadingSub.next(false);
+        this.isRefreshed = false;
     }
 }
