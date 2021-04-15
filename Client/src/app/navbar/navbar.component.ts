@@ -12,6 +12,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService) { }
 
+  lang;
+
   loadedUser = new User();
 
   private userSub: Subscription = new Subscription();
@@ -19,13 +21,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
 
   ngOnInit(): void {
+    this.lang = localStorage.getItem('lang') || 'en';
     this.loadedUser = this.authService.user;
-      if (this.loadedUser.email == "notValid" || this.loadedUser.token == "notValid" || this.loadedUser.id == "notValid") {
-        this.isAuthenticated = false;
-      }
-      else {
-        this.isAuthenticated = true;
-      }
+    if (this.loadedUser.email == "notValid" || this.loadedUser.token == "notValid" || this.loadedUser.id == "notValid") {
+      this.isAuthenticated = false;
+    }
+    else {
+      this.isAuthenticated = true;
+    }
 
     this.userSub = this.authService.userSub.subscribe(user => {
       if (user.email == "notValid" || user.token == "notValid" || user.id == "notValid") {
@@ -44,6 +47,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  changeLang(lang) {
+    localStorage.setItem("lang", lang);
+    window.location.reload();
   }
 
 }

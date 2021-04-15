@@ -41,9 +41,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    console.log(this.dayInfoArraySubscribtion);
     this.dayInfoArraySubscribtion.unsubscribe();
-    console.log(this.dayInfoArraySubscribtion);
   }
 
   showWeekBackOnly() {
@@ -64,9 +62,5 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
     this.fetchingDataService.isRefreshed = true;
     this.fetchingDataService.getUserSavedDays();
     this.fetchingDataService.isRefreshed = false;
-  }
-
-  showEverything() {
-    // SORRY - TOO MANY READS
   }
 }
