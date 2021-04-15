@@ -14,10 +14,6 @@ export class PublicConstants {
     readonly defaultValueStart1: number = 0;
     readonly defaultValueFinish1: number = 1440;
 
-    readonly pathToSavingDataApi: string = 'https://localhost:44396/api/savedays';
-    readonly pathToGetDaysApi: string = 'https://localhost:44396/api/getdays';
-
-
     readonly monday = this.lang == 'en' ? "Monday" : "Poniedziałek";
     readonly tuesday = this.lang == 'en' ? "Tuesday" : "Wtorek";
     readonly wednesday = this.lang == 'en' ? "Wednesday" : "Środa";

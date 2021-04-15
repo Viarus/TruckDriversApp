@@ -7,6 +7,7 @@ import { AuthService } from '../authentication/authentication-service';
 import { User } from 'Models/user.model';
 import { PostData } from 'Models/PostData';
 import { PublicConstants } from '../shared/public.constants';
+import { SecretConstants } from '../shared/secret.constants';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -14,7 +15,7 @@ import { PublicConstants } from '../shared/public.constants';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants) { }
+  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants, private secretConstants: SecretConstants) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
@@ -164,7 +165,7 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
     else {
       let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post(this.publicConstants.pathToSavingDataApi, postData).subscribe();
+      this.http.post(this.secretConstants.pathToSavingDataApi, postData).subscribe();
     }
   }
 
