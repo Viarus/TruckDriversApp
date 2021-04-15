@@ -6,19 +6,6 @@ import { Subject } from "rxjs";
 
 export class DataService {
     date: Date = new Date();
-        /*newDayInfo: DayInfo = {
-            TimeOfStart: 0,
-            TimeOfFinish: 720,
-            TimeOfStart2: 900,
-            TimeOfFinish2: 1260,
-            AddAfternoonTime: false,
-            Day: this.date.getDate(),
-            DayOfWeek: this.date.getDay(),
-            Month: (this.date.getMonth() + 1),
-            Year: this.date.getFullYear(),
-            getDate: DayInfo.prototype.getDate,
-            getDayOfWeekInPolish: DayInfo.prototype.getDayOfWeekInPolish
-        }; */
     newDayInputEmmiter: Subject<DayInfo> = new Subject<DayInfo>();
 
     newDayInfo: DayInfo = new DayInfo();

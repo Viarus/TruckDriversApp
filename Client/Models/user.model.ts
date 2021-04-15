@@ -4,9 +4,9 @@ export class User {
     public token: string;
     public tokenExpirationDate: Date;
     constructor() { 
-        this.email = "notValid",
-        this.id = "notValid",
-        this.token = "notValid",
+        this.email = "InvalidData",
+        this.id = "InvalidData",
+        this.token = "InvalidData",
         this.tokenExpirationDate = new Date();
     }
     get tokenValid() {

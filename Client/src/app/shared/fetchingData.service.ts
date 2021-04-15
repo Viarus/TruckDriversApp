@@ -5,10 +5,11 @@ import { User } from "Models/user.model";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 import { AuthService } from "../authentication/authentication-service";
+import { PublicConstants } from "./public.constants";
 
 @Injectable({ providedIn: 'root' })
 export class FetchingDataService {
-    constructor(private http: HttpClient, private authService: AuthService) { }
+    constructor(private http: HttpClient, private authService: AuthService, private publicConstants: PublicConstants) { }
 
     user: User = new User();
     public isRefreshed = false;
@@ -30,7 +31,7 @@ export class FetchingDataService {
                 headers: new HttpHeaders(headerDict),
             };
 
-            this.http.get<Array<object>>('https://localhost:44396/api/getdays', requestOptions).pipe(take(1)).subscribe(response => {
+            this.http.get<Array<object>>(this.publicConstants.pathToGetDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
                 let dayInfoArrayHolder = new Array<DayInfo>();
                 response.forEach(element => {
                     let dayInfo = new DayInfo();

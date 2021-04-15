@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'Models/user.model';
 import { Observable, Subscription } from 'rxjs';
+import { PublicConstants } from '../shared/public.constants';
 import { AuthResponseData, AuthService } from './authentication-service';
 
 @Component({
@@ -12,7 +13,7 @@ import { AuthResponseData, AuthService } from './authentication-service';
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private publicConstants: PublicConstants) { }
 
   user = new User();
 
@@ -61,7 +62,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       },
       error => {
         console.log(error);
-        this.error = "Wystąpił błąd!";
+        this.error = this.publicConstants.generalError;
         this.isLoading = false;
       }
     );

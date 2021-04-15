@@ -6,6 +6,7 @@ import { DataService } from '../shared/data/data.service';
 import { AuthService } from '../authentication/authentication-service';
 import { User } from 'Models/user.model';
 import { PostData } from 'Models/PostData';
+import { PublicConstants } from '../shared/public.constants';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -13,7 +14,7 @@ import { PostData } from 'Models/PostData';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService) { }
+  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
@@ -22,8 +23,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
     else {
-      this.newDayInfo.TimeOfStart2 = 2000;
-      this.newDayInfo.TimeOfFinish2 = 2000;
+      this.newDayInfo.TimeOfStart2 = this.publicConstants.defaultValueForTime;
+      this.newDayInfo.TimeOfFinish2 = this.publicConstants.defaultValueForTime;
       this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
   })
@@ -43,11 +44,11 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   notFinishedTodayInput2: boolean = false;
   isDayWorkedTimeCorrect2: boolean = true;
 
-  timeOfStartHolder2: number = 2000;
-  timeOfFinishHolder2: number = 2000;
+  timeOfStartHolder2: number = this.publicConstants.defaultValueForTime;
+  timeOfFinishHolder2: number = this.publicConstants.defaultValueForTime;
 
-  timeOfStartHolder2ForTimePicker = { hour: 2000, minute: 2000 };
-  timeOfFinishHolder2ForTimePicker = { hour: 2000, minute: 2000 };
+  timeOfStartHolder2ForTimePicker = { hour: this.publicConstants.defaultValueForTime, minute: this.publicConstants.defaultValueForTime };
+  timeOfFinishHolder2ForTimePicker = { hour: this.publicConstants.defaultValueForTime, minute: this.publicConstants.defaultValueForTime };
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
@@ -115,8 +116,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       this.newDayInfo.TimeOfStart = 0;
     }
     if (!this.showNewTimeRange) {
-      this.newDayInfo.TimeOfStart2 = 2000;
-      this.newDayInfo.TimeOfFinish2 = 2000;
+      this.newDayInfo.TimeOfStart2 = this.publicConstants.defaultValueForTime;
+      this.newDayInfo.TimeOfFinish2 = this.publicConstants.defaultValueForTime;
       this.newDayInfo.AddAfternoonTime = false;
       this.newDayInfoSubject.next(this.newDayInfo);
     }
@@ -159,11 +160,11 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
 
   postNewDay() {
     if ((this.newDayInfo.TimeOfStart > this.newDayInfo.TimeOfStart2) || (this.newDayInfo.TimeOfStart2 < this.newDayInfo.TimeOfFinish) || ((this.newDayInfo.TimeOfFinish2 - this.newDayInfo.TimeOfStart2) < 0)) {
-      console.log("ERROR - Wrong data entered")
+      console.log(this.publicConstants.wrongDataEnteredError)
     }
     else {
       let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post('https://localhost:44396/api/savedays', postData).subscribe();
+      this.http.post(this.publicConstants.pathToSavingDataApi, postData).subscribe();
     }
   }
 
@@ -177,10 +178,10 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.showNewTimeRangeButton = true;
     this.timeOfStartHolder2 = this.newDayInfo.TimeOfStart2;
     this.timeOfFinishHolder2 = this.newDayInfo.TimeOfFinish2;
-    if (this.timeOfStartHolder2 != 2000) {
+    if (this.timeOfStartHolder2 != this.publicConstants.defaultValueForTime) {
       this.timeOfStartHolder2ForTimePicker = this.toNormalTime(this.timeOfStartHolder2);
     }
-    if (this.timeOfFinishHolder2 != 2000) {
+    if (this.timeOfFinishHolder2 != this.publicConstants.defaultValueForTime) {
       this.timeOfFinishHolder2ForTimePicker = this.toNormalTime(this.timeOfFinishHolder2);
     }
 

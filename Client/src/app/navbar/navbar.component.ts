@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User } from 'Models/user.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../authentication/authentication-service';
+import { PublicConstants } from '../shared/public.constants';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ import { AuthService } from '../authentication/authentication-service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private publicConstants: PublicConstants) { }
 
   lang;
 
@@ -23,7 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'en';
     this.loadedUser = this.authService.user;
-    if (this.loadedUser.email == "notValid" || this.loadedUser.token == "notValid" || this.loadedUser.id == "notValid") {
+    if (this.loadedUser.email == this.publicConstants.defaultInvalid || this.loadedUser.token == this.publicConstants.defaultInvalid || this.loadedUser.id == this.publicConstants.defaultInvalid) {
       this.isAuthenticated = false;
     }
     else {
@@ -31,7 +32,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     this.userSub = this.authService.userSub.subscribe(user => {
-      if (user.email == "notValid" || user.token == "notValid" || user.id == "notValid") {
+      if (user.email == this.publicConstants.defaultInvalid || user.token == this.publicConstants.defaultInvalid || user.id == this.publicConstants.defaultInvalid) {
         this.isAuthenticated = false;
       }
       else {
