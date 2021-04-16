@@ -31,5 +31,6 @@
     "dayOfWeek": "Day",
     "day": "Day:",
     "resetTimes": "Reset Times",
-    "invalidDataProvided": "Entered Data is Invalid."
+    "invalidDataProvided": "Entered Data is Invalid.",
+    "delete": "Delete"
 }

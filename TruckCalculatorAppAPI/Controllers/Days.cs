@@ -86,7 +86,7 @@ namespace TruckCalculatorAppAPI.Controllers
             User currentUser = new User();
             FirebaseToken decodedToken;
             bool isTokenValid = false;
-            string tokenUid;
+            string tokenUid = "";
 
             FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
             if (firebaseApp == null)
@@ -130,9 +130,43 @@ namespace TruckCalculatorAppAPI.Controllers
         }
 
         // DELETE api/<Days>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async void Delete()
         {
+            string userToken = Request.Headers["token"];
+            string docId = Request.Headers["docId"];
+
+            FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+            FirebaseToken decodedToken;
+            bool isTokenValid = false;
+            string tokenUid = "";
+
+            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+            if (firebaseApp == null)
+            {
+                string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
+                string projectId = TemporarySecretClass.project;
+                firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
+            }
+            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+
+            try
+            {
+                decodedToken = await auth.VerifyIdTokenAsync(userToken);
+                isTokenValid = true;
+                tokenUid = decodedToken.Uid;
+            }
+            catch (Exception e)
+            {
+                isTokenValid = false;
+                Console.WriteLine(e.Message);
+            }
+
+            if (isTokenValid)
+            {
+                DocumentReference savedDayDocPath = db.Document("users/" + tokenUid + "/savedDays/" + docId);
+                await savedDayDocPath.DeleteAsync();
+            }
         }
     }
 }

@@ -31,5 +31,6 @@
     "dayOfWeek": "Dzień Tygodnia",
     "day": "Dzień",
     "resetTimes": "Resetuj czas",
-    "invalidDataProvided": "Nieprawidłowe dane wejściowe."
+    "invalidDataProvided": "Nieprawidłowe dane wejściowe.",
+    "delete": "Usuń"
 }

@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { DayInfo } from '../../../Models/DayInfo';
+import { DeletingDataService } from '../shared/deletingData.service';
 import { FetchingDataService } from '../shared/fetchingData.service';
 
 @Injectable()
@@ -18,13 +20,15 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   isLoading = false;
 
+  refreshButtonDisabled = false;
+
   dayInfoArray: Array<DayInfo>;
   dayInfoArrayToShow: Array<DayInfo>;
 
   dayInfoArraySubscription: Subscription = new Subscription();
   isLoadingSubscription: Subscription = new Subscription();
 
-  constructor(private fetchingDataService: FetchingDataService) { }
+  constructor(private fetchingDataService: FetchingDataService, private deleteData: DeletingDataService) { }
 
   ngOnInit() {
     this.isLoadingSubscription = this.fetchingDataService.isLoadingSub.subscribe(resData => {
@@ -72,5 +76,14 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   onRefresh() {
     this.fetchingDataService.isRefreshed = true;
     this.fetchingDataService.getUserSavedDays();
+    this.disableButton();
+  }
+  disableButton(){
+    this.refreshButtonDisabled = true;
+    setTimeout(() => {
+      this.refreshButtonDisabled = false}, 3500);
+  }
+  onDelete(index: number){
+    this.deleteData.onDelete(this.dayInfoArray[index].DocId);    
   }
 }

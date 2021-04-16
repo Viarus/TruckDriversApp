@@ -13,7 +13,6 @@ import { GraphComponent } from './output-data/graph/graph.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { TimePickerSecondComponent } from './input-date-and-time/time-picker-second/time-picker-second.component';
-import { SummaryOfTheDayComponent } from './input-date-and-time/summary-of-the-day/summary-of-the-day.component';
 import { ListOfAllDaysComponent } from './list-of-all-days/list-of-all-days.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { LoadingCircleComponent } from './shared/loading-circle/loading-circle/loading-circle.component';
@@ -55,7 +54,6 @@ const appRoutes: Routes = [
     OutputDataComponent,
     GraphComponent,
     TimePickerSecondComponent,
-    SummaryOfTheDayComponent,
     ListOfAllDaysComponent,
     AuthenticationComponent,
     LoadingCircleComponent,
