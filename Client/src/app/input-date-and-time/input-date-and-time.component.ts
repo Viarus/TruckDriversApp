@@ -1,14 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DataService } from '../shared/data/data.service';
 import { AuthService } from '../authentication/authentication-service';
-import { User } from 'Models/user.model';
-import { PostData } from 'Models/PostData';
 import { PublicConstants } from '../shared/public.constants';
 import { SecretConstants } from '../shared/secret.constants';
 import { ToastrService } from 'ngx-toastr';
+import { PostingDataService } from '../shared/postingData.service';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -16,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants, private secretConstants: SecretConstants, private toastrService: ToastrService) { }
+  constructor(private dataService: DataService, private publicConstants: PublicConstants, private postingDataService: PostingDataService) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
@@ -32,8 +30,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   })
 
   newDayInfo: DayInfo = new DayInfo();
-
-  user: User = new User();
 
   inputedDate: Date = new Date();
 
@@ -58,7 +54,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   ngOnInit() {
     this.newDayInfo = this.getNewDayInfo();
     this.dataService.setTodayDate();
-    this.user = this.authService.user;
   }
 
   ngOnDestroy() {
@@ -161,15 +156,11 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   postNewDay() {
-    if ((this.newDayInfo.TimeOfStart > this.newDayInfo.TimeOfStart2) || (this.newDayInfo.TimeOfStart2 < this.newDayInfo.TimeOfFinish) || ((this.newDayInfo.TimeOfFinish2 - this.newDayInfo.TimeOfStart2) < 0) || (this.newDayInfo.TimeOfStart >= this.newDayInfo.TimeOfFinish)) {
-      this.toastrService.error(this.publicConstants.wrongDataEnteredError);
+    if (!this.showNewTimeRange){
+      this.newDayInfo.TimeOfStart2 = this.publicConstants.defaultValueForTime;
+      this.newDayInfo.TimeOfFinish2 = this.publicConstants.defaultValueForTime;
     }
-    else {
-      let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post(this.secretConstants.pathToDaysApi, postData).subscribe(resData => {
-        this.toastrService.success(this.publicConstants.savingSuccess);
-      });
-    }
+    this.postingDataService.onPost(this.newDayInfo);
   }
 
   onShowNewTimeRange() {
