@@ -2,8 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { User } from "Models/user.model";
+import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
+import { PublicConstants } from "../shared/public.constants";
 import { SecretConstants } from "../shared/secret.constants";
 
 export interface AuthResponseData {
@@ -22,7 +24,7 @@ export class AuthService {
     user = new User();
     private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
     autoLogin() {
         const userData: {
@@ -80,6 +82,8 @@ export class AuthService {
             clearTimeout(this.tokenExpirationTimer);
         }
         this.tokenExpirationTimer = null;
+        //toastr - after you fix relod after logout
+        //this.toastrService.success(this.publicConstants.logoutSuccess);
         window.location.reload();
     }
 

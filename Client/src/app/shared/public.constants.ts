@@ -15,6 +15,9 @@ export class PublicConstants {
     readonly generalError = this.lang == 'en' ? "An error occured" : "Wystąpił błąd";
     readonly wrongDataEnteredError = this.lang == 'en' ? "Wrong Data Entered" : "Wprowadzono złe dane";
     
+    readonly loginSuccess = this.lang == 'en' ? "Logged in" : "Zalogowano pomyślnie";
+    readonly logoutSuccess = this.lang == 'en' ? "Logged out" : "Wylogowano pomyślnie";
+
     readonly savingSuccess = this.lang == 'en' ? "Day has been saved successfully." : "Dzień został zapisany.";
     readonly deleteSuccess = this.lang == 'en' ? "Day has been deleted successfully." : "Dzień został usunięty.";
 

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'Models/user.model';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { PublicConstants } from '../shared/public.constants';
 import { AuthResponseData, AuthService } from './authentication-service';
@@ -13,7 +14,7 @@ import { AuthResponseData, AuthService } from './authentication-service';
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private router: Router, private publicConstants: PublicConstants) { }
+  constructor(private authService: AuthService, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
   user = new User();
 
@@ -32,7 +33,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
   isLoginMode: boolean = true;
   isLoading: boolean = false;
-  error: string = null;
 
   SwitchLoginMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -56,14 +56,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     }
     this.authObsSubs = authObs.subscribe(
       resData => {
-        this.error = null;
         this.isLoading = false;
-        this.router.navigate(['/input'])
+        this.router.navigate(['/input']);
+        this.toastrService.success(this.publicConstants.loginSuccess);
       },
       error => {
-        console.log(error);
-        this.error = this.publicConstants.generalError;
         this.isLoading = false;
+        this.toastrService.error(this.publicConstants.wrongDataEnteredError);
       }
     );
     form.reset();
