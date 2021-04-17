@@ -8,6 +8,7 @@ import { User } from 'Models/user.model';
 import { PostData } from 'Models/PostData';
 import { PublicConstants } from '../shared/public.constants';
 import { SecretConstants } from '../shared/secret.constants';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-input-date-and-time',
@@ -15,7 +16,7 @@ import { SecretConstants } from '../shared/secret.constants';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants, private secretConstants: SecretConstants) { }
+  constructor(private http: HttpClient, private dataService: DataService, private authService: AuthService, private publicConstants: PublicConstants, private secretConstants: SecretConstants, private toastrService: ToastrService) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
@@ -160,12 +161,14 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   postNewDay() {
-    if ((this.newDayInfo.TimeOfStart > this.newDayInfo.TimeOfStart2) || (this.newDayInfo.TimeOfStart2 < this.newDayInfo.TimeOfFinish) || ((this.newDayInfo.TimeOfFinish2 - this.newDayInfo.TimeOfStart2) < 0)) {
-      console.log(this.publicConstants.wrongDataEnteredError)
+    if ((this.newDayInfo.TimeOfStart > this.newDayInfo.TimeOfStart2) || (this.newDayInfo.TimeOfStart2 < this.newDayInfo.TimeOfFinish) || ((this.newDayInfo.TimeOfFinish2 - this.newDayInfo.TimeOfStart2) < 0) || (this.newDayInfo.TimeOfStart >= this.newDayInfo.TimeOfFinish)) {
+      this.toastrService.error(this.publicConstants.wrongDataEnteredError);
     }
     else {
       let postData: PostData = new PostData(this.newDayInfo, this.user.email, this.user.id, this.user.token);
-      this.http.post(this.secretConstants.pathToDaysApi, postData).subscribe();
+      this.http.post(this.secretConstants.pathToDaysApi, postData).subscribe(resData => {
+        this.toastrService.success(this.publicConstants.savingSuccess);
+      });
     }
   }
 

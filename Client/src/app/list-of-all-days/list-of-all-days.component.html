@@ -8,29 +8,29 @@
     </div>
     <hr />
     <div class="row">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-text-algin">
             <thead>
                 <tr>
-                    <th scope="col">{{'date' | translate}}</th>
+                    <th scope="col" class="width-column">{{'date' | translate}}</th>
                     <th scope="col">{{'dayOfWeek' | translate}}</th>
                     <th scope="col">{{'timeOfStart' | translate}}</th>
                     <th scope="col">{{'timeOfFinish' | translate}}</th>
                     <th scope="col">{{'timeOfStartAfterBreak' | translate}}</th>
                     <th scope="col">{{'timeOfFinish' | translate}}</th>
-                    <th scope="col">{{'delete' | translate}}</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             
 
             <tbody>
                 <tr scope="row" *ngFor="let info of dayInfoArrayToShow; let i = index">
-                    <td> {{ info.DocId }} </td>
-                    <td>{{ info.DayOfWeek }}</td>
-                    <td>{{ info.TimeOfStart }}</td>
-                    <td>{{ info.TimeOfFinish }}</td>
-                    <td>{{ info.TimeOfStart2 }}</td>
-                    <td>{{ info.TimeOfFinish2 }}</td>
-                    <td><button type="button" class="btn btn-primary" (click)="onDelete(i)">{{'delete' | translate}}</button></td>
+                    <td class="width-column"> {{ info.DocId }} </td>
+                    <td>{{ info.DayOfWeekString }}</td>
+                    <td>{{ info.TimeOfStartClockLike }}</td>
+                    <td>{{ info.TimeOfFinishClockLike }}</td>
+                    <td>{{ info.TimeOfStart2ClockLike }}</td>
+                    <td>{{ info.TimeOfFinish2ClockLike }}</td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="onDelete(i)">{{'delete' | translate}}</button></td>
                 </tr>
             </tbody>
         </table>

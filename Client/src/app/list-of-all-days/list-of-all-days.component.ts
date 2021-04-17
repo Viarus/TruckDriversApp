@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { DayInfo } from '../../../Models/DayInfo';
 import { DeletingDataService } from '../shared/deletingData.service';
 import { FetchingDataService } from '../shared/fetchingData.service';
+import { ClockTime } from '../../../Models/ClockTime'
 
 @Injectable()
 export class ConfigService {
@@ -22,6 +22,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
   refreshButtonDisabled = false;
 
+  dayInfo = new DayInfo();
   dayInfoArray: Array<DayInfo>;
   dayInfoArrayToShow: Array<DayInfo>;
 
@@ -31,19 +32,37 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   constructor(private fetchingDataService: FetchingDataService, private deleteData: DeletingDataService) { }
 
   ngOnInit() {
+    let clockTime: ClockTime = new ClockTime();
     this.isLoadingSubscription = this.fetchingDataService.isLoadingSub.subscribe(resData => {
       this.isLoading = resData;
       console.log(this.isLoading);
     });
     this.dayInfoArraySubscription = this.fetchingDataService.dayInfoSub.subscribe(resData => {
       this.dayInfoArray = resData;
-      this.dayInfoArrayToShow = resData;
+      this.dayInfoArray.forEach(element => {
+        element.TimeOfStartClockLike = clockTime.showClockLikeFromMinutesOnly(element.TimeOfStart);
+        element.TimeOfFinishClockLike = clockTime.showClockLikeFromMinutesOnly(element.TimeOfFinish);
+        if (element.TimeOfStart2 == 2000) {
+          element.TimeOfStart2ClockLike = "";
+        }
+        else {
+          element.TimeOfStart2ClockLike = clockTime.showClockLikeFromMinutesOnly(element.TimeOfStart2);
+        }
+        if (element.TimeOfFinish2 == 2000) {
+          element.TimeOfFinish2ClockLike = "";
+        }
+        else {
+          element.TimeOfFinish2ClockLike = clockTime.showClockLikeFromMinutesOnly(element.TimeOfFinish2);
+        }
+        element.DayOfWeekString = this.dayInfo.getDayOfWeek(element.DayOfWeek);
+      });
+      this.dayInfoArrayToShow = this.dayInfoArray;
       this.showMonthBackOnly();
     },
-    error => {
-      console.log(error);
-      this.isLoading = false;
-    });
+      error => {
+        console.log(error);
+        this.isLoading = false;
+      });
     if (this.fetchingDataService.dayInfoArray.length == 0) {
       this.fetchingDataService.getUserSavedDays();
     }
@@ -78,12 +97,13 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
     this.fetchingDataService.getUserSavedDays();
     this.disableButton();
   }
-  disableButton(){
+  disableButton() {
     this.refreshButtonDisabled = true;
     setTimeout(() => {
-      this.refreshButtonDisabled = false}, 3500);
+      this.refreshButtonDisabled = false
+    }, 3500);
   }
-  onDelete(index: number){
-    this.deleteData.onDelete(this.dayInfoArray[index].DocId);    
+  onDelete(index: number) {
+    this.deleteData.onDelete(this.dayInfoArray[index].DocId);
   }
 }

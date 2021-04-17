@@ -28,6 +28,8 @@ import { UnAuthGuard } from './authentication/unauthentication.guard';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+import { ToastrModule, ToastrService } from 'ngx-toastr'
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -62,6 +64,10 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2500,
+      positionClass: 'toast-top-center'
+    }),
     MaterialModule,
     NgbModule,
     FormsModule,
@@ -71,13 +77,13 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
-  })
+    })
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, ToastrService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

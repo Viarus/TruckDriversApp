@@ -8,7 +8,13 @@ export class DayInfo {
   Month: number;
   Year: number;
   AddAfternoonTime: boolean;
+
   DocId?: string;
+  TimeOfStartClockLike?: string;
+  TimeOfFinishClockLike?: string;
+  TimeOfStart2ClockLike?: string;
+  TimeOfFinish2ClockLike?: string;
+  DayOfWeekString?: string;
 
   constructor() {
     this.TimeOfStart = 0;

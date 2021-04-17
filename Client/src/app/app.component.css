@@ -1,3 +1,4 @@
+@import '~ngx-toastr/toastr.css';
 .center {
   text-align: center;
 }
