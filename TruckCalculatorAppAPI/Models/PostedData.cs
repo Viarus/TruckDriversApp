@@ -77,5 +77,55 @@ namespace TruckCalculatorAppAPI.Models
             };
             return dayInfo;
         }
+        public bool IsDayInfoValid(PostedData dayInfo)
+        {
+            if ((dayInfo.TimeOfStart >= dayInfo.TimeOfFinish)
+                || (dayInfo.TimeOfStart >= dayInfo.TimeOfStart2)
+                || (dayInfo.TimeOfFinish >= dayInfo.TimeOfStart2)
+                || ((dayInfo.TimeOfStart2 >= dayInfo.TimeOfFinish2)
+                    && ((dayInfo.TimeOfStart2 != 2000)
+                        || (dayInfo.TimeOfFinish2 != 2000)))
+                || (dayInfo.TimeOfStart < 0)
+                || (dayInfo.TimeOfStart >= 1440)
+                || (dayInfo.TimeOfStart2 < 0)
+                || (dayInfo.TimeOfFinish < 0)
+                || (dayInfo.TimeOfFinish > 1440)
+                || (dayInfo.TimeOfFinish2 < 0))
+            {
+                return false;
+            }
+            else if (((dayInfo.TimeOfFinish2 > 1440) && (dayInfo.TimeOfFinish2 != 2000))
+                || ((dayInfo.TimeOfStart2 >= 1440) && (dayInfo.TimeOfStart2 != 2000)))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
+    //    isDayInfoValid(dayInfo: DayInfo) : boolean {
+    //    if ((dayInfo.TimeOfStart >= dayInfo.TimeOfFinish)
+    //        || (dayInfo.TimeOfStart >= dayInfo.TimeOfStart2)
+    //        || (dayInfo.TimeOfFinish >= dayInfo.TimeOfStart2)
+    //        || ((dayInfo.TimeOfStart2 >= dayInfo.TimeOfFinish2)
+    //            && ((dayInfo.TimeOfStart2 !== this.publicConstants.defaultValueForTime)
+    //                || (dayInfo.TimeOfFinish2 !== this.publicConstants.defaultValueForTime)))
+    //        || (dayInfo.TimeOfStart< 0)
+    //        || (dayInfo.TimeOfStart >= 1440)
+    //        || (dayInfo.TimeOfStart2< 0)
+    //        || (dayInfo.TimeOfFinish< 0)
+    //        || (dayInfo.TimeOfFinish > 1440)
+    //        || (dayInfo.TimeOfFinish2< 0)) {
+    //        return false;
+    //    }
+    //    else if (((dayInfo.TimeOfFinish2 > 1440) && (dayInfo.TimeOfFinish2 !== this.publicConstants.defaultValueForTime))
+    //        || ((dayInfo.TimeOfStart2 >= 1440) && (dayInfo.TimeOfStart2 !== this.publicConstants.defaultValueForTime))) {
+    //    return false;
+    //}
+    //    else {
+    //    return true;
+    //}
+    //}
 }

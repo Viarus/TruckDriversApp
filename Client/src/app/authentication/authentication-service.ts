@@ -26,6 +26,18 @@ export class AuthService {
 
     constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
+    isUserValid(user: User): boolean {
+        if ((user.email == this.publicConstants.defaultInvalid) || (user.id == this.publicConstants.defaultInvalid) || (user.token == this.publicConstants.defaultInvalid)) {
+            return false;
+        }
+        else if (!user.tokenValid) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     autoLogin() {
         const userData: {
             email: string;

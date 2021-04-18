@@ -14,7 +14,7 @@ import { PostingDataService } from '../shared/postingData.service';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private dataService: DataService, private publicConstants: PublicConstants, private postingDataService: PostingDataService) { }
+  constructor(private dataService: DataService, private publicConstants: PublicConstants, private postingDataService: PostingDataService, private authService: AuthService, private toastrService: ToastrService) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
@@ -156,11 +156,16 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   postNewDay() {
-    if (!this.showNewTimeRange){
-      this.newDayInfo.TimeOfStart2 = this.publicConstants.defaultValueForTime;
-      this.newDayInfo.TimeOfFinish2 = this.publicConstants.defaultValueForTime;
+    if (this.authService.isUserValid(this.authService.user)){
+      if (!this.showNewTimeRange){
+        this.newDayInfo.TimeOfStart2 = this.publicConstants.defaultValueForTime;
+        this.newDayInfo.TimeOfFinish2 = this.publicConstants.defaultValueForTime;
+      }
+      this.postingDataService.onPost(this.newDayInfo);
     }
-    this.postingDataService.onPost(this.newDayInfo);
+    else{
+      this.toastrService.error(this.publicConstants.needForLogIn);
+    }
   }
 
   onShowNewTimeRange() {

@@ -17,6 +17,7 @@ export class PublicConstants {
     
     readonly loginSuccess = this.lang == 'en' ? "Logged in" : "Zalogowano pomyślnie";
     readonly logoutSuccess = this.lang == 'en' ? "Logged out" : "Wylogowano pomyślnie";
+    readonly needForLogIn = this.lang == 'en' ? 'Please log in first (you can use the "Log In as a Guest" option)' : 'Proszę się zalogować (można użyć opcji "Zaloguj się jako gość")';
 
     readonly savingSuccess = this.lang == 'en' ? "Day has been saved successfully." : "Dzień został zapisany.";
     readonly deleteSuccess = this.lang == 'en' ? "Day has been deleted successfully." : "Dzień został usunięty.";

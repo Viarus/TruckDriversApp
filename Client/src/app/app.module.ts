@@ -65,7 +65,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 2500,
+      timeOut: 4000,
       positionClass: 'toast-top-center'
     }),
     MaterialModule,

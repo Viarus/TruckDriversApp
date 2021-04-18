@@ -15,13 +15,16 @@ namespace TruckCalculatorAppAPI.Controllers
     [ApiController]
     public class Days : ControllerBase
     {
-        // GET: api/<Days>
         [HttpGet]
         public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
         {
             FirebaseToken decodedToken;
             bool isTokenValid = false;
             string userToken = Request.Headers["token"];
+            if (userToken == "InvalidData")
+            {
+                return null;
+            }
             string tokenUid = "notValid";
 
             FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
@@ -68,15 +71,6 @@ namespace TruckCalculatorAppAPI.Controllers
                 return null;
             }
         }
-
-        // GET api/<Days>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<Days>
         [HttpPost]
         public async void Post([FromBody] PostedData value)
         {
@@ -88,84 +82,86 @@ namespace TruckCalculatorAppAPI.Controllers
             bool isTokenValid = false;
             string tokenUid = "";
 
-            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
-            if (firebaseApp == null)
+            if (value.Token != "InvalidData")
             {
-                string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
-                string projectId = TemporarySecretClass.project;
-                firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
-            }
-            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+                FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+                if (firebaseApp == null)
+                {
+                    string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
+                    string projectId = TemporarySecretClass.project;
+                    firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
+                }
+                FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
 
-            try
-            {
-                decodedToken = await auth.VerifyIdTokenAsync(value.Token);
-                isTokenValid = true;
-                tokenUid = decodedToken.Uid;
-            }
-            catch (Exception e)
-            {
-                isTokenValid = false;
-                Console.WriteLine(e.Message);
-            }
+                try
+                {
+                    decodedToken = await auth.VerifyIdTokenAsync(value.Token);
+                    isTokenValid = true;
+                    tokenUid = decodedToken.Uid;
+                }
+                catch (Exception e)
+                {
+                    isTokenValid = false;
+                    Console.WriteLine(e.Message);
+                }
 
-            if (isTokenValid)
-            {
-                postedData = value;
-                dayInfo = postedData.ExtractDayInfo(postedData);
-                currentUser = postedData.ExtractUser(postedData);
+                if (isTokenValid)
+                {
+                    postedData = value;
+                    if (postedData.IsDayInfoValid(postedData))
+                    {
+                        dayInfo = postedData.ExtractDayInfo(postedData);
+                        currentUser = postedData.ExtractUser(postedData);
+                        currentUser.Uid = tokenUid;
 
-                string savedDayDocId = dayInfo.GetFileName(dayInfo);
-                DocumentReference savedDayDocPath = db.Document("users/" + currentUser.Uid + "/savedDays/" + savedDayDocId);
+                        string savedDayDocId = dayInfo.GetFileName(dayInfo);
+                        DocumentReference savedDayDocPath = db.Document("users/" + currentUser.Uid + "/savedDays/" + savedDayDocId);
 
-                Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
-                await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
-            }
+                        Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
+                        await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
+                    }
+                }
+            }            
         }
-
-        // PUT api/<Days>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<Days>/5
         [HttpDelete]
         public async void Delete()
         {
             string userToken = Request.Headers["token"];
             string docId = Request.Headers["docId"];
 
-            FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
-            FirebaseToken decodedToken;
-            bool isTokenValid = false;
-            string tokenUid = "";
+            if (userToken != "InvalidData")
+            {
+                FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+                FirebaseToken decodedToken;
+                bool isTokenValid = false;
+                string tokenUid = "";
 
-            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
-            if (firebaseApp == null)
-            {
-                string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
-                string projectId = TemporarySecretClass.project;
-                firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
-            }
-            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+                FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
+                if (firebaseApp == null)
+                {
+                    string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
+                    string projectId = TemporarySecretClass.project;
+                    firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
+                }
+                FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
 
-            try
-            {
-                decodedToken = await auth.VerifyIdTokenAsync(userToken);
-                isTokenValid = true;
-                tokenUid = decodedToken.Uid;
-            }
-            catch (Exception e)
-            {
-                isTokenValid = false;
-                Console.WriteLine(e.Message);
-            }
+                try
+                {
+                    decodedToken = await auth.VerifyIdTokenAsync(userToken);
+                    isTokenValid = true;
+                    tokenUid = decodedToken.Uid;
+                }
+                catch (Exception e)
+                {
+                    isTokenValid = false;
+                    Console.WriteLine(e.Message);
+                }
 
-            if (isTokenValid)
-            {
-                DocumentReference savedDayDocPath = db.Document("users/" + tokenUid + "/savedDays/" + docId);
-                await savedDayDocPath.DeleteAsync();
+                if (isTokenValid)
+                {
+                    DocumentReference savedDayDocPath = db.Document("users/" + tokenUid + "/savedDays/" + docId);
+                    await savedDayDocPath.DeleteAsync();
+                }
             }
         }
     }
