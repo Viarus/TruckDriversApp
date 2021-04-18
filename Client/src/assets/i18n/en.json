@@ -1,5 +1,6 @@
 {
-    "login": "Log In",
+    "login": "Log In / Register",
+    "loginForm": "Log In",
     "logout": "Log Out",
     "listOfDays": "List of Days",
     "updateOrAddDay": "Update/Add Day",
@@ -34,5 +35,7 @@
     "invalidDataProvided": "Entered Data is Invalid.",
     "delete": "Delete",
     "zeroDaysInfo": "No saved days",
-    "loginAnonymously": "Log In as a Guest"
+    "loginAnonymously": "Log In as a Guest",
+    "guestAccountInfoBox": "Logged in as a guest. You can save and read the saved days, however, after logging out, you will not be able to retrieve them. We recommend setting up an account. As a guest, you can use the website for 12 hours, then the account is deleted along with all saved days.",
+    "closeTheBox": "Close The Box"
 }

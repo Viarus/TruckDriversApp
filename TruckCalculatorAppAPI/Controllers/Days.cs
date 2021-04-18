@@ -57,9 +57,16 @@ namespace TruckCalculatorAppAPI.Controllers
                 QuerySnapshot allDaysQuerySnapshot = await allDaysQuery.GetSnapshotAsync();
                 foreach (DocumentSnapshot documentSnapshot in allDaysQuerySnapshot.Documents)
                 {
-                    Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
-                    fetchedData = fetchedData.ToFetchedData(documentDictionary, documentSnapshot.Id);
-                    allFetchedData.Add(fetchedData);
+                    if (documentSnapshot.Id == "fileCreatedJustForCollection")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
+                        fetchedData = fetchedData.ToFetchedData(documentDictionary, documentSnapshot.Id);
+                        allFetchedData.Add(fetchedData);
+                    }
                 }
                 allFetchedData.Sort((p, q) => q.DocId.CompareTo(p.DocId));
                 FetchedData[] allFetchedDataArray = allFetchedData.ToArray();

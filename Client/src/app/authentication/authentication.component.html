@@ -12,14 +12,14 @@
       <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6">
     </div>
     <div>
-      <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid" *ngIf="isLoginMode">{{'login' | translate}}</button>
+      <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid" *ngIf="isLoginMode">{{'loginForm' | translate}}</button>
       <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid" *ngIf="!isLoginMode">{{'register' | translate}}</button>
     </div>
     <div>
       <br />
       <h2 *ngIf="isLoginMode">{{'createAnAccount' | translate}}</h2>
       <h2 *ngIf="!isLoginMode">{{'alreadyHaveAccount' | translate}}</h2>
-      <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button" *ngIf="!isLoginMode">{{'login' |
+      <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button" *ngIf="!isLoginMode">{{'loginForm' |
         translate}}</button>
       <button class="btn btn-primary" (click)="SwitchLoginMode()" type="button" *ngIf="isLoginMode">{{'register' |
         translate}}</button>

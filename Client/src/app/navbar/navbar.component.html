@@ -16,13 +16,16 @@
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" routerLinkActive='active'>
-        <a class="nav-link" style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogout()">{{'logout' | translate}}</a>
+        <!-- <a class="nav-link" style="cursor: pointer;" *ngIf="isAuthenticated" (click)="onLogout()">{{'logout' | translate}}</a> -->
+        <button (click)="onLogout()" class="btn btn-danger btn-sm button-in-navbar" type="button" *ngIf="isAuthenticated">{{'logout' | translate}}</button>
       </li>
       <li class="nav-item" routerLinkActive='active'>
-        <a class="nav-link" aria-current="page" routerLink="/login" *ngIf="!isAuthenticated">{{'login' | translate}}</a>
+        <button routerLink="/login" class="btn btn-success btn-sm button-in-navbar" type="button" *ngIf="!isAuthenticated">{{'login' | translate}}</button>
+        <!-- <a class="nav-link" aria-current="page" routerLink="/login" *ngIf="!isAuthenticated">{{'login' | translate}}</a> -->
       </li>
       <li class="nav-item" routerLinkActive='active'>
-        <a class="nav-link" aria-current="page" *ngIf="!isAuthenticated" style="cursor: pointer;" (click)="onLoginAnonymously()">{{'loginAnonymously' | translate}}</a>
+        <button class="btn btn-outline-light btn-sm button-in-navbar" type="button" *ngIf="!isAuthenticated" (click)="onLoginAnonymously()">{{'loginAnonymously' | translate}}</button>
+        <!-- <a class="nav-link" aria-current="page" *ngIf="!isAuthenticated" style="cursor: pointer;" (click)="onLoginAnonymously()">{{'loginAnonymously' | translate}}</a> -->
       </li>
       <li class="nav-item select-my">
         <select class="custom-select custom-select-sm" (change)="changeLang($event.target.value)">

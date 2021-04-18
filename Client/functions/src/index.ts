@@ -18,8 +18,15 @@ export const onUserSignup = functions.auth.user().onCreate((user) => {
         .collection("users")
         .doc(user.uid);
 
-    if (user.email == "") {
-        // const dayInMilliseconds = 86400000;
+    if ((user.email == "") || (user.email == null)) {
+         const halfOfDayInMilliseconds = 43200000;
+        pathToUserPrivateInfoDoc.set({
+            email: "guestAccount",
+        });
+        pathToUserSavedDaysCollection.doc("fileCreatedJustForCollection")
+        .set({
+            whyIamHere: "To make sure that the collection is created",
+        });
         setTimeout(() => {
             pathToUserSavedDaysCollection.get()
                 .then((res) => {
@@ -29,7 +36,8 @@ export const onUserSignup = functions.auth.user().onCreate((user) => {
                 });
             pathToUserPrivateInfoDoc.delete();
             pathToUserDoc.delete();
-        }, 60000);
+            admin.auth().deleteUser(user.uid);
+        }, halfOfDayInMilliseconds);
     } else {
         pathToUserPrivateInfoDoc.set({
             email: user.email,

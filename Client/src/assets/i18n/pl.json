@@ -1,5 +1,6 @@
 {
-    "login": "Zaloguj się",
+    "login": "Zaloguj się / Zarejestruj się",
+    "loginForm": "Zaloguj się",
     "logout": "Wyloguj się",
     "listOfDays": "Lista dni",
     "updateOrAddDay": "Aktualizuj/Dodaj Dzień",
@@ -34,5 +35,7 @@
     "invalidDataProvided": "Nieprawidłowe dane wejściowe.",
     "delete": "Usuń",
     "zeroDaysInfo": "Brak zapisanych dni",
-    "loginAnonymously": "Zaloguj jako gość"
+    "loginAnonymously": "Zaloguj jako gość",
+    "guestAccountInfoBox": "Zalogowano jako gość. Można zapisywać i odczytywać zapisane dni, jednakże po wylogowaniu się nie będzie możliwości ich odzyskać. Zalecamy założenie konta. Jako gość można korzystać z serwisu przez 12 godzin, później konto zostaje usunięte wraz ze wszystkimi zapisanymi dniami.",
+    "closeTheBox": "Zamknij okno"
 }

@@ -54,6 +54,8 @@ export class AuthService {
         loadedUser.token = userData.token;
         loadedUser.tokenExpirationDate = new Date(userData.tokenExpirationDate);
         if (loadedUser.tokenValid) {
+            console.log("IN AUTO LOGIN:");
+            console.log(loadedUser.email);
             this.userSub.next(loadedUser);
             this.user = loadedUser;
             const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
@@ -90,8 +92,7 @@ export class AuthService {
             {
                 returnSecureToken: true
             }).pipe(tap(resData => {
-                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
-                console.log(this.user.token);
+                this.handleAuthentication("guestAccount", resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
 

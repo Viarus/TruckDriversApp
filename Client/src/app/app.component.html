@@ -1,8 +1,15 @@
 <app-navbar></app-navbar>
 <div class="container-sm">
+  <div class="row" *ngIf="showGuestInfoBox">
+    <div class="col-2"></div>
+    <div class="col-6 margin-top alert alert-primary" role="alert">
+      <h4>{{'guestAccountInfoBox' | translate}}</h4>
+      <button (click)="onCloseAlert()" class="btn btn-danger btn-sm" type="button">{{'closeTheBox' | translate}}</button>
+    </div>
+  </div>
   <div class="row">
     <div class="col-1"></div>
-    <div class="col-8 margin-top">
+    <div class="col-8" [ngStyle]="{ 'margin-top': marginTopIfNotGuestAccount() }">
       <router-outlet></router-outlet>
     </div>
     <div class="col-1"></div>
