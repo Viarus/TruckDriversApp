@@ -25,14 +25,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.autoLogin();
     this.userSubs = this.authService.userSub.subscribe(resData => {
       let user = resData;
-      console.log('Show me that you love me');
       if (user.email == "guestAccount") {
         this.showGuestInfoBox = true;
       }
     })
     if (this.authService.user.email == "guestAccount"){
       this.showGuestInfoBox = true;
-      console.log('Show me that you love me NO SUB');
     };
   }
   ngOnDestroy() {

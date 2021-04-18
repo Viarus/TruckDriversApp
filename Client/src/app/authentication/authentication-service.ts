@@ -54,8 +54,6 @@ export class AuthService {
         loadedUser.token = userData.token;
         loadedUser.tokenExpirationDate = new Date(userData.tokenExpirationDate);
         if (loadedUser.tokenValid) {
-            console.log("IN AUTO LOGIN:");
-            console.log(loadedUser.email);
             this.userSub.next(loadedUser);
             this.user = loadedUser;
             const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
@@ -87,7 +85,6 @@ export class AuthService {
     }
 
     loginAnonymously() {
-        console.log(this.user.token);
         return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
             {
                 returnSecureToken: true
