@@ -9,7 +9,7 @@ import { PublicConstants } from "../shared/public.constants";
 import { SecretConstants } from "../shared/secret.constants";
 
 export interface AuthResponseData {
-    kind: string;
+    kind?: string;
     idToken: string;
     email: string;
     refreshToken: string;
@@ -81,6 +81,17 @@ export class AuthService {
                 returnSecureToken: true
             }).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+            }));
+    }
+
+    loginAnonymously() {
+        console.log(this.user.token);
+        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
+            {
+                returnSecureToken: true
+            }).pipe(tap(resData => {
+                this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+                console.log(this.user.token);
             }));
     }
 

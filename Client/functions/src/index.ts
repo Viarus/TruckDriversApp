@@ -9,7 +9,31 @@ export const onUserSignup = functions.auth.user().onCreate((user) => {
         .collection("userInfo")
         .doc("userPrivateInfo");
 
-    return pathToUserPrivateInfoDoc.set({
-        email: user.email,
-    });
+    const pathToUserSavedDaysCollection = admin.firestore()
+        .collection("users")
+        .doc(user.uid)
+        .collection("savedDays");
+
+    const pathToUserDoc = admin.firestore()
+        .collection("users")
+        .doc(user.uid);
+
+    if (user.email == "") {
+        // const dayInMilliseconds = 86400000;
+        setTimeout(() => {
+            pathToUserSavedDaysCollection.get()
+                .then((res) => {
+                    res.forEach((element) => {
+                        element.ref.delete();
+                    });
+                });
+            pathToUserPrivateInfoDoc.delete();
+            pathToUserDoc.delete();
+        }, 60000);
+    } else {
+        pathToUserPrivateInfoDoc.set({
+            email: user.email,
+        });
+    }
+    return null;
 });

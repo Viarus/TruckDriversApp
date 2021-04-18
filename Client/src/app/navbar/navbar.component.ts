@@ -54,6 +54,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     localStorage.setItem("lang", lang);
     window.location.reload();
   }
+  onLoginAnonymously(){
+    this.authService.loginAnonymously();
+  }
 
   
 

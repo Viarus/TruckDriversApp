@@ -33,5 +33,6 @@
     "resetTimes": "Resetuj czas",
     "invalidDataProvided": "Nieprawidłowe dane wejściowe.",
     "delete": "Usuń",
-    "zeroDaysInfo": "Brak zapisanych dni"
+    "zeroDaysInfo": "Brak zapisanych dni",
+    "loginAnonymously": "Zaloguj jako gość"
 }

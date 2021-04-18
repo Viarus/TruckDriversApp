@@ -1,6 +1,6 @@
 {
-    "login": "Log in",
-    "logout": "Log out",
+    "login": "Log In",
+    "logout": "Log Out",
     "listOfDays": "List of Days",
     "updateOrAddDay": "Update/Add Day",
     "register": "Register",
@@ -33,5 +33,6 @@
     "resetTimes": "Reset Times",
     "invalidDataProvided": "Entered Data is Invalid.",
     "delete": "Delete",
-    "zeroDaysInfo": "No saved days"
+    "zeroDaysInfo": "No saved days",
+    "loginAnonymously": "Log In as a Guest"
 }
