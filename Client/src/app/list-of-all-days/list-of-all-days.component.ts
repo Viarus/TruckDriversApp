@@ -18,6 +18,8 @@ export class ConfigService {
 
 export class ListOfAllDaysComponent implements OnInit, OnDestroy {
 
+  isZeroDays: boolean = false;
+
   isLoading = false;
 
   refreshButtonDisabled = false;
@@ -58,6 +60,16 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
       });
       this.dayInfoArrayToShow = this.dayInfoArray;
       this.showMonthBackOnly();
+      console.log(this.dayInfoArray);
+      if (typeof this.dayInfoArray == 'undefined') {
+        this.isZeroDays = true;
+      }
+      else if (this.dayInfoArray.length == 0){
+        this.isZeroDays = true;
+      }
+      else {
+        this.isZeroDays = false;
+      }
     },
       error => {
         console.log(error);
@@ -71,7 +83,6 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
       this.dayInfoArrayToShow = this.fetchingDataService.dayInfoArray;
       this.showMonthBackOnly();
     }
-
   }
   ngOnDestroy() {
     this.dayInfoArraySubscription.unsubscribe();

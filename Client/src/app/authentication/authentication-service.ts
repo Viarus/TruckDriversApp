@@ -40,13 +40,12 @@ export class AuthService {
         loadedUser.email = userData.email;
         loadedUser.id = userData.id;
         loadedUser.token = userData.token;
-        loadedUser.tokenExpirationDate = new Date(userData.token);
+        loadedUser.tokenExpirationDate = new Date(userData.tokenExpirationDate);
         if (loadedUser.tokenValid) {
             this.userSub.next(loadedUser);
             this.user = loadedUser;
             const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
-            //something is wrong - need to be fixed
-            //this.autoLogout(expirationDuration);
+            this.autoLogout(expirationDuration);
         }
     }
 
@@ -82,13 +81,16 @@ export class AuthService {
             clearTimeout(this.tokenExpirationTimer);
         }
         this.tokenExpirationTimer = null;
+        console.log("logged Out");
         //toastr - after you fix relod after logout
         //this.toastrService.success(this.publicConstants.logoutSuccess);
         window.location.reload();
     }
 
     autoLogout(expirationDuration: number) {
-        this.tokenExpirationTimer = setTimeout(this.logout, expirationDuration);
+        this.tokenExpirationTimer = setTimeout(resdata => {
+            this.logout();
+        }, expirationDuration);
     }
 
     private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {

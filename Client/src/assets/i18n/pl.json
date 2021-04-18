@@ -32,5 +32,6 @@
     "day": "Dzień",
     "resetTimes": "Resetuj czas",
     "invalidDataProvided": "Nieprawidłowe dane wejściowe.",
-    "delete": "Usuń"
+    "delete": "Usuń",
+    "zeroDaysInfo": "Brak zapisanych dni"
 }

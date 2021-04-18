@@ -1,9 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col-sm mx-auto">
-            <button type="button" class="btn btn-primary margin-right" (click)="showWeekBackOnly()">{{'lastWeek' | translate}}</button>
-            <button type="button" class="btn btn-primary margin-right" (click)="showMonthBackOnly()">{{'last4Weeks' | translate}}</button>
-            <button type="button" class="btn btn-primary margin-right" (click)="onRefresh()" [disabled]="refreshButtonDisabled">{{'refresh' | translate}}</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showWeekBackOnly()">{{'lastWeek' |
+                translate}}</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="showMonthBackOnly()">{{'last4Weeks' |
+                translate}}</button>
+            <button type="button" class="btn btn-primary margin-right" (click)="onRefresh()"
+                [disabled]="refreshButtonDisabled">{{'refresh' | translate}}</button>
         </div>
     </div>
     <hr />
@@ -20,7 +23,7 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-            
+
 
             <tbody>
                 <tr scope="row" *ngFor="let info of dayInfoArrayToShow; let i = index">
@@ -30,13 +33,16 @@
                     <td>{{ info.TimeOfFinishClockLike }}</td>
                     <td>{{ info.TimeOfStart2ClockLike }}</td>
                     <td>{{ info.TimeOfFinish2ClockLike }}</td>
-                    <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="onDelete(i)">{{'delete' | translate}}</button></td>
+                    <td><button type="button" class="btn btn-outline-danger btn-sm" (click)="onDelete(i)">{{'delete' |
+                            translate}}</button></td>
                 </tr>
             </tbody>
         </table>
-        
     </div>
     <div *ngIf="isLoading" style="text-align: center;">
         <app-loading-circle></app-loading-circle>
-      </div>
+    </div>
+    <div *ngIf="isZeroDays" style="text-align: center;">
+        <h2>{{'zeroDaysInfo' | translate}}</h2>
+    </div>
 </div>
