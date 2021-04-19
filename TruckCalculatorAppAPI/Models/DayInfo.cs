@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TruckCalculatorAppAPI.Models
 {
-    public class DataToBePostedAfternoon
+    public class DayInfo
     {
         public int TimeOfStart { get; set; }
         public int TimeOfStart2 { get; set; }
@@ -16,7 +16,7 @@ namespace TruckCalculatorAppAPI.Models
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public DataToBePostedAfternoon()
+        public DayInfo()
         {
             TimeOfStart = 2000;
             TimeOfStart2 = 2000;
@@ -28,7 +28,7 @@ namespace TruckCalculatorAppAPI.Models
             Month = 0;
             Year = 0;
         }
-        public Dictionary<string, object> ConvertToFirestoreObject(DataToBePostedAfternoon value)
+        public Dictionary<string, object> ConvertToFirestoreObject(DayInfo value)
         {
             Dictionary<string, object> dayInfo = new Dictionary<string, object>
             {
@@ -44,7 +44,7 @@ namespace TruckCalculatorAppAPI.Models
             };
             return dayInfo;
         }
-        public string GetFileName(DataToBePostedAfternoon value)
+        public string GetFileName(DayInfo value)
         {
             string dayString;
             string monthString;
@@ -69,6 +69,33 @@ namespace TruckCalculatorAppAPI.Models
 
             string fileTitle = yearString + "-" + monthString + "-" + dayString;
             return fileTitle;
+        }
+        public bool IsDayInfoValid(DayInfo dayInfo)
+        {
+            if ((dayInfo.TimeOfStart >= dayInfo.TimeOfFinish)
+                || (dayInfo.TimeOfStart >= dayInfo.TimeOfStart2)
+                || (dayInfo.TimeOfFinish >= dayInfo.TimeOfStart2)
+                || ((dayInfo.TimeOfStart2 >= dayInfo.TimeOfFinish2)
+                    && ((dayInfo.TimeOfStart2 != 2000)
+                        || (dayInfo.TimeOfFinish2 != 2000)))
+                || (dayInfo.TimeOfStart < 0)
+                || (dayInfo.TimeOfStart >= 1440)
+                || (dayInfo.TimeOfStart2 < 0)
+                || (dayInfo.TimeOfFinish < 0)
+                || (dayInfo.TimeOfFinish > 1440)
+                || (dayInfo.TimeOfFinish2 < 0))
+            {
+                return false;
+            }
+            else if (((dayInfo.TimeOfFinish2 > 1440) && (dayInfo.TimeOfFinish2 != 2000))
+                || ((dayInfo.TimeOfStart2 >= 1440) && (dayInfo.TimeOfStart2 != 2000)))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

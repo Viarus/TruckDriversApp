@@ -82,7 +82,7 @@ namespace TruckCalculatorAppAPI.Controllers
         public async void Post([FromBody] PostedData value)
         {
             FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
-            DataToBePostedAfternoon dayInfo;
+            DayInfo dayInfo;
             PostedData postedData;
             User currentUser = new User();
             FirebaseToken decodedToken;
@@ -115,9 +115,9 @@ namespace TruckCalculatorAppAPI.Controllers
                 if (isTokenValid)
                 {
                     postedData = value;
-                    if (postedData.IsDayInfoValid(postedData))
-                    {
-                        dayInfo = postedData.ExtractDayInfo(postedData);
+                    dayInfo = postedData.ExtractDayInfo(postedData);
+                    if (dayInfo.IsDayInfoValid(dayInfo))
+                    {                        
                         currentUser = postedData.ExtractUser(postedData);
                         currentUser.Uid = tokenUid;
 
