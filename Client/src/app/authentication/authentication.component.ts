@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
-import { PublicConstants } from '../shared/public.constants';
-import { AuthResponseData, AuthService } from './authentication-service';
+import { PublicConstants } from '../shared/constants/public.constants';
+import { AuthResponseData, AuthService } from '../shared/services/authentication-service';
 
 @Component({
   selector: 'app-authentication',

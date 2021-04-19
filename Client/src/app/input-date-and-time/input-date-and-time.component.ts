@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../shared/models/dayInfo.model';
 import { DataService } from '../shared/data/data.service';
-import { AuthService } from '../authentication/authentication-service';
-import { PublicConstants } from '../shared/public.constants';
-import { SecretConstants } from '../shared/secret.constants';
+import { AuthService } from '../shared/services/authentication-service';
+import { PublicConstants } from '../shared/constants/public.constants';
+import { SecretConstants } from '../shared/constants/secret.constants';
 import { ToastrService } from 'ngx-toastr';
-import { PostingDataService } from '../shared/postingData.service';
+import { PostingDataService } from '../shared/services/postingData.service';
 
 @Component({
   selector: 'app-input-date-and-time',

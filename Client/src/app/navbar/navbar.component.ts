@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
-import { AuthResponseData, AuthService } from '../authentication/authentication-service';
-import { PublicConstants } from '../shared/public.constants';
+import { AuthResponseData, AuthService } from '../shared/services/authentication-service';
+import { PublicConstants } from '../shared/constants/public.constants';
 
 @Component({
   selector: 'app-navbar',

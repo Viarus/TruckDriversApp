@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 import { DayInfo } from "src/app/shared/models/dayInfo.model";
 import { PostData } from "src/app/shared/models/postData.model";
 import { ToastrService } from "ngx-toastr";
-import { AuthService } from "../authentication/authentication-service";
-import { PublicConstants } from "./public.constants";
-import { SecretConstants } from "./secret.constants";
+import { AuthService } from "./authentication-service";
+import { PublicConstants } from "../constants/public.constants";
+import { SecretConstants } from "../constants/secret.constants";
 
 @Injectable({ providedIn: 'root' })
 export class PostingDataService {

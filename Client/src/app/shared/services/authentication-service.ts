@@ -5,8 +5,8 @@ import { User } from "src/app/shared/models/user.model";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
-import { PublicConstants } from "../shared/public.constants";
-import { SecretConstants } from "../shared/secret.constants";
+import { PublicConstants } from "../constants/public.constants";
+import { SecretConstants } from "../constants/secret.constants";
 
 export interface AuthResponseData {
     kind?: string;

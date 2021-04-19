@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { User } from "src/app/shared/models/user.model";
 import { Observable } from "rxjs";
 import { take, tap } from "rxjs/operators";
-import { PublicConstants } from "../shared/public.constants";
-import { AuthService } from "./authentication-service";
+import { PublicConstants } from "../shared/constants/public.constants";
+import { AuthService } from "../shared/services/authentication-service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate {

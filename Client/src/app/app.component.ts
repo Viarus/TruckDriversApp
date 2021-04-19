@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { DayInfo } from './shared/models/dayInfo.model';
-import { AuthService } from './authentication/authentication-service';
+import { AuthService } from './shared/services/authentication-service';
 
 
 @Component({

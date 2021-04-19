@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { User } from "src/app/shared/models/user.model";
 import { Observable } from "rxjs";
-import { PublicConstants } from "../shared/public.constants";
-import { AuthService } from "./authentication-service";
+import { PublicConstants } from "../shared/constants/public.constants";
+import { AuthService } from "../shared/services/authentication-service";
 
 @Injectable({ providedIn: "root" })
 export class UnAuthGuard implements CanActivate {

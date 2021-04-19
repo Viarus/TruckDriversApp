@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
-import { PublicConstants } from 'src/app/shared/public.constants';
+import { PublicConstants } from 'src/app/shared/constants/public.constants';
 
 @Component({
   selector: 'app-time-picker-second',

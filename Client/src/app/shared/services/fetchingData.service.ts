@@ -4,8 +4,8 @@ import { DayInfo } from "src/app/shared/models/dayInfo.model";
 import { User } from "src/app/shared/models/user.model";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
-import { AuthService } from "../authentication/authentication-service";
-import { SecretConstants } from "./secret.constants";
+import { AuthService } from "./authentication-service";
+import { SecretConstants } from "../constants/secret.constants";
 
 @Injectable({ providedIn: 'root' })
 export class FetchingDataService {
