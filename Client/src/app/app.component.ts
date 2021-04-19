@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { DayInfo } from '../../Models/DayInfo';
+import { DayInfo } from './shared/models/dayInfo.model';
 import { AuthService } from './authentication/authentication-service';
 
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DayInfo } from "Models/DayInfo";
-import { User } from "Models/user.model";
+import { DayInfo } from "src/app/shared/models/dayInfo.model";
+import { User } from "src/app/shared/models/user.model";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 import { AuthService } from "../authentication/authentication-service";

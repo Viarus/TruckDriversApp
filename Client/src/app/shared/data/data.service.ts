@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DayInfo } from "Models/DayInfo";
+import { DayInfo } from "src/app/shared/models/dayInfo.model";
 import { Subject } from "rxjs";
 
 @Injectable({ providedIn: 'root' })

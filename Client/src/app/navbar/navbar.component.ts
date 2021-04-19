@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'Models/user.model';
+import { User } from 'src/app/shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { AuthResponseData, AuthService } from '../authentication/authentication-service';

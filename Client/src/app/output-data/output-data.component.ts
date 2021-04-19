@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { DayInfo } from '../../../Models/DayInfo';
+import { DayInfo } from '../shared/models/dayInfo.model';
 import { DataService } from '../shared/data/data.service';
 
 @Component({

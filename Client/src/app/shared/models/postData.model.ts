@@ -1,4 +1,4 @@
-import { DayInfo } from "./DayInfo";
+import { DayInfo } from "./dayInfo.model";
 
 export class PostData {
     public TimeOfStart: number;

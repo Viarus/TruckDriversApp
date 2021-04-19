@@ -1,7 +1,7 @@
 import { Component, Input, DoCheck, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
-import { ClockTime } from '../../../../Models/ClockTime';
-import { DayInfo } from '../../../../Models/DayInfo';
+import { ClockTime } from '../../shared/models/clockTime.model';
+import { DayInfo } from '../../shared/models/dayInfo.model';
 
 @Component({
   selector: 'app-graph',

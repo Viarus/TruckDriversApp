@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { User } from "Models/user.model";
+import { User } from "src/app/shared/models/user.model";
 import { Observable } from "rxjs";
 import { take, tap } from "rxjs/operators";
 import { PublicConstants } from "../shared/public.constants";

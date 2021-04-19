@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import { DayInfo } from '../../../Models/DayInfo';
+import { DayInfo } from '../shared/models/dayInfo.model';
 import { DataService } from '../shared/data/data.service';
 import { AuthService } from '../authentication/authentication-service';
 import { PublicConstants } from '../shared/public.constants';

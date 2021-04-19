@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { User } from "Models/user.model";
+import { User } from "src/app/shared/models/user.model";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";

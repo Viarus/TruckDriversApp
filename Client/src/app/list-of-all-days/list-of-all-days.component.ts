@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DayInfo } from '../../../Models/DayInfo';
+import { DayInfo } from '../shared/models/dayInfo.model';
 import { DeletingDataService } from '../shared/deletingData.service';
 import { FetchingDataService } from '../shared/fetchingData.service';
-import { ClockTime } from '../../../Models/ClockTime'
+import { ClockTime } from '../shared/models/clockTime.model'
 
 @Injectable()
 export class ConfigService {

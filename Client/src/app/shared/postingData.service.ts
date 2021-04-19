@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DayInfo } from "Models/DayInfo";
-import { PostData } from "Models/PostData";
+import { DayInfo } from "src/app/shared/models/dayInfo.model";
+import { PostData } from "src/app/shared/models/postData.model";
 import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../authentication/authentication-service";
 import { PublicConstants } from "./public.constants";
