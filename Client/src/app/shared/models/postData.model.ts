@@ -1,20 +1,12 @@
 import { DayInfo } from "./dayInfo.model";
 
-export class PostData {
-    public TimeOfStart: number;
-    public TimeOfFinish: number;
-    public TimeOfStart2: number;
-    public TimeOfFinish2: number;
-    public DayOfWeek: number;
-    public Day: number;
-    public Month: number;
-    public Year: number;
-    public AddAfternoonTime: boolean;
+export class PostData extends DayInfo {
     public Email: string;
     public Uid: string;
     public Token: string;
     
     constructor(dayInfo: DayInfo, email: string, uid: string, token: string) {
+        super();
         this.TimeOfStart = dayInfo.TimeOfStart;
         this.TimeOfStart2 = dayInfo.TimeOfStart2;
         this.TimeOfFinish = dayInfo.TimeOfFinish;
