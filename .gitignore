@@ -338,6 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/TruckCalculatorAppAPI/firebaseCred.json
+/TruckCalculatorAppAPI/truckappCred.json
 /TruckCalculatorAppAPI/Models/TemporarySecretClass.cs
 Client/src/app/shared/secret.constants.ts

@@ -18,8 +18,14 @@ namespace TruckCalculatorAppAPI.Controllers
     public class Days : ControllerBase
     {
         [HttpGet]
-        public async System.Threading.Tasks.Task<FetchedData[]> GetAsync(FireBase fireBase)
+        public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
         {
+            //FirebaseApp.Create(new AppOptions()
+            //{
+            //    Credential = GoogleCredential.GetApplicationDefault(),
+            //});
+
+            FireBase fireBase = new FireBase();
             FirebaseToken decodedToken;
             bool isTokenValid = false;
             string userToken = Request.Headers["token"];
@@ -74,14 +80,27 @@ namespace TruckCalculatorAppAPI.Controllers
             }
         }
         [HttpPost]
-        public async void Post([FromBody] PostedData value, FireBase fireBase)
+        public async void Post([FromBody] PostedData value)
         {
-            FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
+            //FirebaseApp.Create(new AppOptions()
+            //{
+            //    Credential = GoogleCredential.FromFile(PublicConstants.PATH_TO_FIREBASE_CRED_FILE_MAC),
+            //});
+
+            FireBase fireBase = new FireBase();
+
+            FirestoreDb db = fireBase.GetFirestoreDb();
+
             DayInfo dayInfo;
+
             PostedData postedData;
+
             User currentUser = new User();
+
             FirebaseToken decodedToken;
+
             bool isTokenValid = false;
+
             string tokenUid = "";
 
             if (value.Token != "InvalidData")
@@ -119,8 +138,14 @@ namespace TruckCalculatorAppAPI.Controllers
             }            
         }
         [HttpDelete]
-        public async void Delete(FireBase fireBase)
+        public async void Delete()
         {
+            //FirebaseApp.Create(new AppOptions()
+            //{
+            //    Credential = GoogleCredential.GetApplicationDefault(),
+            //});
+
+            FireBase fireBase = new FireBase();
             string userToken = Request.Headers["token"];
             string docId = Request.Headers["docId"];
 

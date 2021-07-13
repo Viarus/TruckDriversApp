@@ -15,5 +15,5 @@ export class SecretConstants {
         measurementId: "G-2P4J278DQ2"
       };
 
-      readonly pathToDaysApi: string = 'https://localhost:44396/api/days';
+      readonly pathToDaysApi: string = 'https://localhost:5001/api/days';
 }
