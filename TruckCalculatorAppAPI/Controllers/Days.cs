@@ -1,6 +1,4 @@
-﻿using FirebaseAdmin;
-using FirebaseAdmin.Auth;
-using Google.Apis.Auth.OAuth2;
+﻿using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,11 +18,6 @@ namespace TruckCalculatorAppAPI.Controllers
         [HttpGet]
         public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
         {
-            //FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = GoogleCredential.GetApplicationDefault(),
-            //});
-
             FireBase fireBase = new FireBase();
             FirebaseToken decodedToken;
             bool isTokenValid = false;
@@ -35,7 +28,7 @@ namespace TruckCalculatorAppAPI.Controllers
             }
             string tokenUid = "notValid";
 
-            FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
+            FirestoreDb db = fireBase.GetFirestoreDb();
             FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
 
             try
@@ -82,11 +75,6 @@ namespace TruckCalculatorAppAPI.Controllers
         [HttpPost]
         public async void Post([FromBody] PostedData value)
         {
-            //FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = GoogleCredential.FromFile(PublicConstants.PATH_TO_FIREBASE_CRED_FILE_MAC),
-            //});
-
             FireBase fireBase = new FireBase();
 
             FirestoreDb db = fireBase.GetFirestoreDb();
@@ -140,18 +128,14 @@ namespace TruckCalculatorAppAPI.Controllers
         [HttpDelete]
         public async void Delete()
         {
-            //FirebaseApp.Create(new AppOptions()
-            //{
-            //    Credential = GoogleCredential.GetApplicationDefault(),
-            //});
-
             FireBase fireBase = new FireBase();
+
             string userToken = Request.Headers["token"];
             string docId = Request.Headers["docId"];
 
             if (userToken != "InvalidData")
             {
-                FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
+                FirestoreDb db = fireBase.GetFirestoreDb();
                 FirebaseToken decodedToken;
                 bool isTokenValid = false;
                 string tokenUid = "";
