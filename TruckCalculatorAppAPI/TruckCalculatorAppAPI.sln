@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TruckCalculatorAppAPI", "TruckCalculatorAppAPI.csproj", "{3B87A1CB-6B00-4198-8986-E6E2515E4307}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B87A1CB-6B00-4198-8986-E6E2515E4307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B87A1CB-6B00-4198-8986-E6E2515E4307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B87A1CB-6B00-4198-8986-E6E2515E4307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B87A1CB-6B00-4198-8986-E6E2515E4307}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1A9927E-4EA5-40F5-A81D-E8C8BC9604FD}
+	EndGlobalSection
+EndGlobal

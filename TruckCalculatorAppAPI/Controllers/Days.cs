@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using TruckCalculatorAppAPI.Models;
+using TruckCalculatorAppAPI.Constants;
+using TruckCalculatorAppAPI.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,7 +18,7 @@ namespace TruckCalculatorAppAPI.Controllers
     public class Days : ControllerBase
     {
         [HttpGet]
-        public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
+        public async System.Threading.Tasks.Task<FetchedData[]> GetAsync(FireBase fireBase)
         {
             FirebaseToken decodedToken;
             bool isTokenValid = false;
@@ -27,15 +29,8 @@ namespace TruckCalculatorAppAPI.Controllers
             }
             string tokenUid = "notValid";
 
-            FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
-            FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
-            if (firebaseApp == null)
-            {
-                string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
-                string projectId = TemporarySecretClass.project;
-                firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
-            }
-            FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+            FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
+            FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
 
             try
             {
@@ -79,9 +74,9 @@ namespace TruckCalculatorAppAPI.Controllers
             }
         }
         [HttpPost]
-        public async void Post([FromBody] PostedData value)
+        public async void Post([FromBody] PostedData value, FireBase fireBase)
         {
-            FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+            FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
             DayInfo dayInfo;
             PostedData postedData;
             User currentUser = new User();
@@ -91,14 +86,7 @@ namespace TruckCalculatorAppAPI.Controllers
 
             if (value.Token != "InvalidData")
             {
-                FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
-                if (firebaseApp == null)
-                {
-                    string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
-                    string projectId = TemporarySecretClass.project;
-                    firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
-                }
-                FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+                FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
 
                 try
                 {
@@ -131,26 +119,19 @@ namespace TruckCalculatorAppAPI.Controllers
             }            
         }
         [HttpDelete]
-        public async void Delete()
+        public async void Delete(FireBase fireBase)
         {
             string userToken = Request.Headers["token"];
             string docId = Request.Headers["docId"];
 
             if (userToken != "InvalidData")
             {
-                FirestoreDb db = FirestoreDb.Create(TemporarySecretClass.project);
+                FirestoreDb db = FirestoreDb.Create(SecretConstants.project);
                 FirebaseToken decodedToken;
                 bool isTokenValid = false;
                 string tokenUid = "";
 
-                FirebaseApp firebaseApp = FirebaseApp.DefaultInstance;
-                if (firebaseApp == null)
-                {
-                    string credentials = @"D:\Projekty PROGRAMOWANIE\Csharp\TruckDriversApp\TruckCalculatorAppAPI\firebaseCred.json";
-                    string projectId = TemporarySecretClass.project;
-                    firebaseApp = FirebaseApp.Create(new AppOptions() { ProjectId = projectId, Credential = GoogleCredential.FromFile(credentials) });
-                }
-                FirebaseAuth auth = FirebaseAuth.GetAuth(firebaseApp);
+                FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
 
                 try
                 {
