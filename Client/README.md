@@ -1,5 +1,15 @@
 # TruckCalculatorApp
 
+# Dependencies
+
+Use `npm install` to install dependencies.
+
+# Install Angular
+
+Use `npm install -g @angular/cli`
+
+# More
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
 ## Development server
