@@ -7,6 +7,7 @@ import { Subject, TimeoutError } from "rxjs";
 import { tap } from "rxjs/operators";
 import { PublicConstants } from "../constants/public.constants";
 import { SecretConstants } from "../constants/secret.constants";
+import { LoginAndSignupRequest } from "../models/authRequests.model";
 
 export interface AuthResponseData {
     kind?: string;
@@ -49,24 +50,16 @@ export class AuthService {
     }
 
     signup(email: string, password: string) {
-        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_SIGNUP_ENDPOINT + SecretConstants.webApiKey,
-            {
-                email: email,
-                password: password,
-                returnSecureToken: true
-            }).pipe(tap(resData => {
+        let signupRequest = new LoginAndSignupRequest(email, password);
+        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_SIGNUP_ENDPOINT + SecretConstants.webApiKey, signupRequest).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
 
 
     login(email: string, password: string) {
-        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_LOGIN_ENDPOINT + SecretConstants.webApiKey,
-            {
-                email: email,
-                password: password,
-                returnSecureToken: true
-            }).pipe(tap(resData => {
+        let loginRequest = new LoginAndSignupRequest(email, password);
+        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_LOGIN_ENDPOINT + SecretConstants.webApiKey, loginRequest).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
