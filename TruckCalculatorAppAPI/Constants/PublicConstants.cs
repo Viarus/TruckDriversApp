@@ -19,6 +19,7 @@ namespace TruckCalculatorAppAPI.Constants
         //RESPONSES MESSAGES
 
         public const string DAY_SAVED_SUCCESSFULLY_MESSAGE = "Day has been saved successfully.";
+        public const string DAY_DELETED_SUCCESSFULLY_MESSAGE = "Day has been deleted successfully.";
 
         //ERRORS/EXCEPTIONS/BAD RESPONSES
         public const string DEFAULT_TOKEN_INVALID_EXCEPTION = "Token is set as a invalid data.";

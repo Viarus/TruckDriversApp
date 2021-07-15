@@ -66,7 +66,7 @@ namespace TruckCalculatorAppAPI.Controllers
                 FirestoreDb db = fireBase.GetFirestoreDb();
                 currentUser = postedData.ExtractUser(postedData);
                 string savedDayDocId = dayInfo.GetFileName(dayInfo);
-                DocumentReference savedDayDocPath = db.Document(fireBase.getPathForSavingDay(tokenUid, savedDayDocId));
+                DocumentReference savedDayDocPath = db.Document(fireBase.getPathToSavedDay(tokenUid, savedDayDocId));
                 Dictionary<string, object> dayInfoFirestoreObject = dayInfo.ConvertToFirestoreObject(dayInfo);
 
                 await savedDayDocPath.SetAsync(dayInfoFirestoreObject);
@@ -77,7 +77,7 @@ namespace TruckCalculatorAppAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync()
         {
-            FireBase fireBase = new FireBase(); //TODO refactor
+            FireBase fireBase = new FireBase();
 
             string token = Request.Headers[PublicConstants.REQUEST_HEADER_TOKEN];
             string docId = Request.Headers[PublicConstants.REQUEST_HEADER_DOC_ID];
@@ -86,7 +86,6 @@ namespace TruckCalculatorAppAPI.Controllers
 
             FirestoreDb db = fireBase.GetFirestoreDb();
             FirebaseToken decodedToken;
-            bool isTokenValid = false;
             string tokenUid = "";
 
             FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
@@ -94,20 +93,16 @@ namespace TruckCalculatorAppAPI.Controllers
             try
             {
                 decodedToken = await auth.VerifyIdTokenAsync(token);
-                isTokenValid = true;
                 tokenUid = decodedToken.Uid;
             }
             catch (Exception e)
             {
-                isTokenValid = false;
-                Console.WriteLine(e.Message);
+                return BadRequest(PublicConstants.TOKEN_INVALID_EXCEPTION);
             }
 
-            if (isTokenValid)
-            {
-                DocumentReference savedDayDocPath = db.Document("users/" + tokenUid + "/savedDays/" + docId);
-                await savedDayDocPath.DeleteAsync();
-            }
+            DocumentReference savedDayDocPath = db.Document(fireBase.getPathToSavedDay(tokenUid, docId));
+            await savedDayDocPath.DeleteAsync();
+            return Ok(PublicConstants.DAY_DELETED_SUCCESSFULLY_MESSAGE);
         }
 
         private bool isUserTokenSetAsInvalidData(string userToken)
