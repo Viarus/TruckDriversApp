@@ -9,6 +9,11 @@ export class PublicConstants {
     readonly defaultValueStart1: number = 0;
     readonly defaultValueFinish1: number = 1440;
 
+    //AUTHENTICATION
+
+    static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guest.com";
+    static readonly LOCAL_STORAGE_USER_DATA = 'userData';
+
     //showable
     lang: string = localStorage.getItem('lang') || 'en';
 

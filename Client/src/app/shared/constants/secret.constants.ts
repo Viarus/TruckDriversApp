@@ -2,6 +2,13 @@ import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })
 export class SecretConstants {
+
+    //PATHS/API ENDPOINTS
+
+    static readonly FIREBASE_SIGNUP_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+    static readonly FIREBASE_LOGIN_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+    static readonly FIREBASE_LOGIN_ANONYM_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+
     static readonly webApiKey:string = "AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA";
 
     static readonly firebaseConfig = {

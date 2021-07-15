@@ -20,6 +20,7 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
+
     userSub = new Subject<User>();
     user = new User();
     private tokenExpirationTimer: any;
@@ -48,7 +49,7 @@ export class AuthService {
     }
 
     signup(email: string, password: string) {
-        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
+        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_SIGNUP_ENDPOINT + SecretConstants.webApiKey,
             {
                 email: email,
                 password: password,
@@ -60,7 +61,7 @@ export class AuthService {
 
 
     login(email: string, password: string) {
-        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + SecretConstants.webApiKey,
+        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_LOGIN_ENDPOINT + SecretConstants.webApiKey,
             {
                 email: email,
                 password: password,
@@ -71,11 +72,11 @@ export class AuthService {
     }
 
     loginAnonymously() {
-        return this.http.post<AuthResponseData>("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + SecretConstants.webApiKey,
+        return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_LOGIN_ANONYM_ENDPOINT + SecretConstants.webApiKey,
             {
                 returnSecureToken: true
             }).pipe(tap(resData => {
-                this.handleAuthentication("guestAccount", resData.localId, resData.idToken, +resData.expiresIn);
+                this.handleAuthentication(PublicConstants.GUEST_ACCOUNT_EMAIL, resData.localId, resData.idToken, +resData.expiresIn);
             }));
     }
 
@@ -100,7 +101,7 @@ export class AuthService {
         }, expirationDuration);
     }
 
-    private handleAuthentication(email: string, userId: string, token: string, expiresIn: number,) {
+    private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
         const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
         var user = new User();
         user.email = email;
@@ -110,17 +111,15 @@ export class AuthService {
         this.autoLogout(expiresIn * 1000);
         this.userSub.next(user);
         this.user = user;
-        localStorage.setItem('userData', JSON.stringify(this.user));
+        localStorage.setItem(PublicConstants.LOCAL_STORAGE_USER_DATA, JSON.stringify(this.user));
     }
 
     private isAutoLoadingLocalStorageEmpty(): boolean{
-        let user: User = JSON.parse(localStorage.getItem('userData'));
+        let user: User = JSON.parse(localStorage.getItem(PublicConstants.LOCAL_STORAGE_USER_DATA));
         if (!user) return true;
         else {
             this.user = user;
             return false;
         }
     }
-
-    private 
 }
