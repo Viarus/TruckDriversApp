@@ -29,5 +29,15 @@ namespace TruckCalculatorAppAPI.Services
             }
             return firebaseApp;
         }
+
+        public string getPathToSavedDays(string tokenUid)
+        {
+            return PublicConstants.PATH_USERS + "/" + tokenUid + "/" + PublicConstants.PATH_SAVED_DAYS;
+        }
+
+        public string getPathForSavingDay(string tokenUid, string savedDayDocId)
+        {
+            return getPathToSavedDays(tokenUid) + "/" + savedDayDocId;
+        }
     }
 }
