@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { User } from "src/app/shared/models/user.model";
 import { ToastrService } from "ngx-toastr";
-import { Subject } from "rxjs";
+import { Subject, TimeoutError } from "rxjs";
 import { tap } from "rxjs/operators";
 import { PublicConstants } from "../constants/public.constants";
 import { SecretConstants } from "../constants/secret.constants";
@@ -39,24 +39,10 @@ export class AuthService {
     }
 
     autoLogin() {
-        const userData: {
-            email: string;
-            id: string;
-            token: string;
-            tokenExpirationDate: string
-        } = JSON.parse(localStorage.getItem('userData'));
-        if (!userData) {
-            return;
-        }
-        let loadedUser = new User();
-        loadedUser.email = userData.email;
-        loadedUser.id = userData.id;
-        loadedUser.token = userData.token;
-        loadedUser.tokenExpirationDate = new Date(userData.tokenExpirationDate);
-        if (loadedUser.tokenValid) {
-            this.userSub.next(loadedUser);
-            this.user = loadedUser;
-            const expirationDuration = new Date(userData.tokenExpirationDate).getTime() - new Date().getTime();
+        if (this.isAutoLoadingLocalStorageEmpty()) return;
+        if (this.user.tokenValid) {
+            this.userSub.next(this.user);
+            const expirationDuration = new Date(this.user.tokenExpirationDate).getTime() - new Date().getTime();
             this.autoLogout(expirationDuration);
         }
     }
@@ -126,4 +112,15 @@ export class AuthService {
         this.user = user;
         localStorage.setItem('userData', JSON.stringify(this.user));
     }
+
+    private isAutoLoadingLocalStorageEmpty(): boolean{
+        let user: User = JSON.parse(localStorage.getItem('userData'));
+        if (!user) return true;
+        else {
+            this.user = user;
+            return false;
+        }
+    }
+
+    private 
 }
