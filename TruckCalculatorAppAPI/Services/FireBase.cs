@@ -3,8 +3,6 @@ using Google.Cloud.Firestore.V1;
 using TruckCalculatorAppAPI.Constants;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
-using System;
-using Google.Api.Gax.Grpc;
 
 namespace TruckCalculatorAppAPI.Services
 {
@@ -16,10 +14,6 @@ namespace TruckCalculatorAppAPI.Services
         {
             CredentialsPath = PublicConstants.PATH_TO_FIREBASE_CRED_FILE_MAC
         }.Build();
-
-        public FireBase()
-        {
-        }
 
         public FirestoreDb GetFirestoreDb()
         {

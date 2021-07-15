@@ -19,17 +19,20 @@ namespace TruckCalculatorAppAPI.Controllers
         public async System.Threading.Tasks.Task<FetchedData[]> GetAsync()
         {
             FireBase fireBase = new FireBase();
+
             FirebaseToken decodedToken;
+
             bool isTokenValid = false;
-            string userToken = Request.Headers["token"];
-            if (userToken == "InvalidData")
-            {
-                return null;
-            }
-            string tokenUid = "notValid";
+            string userToken = Request.Headers[PublicConstants.REQUEST_HEADER_TOKEN];
+            string tokenUid = PublicConstants.DEFAULT_TOKEN_UID_INVALID;
 
             FirestoreDb db = fireBase.GetFirestoreDb();
             FirebaseAuth auth = FirebaseAuth.GetAuth(fireBase.GetFirebaseInstance());
+
+            if (this.isUserTokenSetAsInvalidData(userToken))
+            {
+                return null; //TODO make a response
+            }
 
             try
             {
@@ -160,6 +163,12 @@ namespace TruckCalculatorAppAPI.Controllers
                     await savedDayDocPath.DeleteAsync();
                 }
             }
+        }
+
+        private bool isUserTokenSetAsInvalidData(string userToken)
+        {
+            if (userToken == PublicConstants.DEFAULT_TOKEN_INVALID) { return true; }
+            else { return false; }
         }
     }
 }
