@@ -74,6 +74,7 @@ namespace TruckCalculatorAppAPI.Controllers
             }
             else { return BadRequest(PublicConstants.WRONG_DATA_EXCEPTION); }
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync()
         {
@@ -110,11 +111,13 @@ namespace TruckCalculatorAppAPI.Controllers
             if (userToken == PublicConstants.DEFAULT_TOKEN_INVALID) { return true; }
             else { return false; }
         }
+
         private bool isDocumentValidForFetch(DocumentSnapshot documentSnapshot)
         {
             if (documentSnapshot.Id == PublicConstants.ID_DOCUMENT_FOR_COLLETION_CREATION) { return false; }
             return true;
         }
+
         private async Task<FetchedData[]> fetchSavedDays(string tokenUid, FireBase fireBase)
         {
             FirestoreDb db = fireBase.GetFirestoreDb();
