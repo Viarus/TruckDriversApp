@@ -35,7 +35,7 @@ namespace TruckCalculatorAppAPI.Services
             return PublicConstants.PATH_USERS + "/" + tokenUid + "/" + PublicConstants.PATH_SAVED_DAYS;
         }
 
-        public string getPathForSavingDay(string tokenUid, string savedDayDocId)
+        public string getPathToSavedDay(string tokenUid, string savedDayDocId)
         {
             return getPathToSavedDays(tokenUid) + "/" + savedDayDocId;
         }
