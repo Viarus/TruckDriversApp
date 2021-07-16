@@ -9,6 +9,9 @@ import { PublicConstants } from "../constants/public.constants";
 import { SecretConstants } from "../constants/secret.constants";
 import { LoginAndSignupBody } from "../models/request/LoginAndSignupBody.model";
 
+//AFTER REFRESH YOU CAN'T ADD DAYS -- FIX -- [send credentials before adding days, if empty check cache]
+//TOASTR FOR ADDING DAYS SEEMS TO NOT WORK --FIX--
+
 export interface AuthResponseData {
     kind?: string;
     idToken: string;
