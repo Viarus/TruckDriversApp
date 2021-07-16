@@ -7,7 +7,7 @@ import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { PublicConstants } from "../constants/public.constants";
 import { SecretConstants } from "../constants/secret.constants";
-import { LoginAndSignupRequest } from "../models/authRequests.model";
+import { LoginAndSignupBody } from "../models/request/LoginAndSignupBody.model";
 
 export interface AuthResponseData {
     kind?: string;
@@ -50,7 +50,7 @@ export class AuthService {
     }
 
     signup(email: string, password: string) {
-        let signupRequest = new LoginAndSignupRequest(email, password);
+        let signupRequest = new LoginAndSignupBody(email, password);
         return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_SIGNUP_ENDPOINT + SecretConstants.webApiKey, signupRequest).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));
@@ -58,7 +58,7 @@ export class AuthService {
 
 
     login(email: string, password: string) {
-        let loginRequest = new LoginAndSignupRequest(email, password);
+        let loginRequest = new LoginAndSignupBody(email, password);
         return this.http.post<AuthResponseData>(SecretConstants.FIREBASE_LOGIN_ENDPOINT + SecretConstants.webApiKey, loginRequest).pipe(tap(resData => {
                 this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
             }));

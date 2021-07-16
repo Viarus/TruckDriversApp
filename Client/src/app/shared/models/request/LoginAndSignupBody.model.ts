@@ -1,4 +1,4 @@
-export class LoginAndSignupRequest {
+export class LoginAndSignupBody {
     private _email: string;
     private _password: string;
     private _returnSecureToken: boolean;

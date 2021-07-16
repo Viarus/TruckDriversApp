@@ -9,9 +9,12 @@ export class PublicConstants {
     readonly defaultValueStart1: number = 0;
     readonly defaultValueFinish1: number = 1440;
 
-    //AUTHENTICATION
-
+    //COMMUNICATION WITH API
     static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guest.com";
+    static readonly HEADER_DOC_ID = 'docId';
+    static readonly HEADER_TOKEN = 'token';
+    
+    //AUTHENTICATION
     static readonly LOCAL_STORAGE_USER_DATA = 'userData';
 
     //ROUTER
