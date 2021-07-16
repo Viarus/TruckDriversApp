@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { User } from "src/app/shared/models/user.model";
 import { ToastrService } from "ngx-toastr";
-import { Subject, TimeoutError } from "rxjs";
+import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { PublicConstants } from "../constants/public.constants";
 import { SecretConstants } from "../constants/secret.constants";
