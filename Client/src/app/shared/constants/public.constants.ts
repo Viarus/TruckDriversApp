@@ -14,6 +14,10 @@ export class PublicConstants {
     static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guest.com";
     static readonly LOCAL_STORAGE_USER_DATA = 'userData';
 
+    //ROUTER
+
+    static readonly ROUTER_PATH_TO_LOGIN = '/login';
+
     //showable
     lang: string = localStorage.getItem('lang') || 'en';
 

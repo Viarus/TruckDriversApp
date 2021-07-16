@@ -74,10 +74,10 @@ export class AuthService {
     }
 
     logout() {
-        var emptyUser: User = new User();
+        let emptyUser: User = new User();
         this.userSub.next(emptyUser);
-        this.router.navigate(['/login']);
-        localStorage.removeItem('userData');
+        this.router.navigate([PublicConstants.ROUTER_PATH_TO_LOGIN]);
+        localStorage.removeItem(PublicConstants.LOCAL_STORAGE_USER_DATA);
         if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
         }
