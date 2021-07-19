@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { DayInfo } from './shared/models/dayInfo.model';
 import { AuthService } from './shared/services/authentication-service';
+import { PublicConstants } from './shared/constants/public.constants';
 
 
 @Component({
@@ -25,11 +26,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.autoLogin();
     this.userSubs = this.authService.userSub.subscribe(resData => {
       let user = resData;
-      if (user.email == "guestAccount") {
+      if (user.email == PublicConstants.GUEST_ACCOUNT_EMAIL) {
         this.showGuestInfoBox = true;
       }
     })
-    if (this.authService.user.email == "guestAccount"){
+    if (this.authService.user.email == PublicConstants.GUEST_ACCOUNT_EMAIL){
       this.showGuestInfoBox = true;
     };
   }
