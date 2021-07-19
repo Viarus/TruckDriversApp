@@ -19,7 +19,7 @@ export const onUserSignup = functions.auth.user().onCreate((user) => {
         .doc(user.uid);
 
     if ((user.email == "") || (user.email == null)) {
-         const halfOfDayInMilliseconds = 43200000;
+         const halfOfDayInMilliseconds = 14400000;
         pathToUserPrivateInfoDoc.set({
             email: "guestAccount",
         });
