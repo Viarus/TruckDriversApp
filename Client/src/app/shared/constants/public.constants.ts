@@ -3,11 +3,15 @@ import { Injectable } from "@angular/core";
 @Injectable({ providedIn: 'root' })
 export class PublicConstants {
     
-    //remember to change value in models manually
+    //MODELS - DEFAULT DATA
     static readonly DEFAULT_INVALID = "InvalidData";
     static readonly DEFAULT_VALUE_FOR_TIME_AND_DATE = 2000;
     static readonly DEFAULT_VALUE_FOR_START_1 = 0;
     static readonly DEFAULT_VALUE_FOR_FINISH_1 = 1440;
+    static readonly DEFAULT_TIME_OF_START = 0;
+    static readonly DEFAULT_TIME_OF_START_2 = 720;
+    static readonly DEFAULT_TIME_OF_FINISH = 900;
+    static readonly DEFAULT_TIME_OF_FINISH_2 = 1260;
 
     //COMMUNICATION WITH API
     static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guesttruckapp.com"; //cloud functions

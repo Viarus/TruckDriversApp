@@ -6,6 +6,7 @@ import { AuthService } from '../shared/services/authentication-service';
 import { PublicConstants } from '../shared/constants/public.constants';
 import { ToastrService } from 'ngx-toastr';
 import { PostingDataService } from '../shared/services/postingData.service';
+import { ClockTime } from '../shared/models/clockTime.model';
 
 @Component({
   selector: 'app-input-date-and-time',
