@@ -8,7 +8,7 @@ import { AuthService } from "../shared/services/authentication-service";
 
 @Injectable({ providedIn: "root" })
 export class AuthGuard implements CanActivate {
-    constructor(private authService: AuthService, private router: Router, private publicConstants: PublicConstants) { }
+    constructor(private authService: AuthService, private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): boolean | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> | UrlTree {
 

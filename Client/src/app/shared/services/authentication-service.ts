@@ -29,7 +29,7 @@ export class AuthService {
     user = new User();
     private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
+    constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService) { }
 
     isUserValid(user: User): boolean {
         if ((user.email == PublicConstants.DEFAULT_INVALID) || (user.id == PublicConstants.DEFAULT_INVALID) || (user.token == PublicConstants.DEFAULT_INVALID)) {

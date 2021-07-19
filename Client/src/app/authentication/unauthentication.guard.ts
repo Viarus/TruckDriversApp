@@ -7,7 +7,7 @@ import { AuthService } from "../shared/services/authentication-service";
 
 @Injectable({ providedIn: "root" })
 export class UnAuthGuard implements CanActivate {
-    constructor(private authService: AuthService, private router: Router, private publicConstants: PublicConstants) { }
+    constructor(private authService: AuthService, private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): boolean | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> | UrlTree {
 
@@ -16,7 +16,7 @@ export class UnAuthGuard implements CanActivate {
             return true
         }
         else {
-            return this.router.createUrlTree(['/input']);
+            return this.router.createUrlTree([PublicConstants.ROUTER_PATH_TO_INPUT]);
         }
     }
 }

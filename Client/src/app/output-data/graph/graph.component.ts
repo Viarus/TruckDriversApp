@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from '../../shared/models/clockTime.model';
 import { DayInfo } from '../../shared/models/dayInfo.model';

@@ -17,7 +17,7 @@ export class TimePickerComponent implements OnInit, OnDestroy {
   @Input() disableFinishTime: boolean = true;
 
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
   ngOnInit() {
     const myNumber = interval(30);

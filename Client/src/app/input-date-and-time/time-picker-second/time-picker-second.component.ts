@@ -20,7 +20,7 @@ export class TimePickerSecondComponent implements OnInit, OnDestroy {
   @Input() timeOfFinishFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME };
 
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
-  constructor(private publicConstants: PublicConstants) { }
+  constructor() { }
 
   ngOnInit() {
     if (!((this.timeOfStartFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME) || (this.timeOfStartFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME))) {

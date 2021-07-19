@@ -11,7 +11,7 @@ import { DeleteHeader } from "../models/request/DeleteHeader.model";
 @Injectable({ providedIn: 'root' })
 export class DeletingDataService {
 
-    constructor(private http: HttpClient, private authService: AuthService, private secretConstants: SecretConstants, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
+    constructor(private http: HttpClient, private authService: AuthService, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
     onDelete(docId: string) {
 
@@ -22,7 +22,7 @@ export class DeletingDataService {
             responseType :'text' as const
         };
 
-        this.http.delete(this.secretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(resData => {
+        this.http.delete(SecretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(resData => {
             this.toastrService.warning(this.publicConstants.deleteSuccess);
         });
     }

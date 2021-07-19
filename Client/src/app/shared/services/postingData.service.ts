@@ -10,13 +10,13 @@ import { SecretConstants } from "../constants/secret.constants";
 @Injectable({ providedIn: 'root' })
 export class PostingDataService {
 
-    constructor(private http: HttpClient, private authService: AuthService, private secretConstants: SecretConstants, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
+    constructor(private http: HttpClient, private authService: AuthService, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
     onPost(newDayInfo: DayInfo) {
 
         if (this.isDayInfoValid(newDayInfo)) {
             let postData: PostData = new PostData(newDayInfo, this.authService.user.email, this.authService.user.id, this.authService.user.token);
-            this.http.post(this.secretConstants.pathToDaysApi, postData).subscribe(resData => {
+            this.http.post(SecretConstants.pathToDaysApi, postData).subscribe(resData => {
                 this.toastrService.success(this.publicConstants.savingSuccess);
             });
         }

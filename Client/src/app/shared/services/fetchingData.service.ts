@@ -10,7 +10,7 @@ import { PublicConstants } from "../constants/public.constants";
 
 @Injectable({ providedIn: 'root' })
 export class FetchingDataService {
-    constructor(private http: HttpClient, private authService: AuthService, private secretConstants: SecretConstants) { }
+    constructor(private http: HttpClient, private authService: AuthService) { }
 
     public isRefreshed = false;
     isLoadingSub: Subject<boolean> = new Subject<boolean>();
@@ -30,7 +30,7 @@ export class FetchingDataService {
 
             this.isLoadingSub.next(true);
 
-            this.http.get<Array<object>>(this.secretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
+            this.http.get<Array<object>>(SecretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(response => {
                 let dayInfoArrayHolder = this.convertToDayInfoArray(response);
                 this.dayInfoSub.next(dayInfoArrayHolder);
             });
