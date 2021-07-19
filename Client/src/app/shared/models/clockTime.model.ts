@@ -1,9 +1,11 @@
+import { PublicConstants } from "../constants/public.constants";
+
 export class ClockTime {
   minutes: number;
   hours: number;
   constructor() {
-    this.minutes = 2000;
-    this.hours = 2000;
+    this.minutes = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+    this.hours = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
   }
   showClockLikeFromMinutesOnly(minutes: number): string {
     let clockTime: ClockTime = new ClockTime();

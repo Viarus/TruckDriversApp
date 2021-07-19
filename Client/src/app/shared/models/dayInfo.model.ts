@@ -1,3 +1,5 @@
+import { PublicConstants } from "../constants/public.constants";
+
 export class DayInfo {
   TimeOfStart: number;
   TimeOfFinish: number;
@@ -21,10 +23,10 @@ export class DayInfo {
     this.TimeOfFinish = 720;
     this.TimeOfStart2 = 900;
     this.TimeOfFinish2 = 1260;
-    this.DayOfWeek = 2000;
-    this.Day = 2000;
-    this.Month = 2000;
-    this.Year = 2000;
+    this.DayOfWeek = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+    this.Day = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+    this.Month = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+    this.Year = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
     this.AddAfternoonTime = false;
     this.DocId = "notValid";
   }

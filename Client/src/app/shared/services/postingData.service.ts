@@ -29,8 +29,8 @@ export class PostingDataService {
             || (dayInfo.TimeOfStart >= dayInfo.TimeOfStart2)
             || (dayInfo.TimeOfFinish >= dayInfo.TimeOfStart2)
             || ((dayInfo.TimeOfStart2 >= dayInfo.TimeOfFinish2)
-                && ((dayInfo.TimeOfStart2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME)
-                    || (dayInfo.TimeOfFinish2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME)))
+                && ((dayInfo.TimeOfStart2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE)
+                    || (dayInfo.TimeOfFinish2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE)))
             || (dayInfo.TimeOfStart < 0)
             || (dayInfo.TimeOfStart >= 1440)
             || (dayInfo.TimeOfStart2 < 0)
@@ -39,8 +39,8 @@ export class PostingDataService {
             || (dayInfo.TimeOfFinish2 < 0)) {
             return false;
         }
-        else if (((dayInfo.TimeOfFinish2 > 1440) && (dayInfo.TimeOfFinish2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME))
-            || ((dayInfo.TimeOfStart2 >= 1440) && (dayInfo.TimeOfStart2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME))) {
+        else if (((dayInfo.TimeOfFinish2 > 1440) && (dayInfo.TimeOfFinish2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))
+            || ((dayInfo.TimeOfStart2 >= 1440) && (dayInfo.TimeOfStart2 !== PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))) {
             return false;
         }
         else {

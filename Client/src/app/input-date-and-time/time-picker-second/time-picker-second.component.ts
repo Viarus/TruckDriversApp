@@ -16,17 +16,17 @@ export class TimePickerSecondComponent implements OnInit, OnDestroy {
   @Input() disableStartTime: boolean = true;
   @Input() disableFinishTime: boolean = true;
 
-  @Input() timeOfStartFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME };
-  @Input() timeOfFinishFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME };
+  @Input() timeOfStartFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
+  @Input() timeOfFinishFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
 
   @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
   constructor() { }
 
   ngOnInit() {
-    if (!((this.timeOfStartFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME) || (this.timeOfStartFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME))) {
+    if (!((this.timeOfStartFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) || (this.timeOfStartFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))) {
       this.timeOfStart = this.timeOfStartFromHolder;
     }
-    if (!((this.timeOfFinishFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME) || (this.timeOfFinishFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME))) {
+    if (!((this.timeOfFinishFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) || (this.timeOfFinishFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))) {
       this.timeOfFinish = this.timeOfFinishFromHolder;
     }
     const myNumber = interval(30);

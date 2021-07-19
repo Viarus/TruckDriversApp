@@ -1,3 +1,5 @@
+import { PublicConstants } from "../constants/public.constants";
+
 export class User {
     public email: string;
     public id: string;
@@ -5,9 +7,9 @@ export class User {
     public tokenExpirationDate: Date;
 
     constructor() { 
-        this.email = "InvalidData",
-        this.id = "InvalidData",
-        this.token = "InvalidData",
+        this.email = PublicConstants.DEFAULT_INVALID,
+        this.id = PublicConstants.DEFAULT_INVALID,
+        this.token = PublicConstants.DEFAULT_INVALID,
         this.tokenExpirationDate = new Date();
     }
 

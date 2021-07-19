@@ -22,8 +22,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
     else {
-      this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
-      this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
+      this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+      this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
       this.dataService.newDayInputEmmiter.next(this.newDayInfo);
     }
   })
@@ -41,11 +41,11 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   notFinishedTodayInput2: boolean = false;
   isDayWorkedTimeCorrect2: boolean = true;
 
-  timeOfStartHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME;
-  timeOfFinishHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME;
+  timeOfStartHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+  timeOfFinishHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
 
-  timeOfStartHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME };
-  timeOfFinishHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME };
+  timeOfStartHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
+  timeOfFinishHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
@@ -112,8 +112,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
       this.newDayInfo.TimeOfStart = 0;
     }
     if (!this.showNewTimeRange) {
-      this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
-      this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
+      this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+      this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
       this.newDayInfo.AddAfternoonTime = false;
       this.newDayInfoSubject.next(this.newDayInfo);
     }
@@ -157,8 +157,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   postNewDay() {
     if (this.authService.isUserValid(this.authService.user)){
       if (!this.showNewTimeRange){
-        this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
-        this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME;
+        this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+        this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
       }
       this.postingDataService.onPost(this.newDayInfo);
     }
@@ -177,10 +177,10 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.showNewTimeRangeButton = true;
     this.timeOfStartHolder2 = this.newDayInfo.TimeOfStart2;
     this.timeOfFinishHolder2 = this.newDayInfo.TimeOfFinish2;
-    if (this.timeOfStartHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME) {
+    if (this.timeOfStartHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) {
       this.timeOfStartHolder2ForTimePicker = this.toNormalTime(this.timeOfStartHolder2);
     }
-    if (this.timeOfFinishHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME) {
+    if (this.timeOfFinishHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) {
       this.timeOfFinishHolder2ForTimePicker = this.toNormalTime(this.timeOfFinishHolder2);
     }
 
