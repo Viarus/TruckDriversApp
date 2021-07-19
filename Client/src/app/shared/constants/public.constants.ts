@@ -10,7 +10,7 @@ export class PublicConstants {
     readonly defaultValueFinish1: number = 1440;
 
     //COMMUNICATION WITH API
-    static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guest.com"; //cloud functions
+    static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guesttruckapp.com"; //cloud functions
     static readonly HEADER_DOC_ID = 'docId';
     static readonly HEADER_TOKEN = 'token';
 
