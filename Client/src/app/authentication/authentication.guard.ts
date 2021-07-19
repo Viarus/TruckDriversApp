@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): boolean | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> | UrlTree {
 
         let loadedUser: User = this.authService.user;
-        if (loadedUser.email == this.publicConstants.defaultInvalid || loadedUser.token == this.publicConstants.defaultInvalid || loadedUser.id == this.publicConstants.defaultInvalid) {
+        if (loadedUser.email == PublicConstants.DEFAULT_INVALID || loadedUser.token == PublicConstants.DEFAULT_INVALID || loadedUser.id == PublicConstants.DEFAULT_INVALID) {
             return this.router.createUrlTree(['/login']);
         }
         else {

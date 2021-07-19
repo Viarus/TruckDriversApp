@@ -32,7 +32,7 @@ export class AuthService {
     constructor(private http: HttpClient, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
 
     isUserValid(user: User): boolean {
-        if ((user.email == this.publicConstants.defaultInvalid) || (user.id == this.publicConstants.defaultInvalid) || (user.token == this.publicConstants.defaultInvalid)) {
+        if ((user.email == PublicConstants.DEFAULT_INVALID) || (user.id == PublicConstants.DEFAULT_INVALID) || (user.token == PublicConstants.DEFAULT_INVALID)) {
             return false;
         }
         else if (!user.tokenValid) {

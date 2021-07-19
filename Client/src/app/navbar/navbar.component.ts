@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lang = localStorage.getItem('lang') || 'en';
     this.loadedUser = this.authService.user;
-    if (this.loadedUser.email == this.publicConstants.defaultInvalid || this.loadedUser.token == this.publicConstants.defaultInvalid || this.loadedUser.id == this.publicConstants.defaultInvalid) {
+    if (this.loadedUser.email == PublicConstants.DEFAULT_INVALID || this.loadedUser.token == PublicConstants.DEFAULT_INVALID || this.loadedUser.id == PublicConstants.DEFAULT_INVALID) {
       this.isAuthenticated = false;
     }
     else {
@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     this.userSub = this.authService.userSub.subscribe(user => {
-      if (user.email == this.publicConstants.defaultInvalid || user.token == this.publicConstants.defaultInvalid || user.id == this.publicConstants.defaultInvalid) {
+      if (user.email == PublicConstants.DEFAULT_INVALID || user.token == PublicConstants.DEFAULT_INVALID || user.id == PublicConstants.DEFAULT_INVALID) {
         this.isAuthenticated = false;
       }
       else {

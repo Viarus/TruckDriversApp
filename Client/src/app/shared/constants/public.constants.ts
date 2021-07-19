@@ -4,10 +4,10 @@ import { Injectable } from "@angular/core";
 export class PublicConstants {
     
     //remember to change value in models manually
-    readonly defaultInvalid: string = "InvalidData";
-    readonly defaultValueForTime: number = 2000;
-    readonly defaultValueStart1: number = 0;
-    readonly defaultValueFinish1: number = 1440;
+    static readonly DEFAULT_INVALID: string = "InvalidData";
+    static readonly DEFAULT_VALUE_FOR_TIME: number = 2000;
+    static readonly DEFAULT_VALUE_FOR_START_1: number = 0;
+    static readonly DEFAULT_VALUE_FOR_FINISH_1: number = 1440;
 
     //COMMUNICATION WITH API
     static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guesttruckapp.com"; //cloud functions
@@ -31,8 +31,9 @@ export class PublicConstants {
     //ROUTER
 
     static readonly ROUTER_PATH_TO_LOGIN = '/login';
+    static readonly ROUTER_PATH_TO_INPUT = '/input';
 
-    //showable
+    //showable -- more of them in assets/i18n/en.json or pl.json
     lang: string = localStorage.getItem('lang') || 'en';
 
     readonly generalError = this.lang == 'en' ? "An error occured" : "Wystąpił błąd";
