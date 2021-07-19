@@ -18,7 +18,8 @@ export class DeletingDataService {
         let deleteHeader: DeleteHeader = new DeleteHeader(docId, this.authService.user.token);
 
         const requestOptions = {
-            headers: new HttpHeaders(JSON.parse(JSON.stringify(deleteHeader))).set('Content-Type', 'application/x-www-form-urlencoded').set('Accept', 'text/html, application/xhtml+xml, */*')
+            headers : new HttpHeaders(JSON.parse(JSON.stringify(deleteHeader))),
+            responseType :'text' as const
         };
 
         this.http.delete(this.secretConstants.pathToDaysApi, requestOptions).pipe(take(1)).subscribe(resData => {
