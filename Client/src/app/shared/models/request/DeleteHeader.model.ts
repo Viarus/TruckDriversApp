@@ -11,7 +11,7 @@ export class DeleteHeader {
     }
 
     getHeader(deleteHeader: DeleteHeader) {
-        return new HttpHeaders(this.getMap(deleteHeader));
+        return new HttpHeaders(JSON.parse(JSON.stringify(this.getMap(deleteHeader))));
     }
     
     private getMap(deleteHeader: DeleteHeader) {
