@@ -13,6 +13,17 @@ export class PublicConstants {
     static readonly GUEST_ACCOUNT_EMAIL = "guestAccount@guest.com";
     static readonly HEADER_DOC_ID = 'docId';
     static readonly HEADER_TOKEN = 'token';
+
+    static readonly DAY_INFO_PROPERTY_DOC_ID = 'docId';
+    static readonly DAY_INFO_PROPERTY_TIME_OF_START = 'timeOfStart';
+    static readonly DAY_INFO_PROPERTY_TIME_OF_START_2 = 'timeOfStart2';
+    static readonly DAY_INFO_PROPERTY_TIME_OF_FINISH = 'timeOfFinish';
+    static readonly DAY_INFO_PROPERTY_TIME_OF_FINISH_2 = 'timeOfFinish2';
+    static readonly DAY_INFO_PROPERTY_DAY = 'day';
+    static readonly DAY_INFO_PROPERTY_DAY_OF_WEEK = 'dayOfWeek';
+    static readonly DAY_INFO_PROPERTY_MONTH = 'month';
+    static readonly DAY_INFO_PROPERTY_YEAR = 'year';
+    static readonly DAY_INFO_PROPERTY_ADD_AFTERNOON_TIME = 'addAfternoonTime';
     
     //AUTHENTICATION
     static readonly LOCAL_STORAGE_USER_DATA = 'userData';

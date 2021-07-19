@@ -18,7 +18,7 @@ export class DeletingDataService {
         let deleteHeader: DeleteHeader = new DeleteHeader(docId, this.authService.user.token);
 
         const requestOptions = {
-            headers : new HttpHeaders(JSON.parse(JSON.stringify(deleteHeader))),
+            headers : deleteHeader.getHeader(deleteHeader),
             responseType :'text' as const
         };
 
