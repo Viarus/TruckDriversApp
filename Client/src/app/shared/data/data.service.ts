@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { DayInfo } from "src/app/shared/models/dayInfo.model";
 import { Subject } from "rxjs";
+import { PublicConstants } from "../constants/public.constants";
 
 @Injectable({ providedIn: 'root' })
 
@@ -39,10 +40,10 @@ export class DataService {
         }
     }
     resetNewDayTime(){
-        this.newDayInfo.TimeOfStart = 0;
-        this.newDayInfo.TimeOfFinish = 720;
-        this.newDayInfo.TimeOfStart2 = 900;
-        this.newDayInfo.TimeOfFinish2 = 1260;
+        this.newDayInfo.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START;
+        this.newDayInfo.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH;
+        this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2;
+        this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_TIME_OF_FINISH_2;
         this.newDayInfo.AddAfternoonTime = false;
     }
     setTodayDate(){

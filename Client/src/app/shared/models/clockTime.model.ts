@@ -1,12 +1,19 @@
-import { PublicConstants } from "../constants/public.constants";
-
 export class ClockTime {
   minutes: number;
   hours: number;
-  constructor(hours?: number, minutes?: number) {
+  constructor(hours?: number, minutes?: number, minutesOnly?: number) {
     if (!!hours) {this.hours = hours}
     if (!!minutes) {this.minutes = minutes}
+    if (!hours && !minutes && !! minutesOnly) {this.convertToClockTimeFromMinutesOnly(minutesOnly)}
    }
+
+   convertToClockTimeFromMinutesOnly(number){
+     let convertedValue = this.toClockTime(number);
+     this.hours = convertedValue.hours;
+     this.minutes = convertedValue.minutes;
+   }
+
+   //make below static
   showClockLikeFromMinutesOnly(minutes: number): string {
     let clockTime: ClockTime = new ClockTime();
     clockTime = clockTime.toClockTime(minutes);
@@ -27,22 +34,21 @@ export class ClockTime {
       hoursToShow = clockHours.toString();
     }
     return (hoursToShow + ':' + minutesToShow)
-    //return '22'
   }
-  showClockLike(minutes: number, hours: number): string {
+  showClockLike(clockTime: ClockTime): string {
     let clockMinutes: string;
     let clockHours: string;
-    if (minutes < 10) {
-      clockMinutes = '0' + minutes.toString();
+    if (clockTime.minutes < 10) {
+      clockMinutes = '0' + clockTime.minutes.toString();
     }
     else {
-      clockMinutes = minutes.toString();
+      clockMinutes = clockTime.minutes.toString();
     }
-    if (hours < 10) {
-      clockHours = '0' + hours.toString();
+    if (clockTime.hours < 10) {
+      clockHours = '0' + clockTime.hours.toString();
     }
     else {
-      clockHours = hours.toString();
+      clockHours = clockTime.hours.toString();
     }
     return (clockHours + ':' + clockMinutes)
   }
@@ -51,6 +57,10 @@ export class ClockTime {
     a.minutes = minutes % 60;
     a.hours = Math.floor(minutes / 60);
     return a;
+  }
+
+  toMinutesOnly(clockTime: ClockTime): number{
+    return (clockTime.hours * 60) + clockTime.minutes;
   }
 }
 

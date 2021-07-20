@@ -31,6 +31,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
 
   newDayInfo: DayInfo = new DayInfo();
 
+  clockTimeService: ClockTime = new ClockTime();
+
   inputedDate: Date = new Date();
 
   timeOfStartHolder: number = 0;
@@ -45,14 +47,14 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   timeOfStartHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
   timeOfFinishHolder2: number = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
 
-  timeOfStartHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
-  timeOfFinishHolder2ForTimePicker = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
+  timeOfStartHolder2ForTimePicker = new ClockTime(PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE)
+  timeOfFinishHolder2ForTimePicker = new ClockTime(PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE)
 
   showNewTimeRange: boolean = false;
   showNewTimeRangeButton: boolean = true;
 
   ngOnInit() {
-    this.newDayInfo = this.getNewDayInfo();
+    this.newDayInfo = this.dataService.getNewDayInfo();
     this.dataService.setTodayDate();
   }
 
@@ -60,12 +62,9 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.newDayInfoSubscription.unsubscribe();
   }
 
-  setToday() {
+  //this is needed - html can't read it from the data.service class
+  setToday() { 
     this.dataService.setTodayDate();
-  }
-
-  getNewDayInfo(): DayInfo {
-    return this.dataService.getNewDayInfo()
   }
 
   onStartedChecked() {
@@ -98,13 +97,13 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
   }
 
-  saveTime(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
-    this.newDayInfo.TimeOfStart = this.toMinutesOnly(timeHolder.timeOfStart);
-    if ((timeHolder.timeOfFinish.minute == 0) && (timeHolder.timeOfFinish.hour == 0)) {
+  saveTime(timeHolder: { timeOfStart: ClockTime, timeOfFinish: ClockTime }) {
+    this.newDayInfo.TimeOfStart = this.clockTimeService.toMinutesOnly(timeHolder.timeOfStart);
+    if ((timeHolder.timeOfFinish.minutes == 0) && (timeHolder.timeOfFinish.hours == 0)) {
       this.newDayInfo.TimeOfFinish = 1440;
     }
     else {
-      this.newDayInfo.TimeOfFinish = this.toMinutesOnly(timeHolder.timeOfFinish);
+      this.newDayInfo.TimeOfFinish = this.clockTimeService.toMinutesOnly(timeHolder.timeOfFinish);
     }
     if (this.notFinishedTodayInput) {
       this.newDayInfo.TimeOfFinish = 1440;
@@ -120,13 +119,13 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     }
   }
 
-  saveTime2(timeHolder: { timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }) {
-    this.newDayInfo.TimeOfStart2 = this.toMinutesOnly(timeHolder.timeOfStart);
-    if ((timeHolder.timeOfFinish.minute == 0) && (timeHolder.timeOfFinish.hour == 0)) {
+  saveTime2(timeHolder: { timeOfStart: ClockTime, timeOfFinish: ClockTime }) {
+    this.newDayInfo.TimeOfStart2 = this.clockTimeService.toMinutesOnly(timeHolder.timeOfStart);
+    if ((timeHolder.timeOfFinish.minutes == 0) && (timeHolder.timeOfFinish.hours == 0)) {
       this.newDayInfo.TimeOfFinish2 = 1440;
     }
     else {
-      this.newDayInfo.TimeOfFinish2 = this.toMinutesOnly(timeHolder.timeOfFinish);
+      this.newDayInfo.TimeOfFinish2 = this.clockTimeService.toMinutesOnly(timeHolder.timeOfFinish);
     }
     if (this.notFinishedTodayInput2) {
       this.newDayInfo.TimeOfFinish2 = 1440;
@@ -142,17 +141,6 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.newDayInfo.DayOfWeek = dateHolder.getDay();
     this.newDayInfo.Month = (dateHolder.getMonth() + 1);
     this.newDayInfo.Year = dateHolder.getFullYear();
-  }
-
-  toMinutesOnly(timeHolder: { hour: number, minute: number }) {
-    return (timeHolder.hour * 60) + timeHolder.minute;
-  }
-
-  toNormalTime(minutesHolder: number) {
-    let minutes = minutesHolder % 60;
-    let hours = Math.floor(minutesHolder / 60);
-    let time: { hour: number, minute: number } = { hour: hours, minute: minutes }
-    return time;
   }
 
   postNewDay() {
@@ -179,10 +167,10 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
     this.timeOfStartHolder2 = this.newDayInfo.TimeOfStart2;
     this.timeOfFinishHolder2 = this.newDayInfo.TimeOfFinish2;
     if (this.timeOfStartHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) {
-      this.timeOfStartHolder2ForTimePicker = this.toNormalTime(this.timeOfStartHolder2);
+      this.timeOfStartHolder2ForTimePicker = this.clockTimeService.toClockTime(this.timeOfStartHolder2);
     }
     if (this.timeOfFinishHolder2 != PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) {
-      this.timeOfFinishHolder2ForTimePicker = this.toNormalTime(this.timeOfFinishHolder2);
+      this.timeOfFinishHolder2ForTimePicker = this.clockTimeService.toClockTime(this.timeOfFinishHolder2);
     }
 
   }
