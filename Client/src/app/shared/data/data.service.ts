@@ -57,3 +57,5 @@ export class DataService {
     }
 
 }
+
+export const dataService: DataService = new DataService();

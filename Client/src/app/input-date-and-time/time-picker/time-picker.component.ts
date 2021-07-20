@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { PublicConstants } from 'src/app/shared/constants/public.constants';
-import { DataService } from 'src/app/shared/data/data.service';
+import { DataService, dataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from 'src/app/shared/models/clockTime.model';
 
 @Component({
@@ -23,7 +23,10 @@ export class TimePickerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const myNumber = interval(30);
     this.numberSubscription = myNumber.subscribe(val => {
-      this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
+      dataService.updateNewDayTimes(this.timeOfStart.toMinutesOnly(this.timeOfStart), this.timeOfFinish.toMinutesOnly(this.timeOfFinish));
+      console.log(this.timeOfStart);
+      console.log(dataService);
+      // this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
     }
     );
   }

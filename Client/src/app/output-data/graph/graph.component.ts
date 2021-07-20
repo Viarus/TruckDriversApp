@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { DataService } from 'src/app/shared/data/data.service';
+import { DataService, dataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from '../../shared/models/clockTime.model';
 import { DayInfo } from '../../shared/models/dayInfo.model';
 
@@ -30,7 +30,8 @@ export class GraphComponent implements DoCheck, OnInit {
 
 
   ngDoCheck() {
-    this.timeOfStartClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart);
+    console.log(this.dataService.getNewDayInfo());
+    this.timeOfStartClockTime = this.clockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart);
     this.timeOfStart2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
     this.timeOfFinishClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
     this.timeOfFinish2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish2);
