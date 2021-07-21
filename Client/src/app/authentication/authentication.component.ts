@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { User } from 'src/app/shared/models/user.model';
-import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
-import { PublicConstants } from '../shared/constants/public.constants';
-import { AuthResponseData, AuthService } from '../shared/services/authentication-service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {User} from 'src/app/shared/models/user.model';
+import {ToastrService} from 'ngx-toastr';
+import {Observable, Subscription} from 'rxjs';
+import {PublicConstants} from '../shared/constants/public.constants';
+import {AuthResponseData, AuthService} from '../shared/services/authentication-service';
 
 @Component({
   selector: 'app-authentication',
@@ -18,7 +18,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private toastrService: ToastrService,
-    private publicConstants: PublicConstants) { }
+    private publicConstants: PublicConstants) {
+  }
 
   user = new User();
 
@@ -33,6 +34,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       this.user = resData;
     });
   }
+
   ngOnDestroy(): void {
     this.userSubs.unsubscribe();
     this.authObsSubs.unsubscribe();
@@ -54,8 +56,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     if (this.isLoginMode) {
       authObs = this.authService.login(email, password);
-    }
-    else {
+    } else {
       authObs = this.authService.signup(email, password);
     }
     this.authObsSubs = authObs.subscribe(

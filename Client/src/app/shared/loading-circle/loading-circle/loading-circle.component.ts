@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-loading-circle',
@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingCircleComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

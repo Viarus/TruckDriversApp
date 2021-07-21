@@ -7,6 +7,8 @@ import { PublicConstants } from 'src/app/shared/constants/public.constants';
   templateUrl: './time-picker-second.component.html',
   styleUrls: ['./time-picker-second.component.css']
 })
+
+// TODO REFACTOR
 export class TimePickerSecondComponent implements OnInit, OnDestroy {
   timeOfStart = { hour: 15, minute: 0 };
   timeOfFinish = { hour: 21, minute: 0 };
@@ -32,9 +34,10 @@ export class TimePickerSecondComponent implements OnInit, OnDestroy {
     const myNumber = interval(30);
     this.numberSubscription = myNumber.subscribe(val => this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish }));
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.numberSubscription.unsubscribe();
   }
-  //timepicker needs to trigger something, but I used interval insted. Otherwise timepicker doesn't see maunaly entered data - just the one you "click" or "tap".
-  blankFunction() { } //do not delete!
+  // timepicker needs to trigger something, but I used interval instead.
+  // Otherwise timepicker doesn't see manually entered data - just the one you "click" or "tap".
+  blankFunction(): void { }
 }

@@ -1,26 +1,26 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class SecretConstants {
 
-    //PATHS/API ENDPOINTS
+  // PATHS/API ENDPOINTS
 
-    static readonly FIREBASE_SIGNUP_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
-    static readonly FIREBASE_LOGIN_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
-    static readonly FIREBASE_LOGIN_ANONYM_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
+  static readonly FIREBASE_SIGNUP_ENDPOINT = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
+  static readonly FIREBASE_LOGIN_ENDPOINT = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
+  static readonly FIREBASE_LOGIN_ANONYM_ENDPOINT = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
 
-    static readonly webApiKey:string = "AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA";
+  static readonly webApiKey: string = 'AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA';
 
-    static readonly firebaseConfig = {
-        apiKey: "AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA",
-        authDomain: "truckapp-6433b.firebaseapp.com",
-        databaseURL: "https://truckapp-6433b-default-rtdb.firebaseio.com",
-        projectId: "truckapp-6433b",
-        storageBucket: "truckapp-6433b.appspot.com",
-        messagingSenderId: "797184390532",
-        appId: "1:797184390532:web:22cdaffe0f38c27154d9d1",
-        measurementId: "G-2P4J278DQ2"
-      };
+  static readonly firebaseConfig = {
+    apiKey: 'AIzaSyC9fDU4_cM0QL4e5oS_2qBBDDeglrYIxuA',
+    authDomain: 'truckapp-6433b.firebaseapp.com',
+    databaseURL: 'https://truckapp-6433b-default-rtdb.firebaseio.com',
+    projectId: 'truckapp-6433b',
+    storageBucket: 'truckapp-6433b.appspot.com',
+    messagingSenderId: '797184390532',
+    appId: '1:797184390532:web:22cdaffe0f38c27154d9d1',
+    measurementId: 'G-2P4J278DQ2'
+  };
 
-     static readonly pathToDaysApi: string = 'https://localhost:5001/api/days';
+  static readonly pathToDaysApi: string = 'https://localhost:5001/api/days';
 }

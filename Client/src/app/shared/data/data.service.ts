@@ -38,7 +38,7 @@ export class DataService {
     }
   }
 
-  resetNewDayTime() {
+  resetNewDayTime(): void {
     this.newDayInfo.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START;
     this.newDayInfo.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH;
     this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2;
@@ -46,14 +46,14 @@ export class DataService {
     this.newDayInfo.AddAfternoonTime = false;
   }
 
-  setTodayDate() {
+  setTodayDate(): void {
     this.newDayInfo.Day = this.date.getDate();
     this.newDayInfo.DayOfWeek = this.date.getDay();
     this.newDayInfo.Month = (this.date.getMonth() + 1);
     this.newDayInfo.Year = this.date.getFullYear();
   }
 
-  getNewDayInfo() {
+  getNewDayInfo(): DayInfo {
     return this.newDayInfo;
   }
 

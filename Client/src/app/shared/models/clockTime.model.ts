@@ -1,24 +1,31 @@
 export class ClockTime {
-  minutes: number;
-  hours: number;
 
   constructor(hours: number, minutes: number) {
     this.hours = hours;
     this.minutes = minutes;
   }
+  minutes: number;
+  hours: number;
 
-  convertToClockTimeFromMinutesOnly(number) {
-    let convertedValue = this.toClockTime(number);
-    this.hours = convertedValue.hours;
-    this.minutes = convertedValue.minutes;
+  static toClockTime(minutes: number): ClockTime {
+    return new ClockTime((Math.floor(minutes / 60)), (minutes % 60));
   }
 
+  static toMinutesOnly(clockTime: ClockTime): number {
+    return (clockTime.hours * 60) + clockTime.minutes;
+  }
+
+  // convertToClockTimeFromMinutesOnly(num): void {
+  //   const convertedValue = this.toClockTime(num);
+  //   this.hours = convertedValue.hours;
+  //   this.minutes = convertedValue.minutes;
+  // }
+
   // make below static
-  showClockLikeFromMinutesOnly(minutes: number): string {
-    let clockTime: ClockTime = new ClockTime();
-    clockTime = clockTime.toClockTime(minutes);
-    let clockMinutes: number = clockTime.minutes;
-    let clockHours: number = clockTime.hours;
+  static showClockLikeFromMinutesOnly(minutes: number): string {
+    const clockTime: ClockTime = ClockTime.toClockTime(minutes);
+    const clockMinutes: number = clockTime.minutes;
+    const clockHours: number = clockTime.hours;
     let minutesToShow: string;
     let hoursToShow: string;
     if (clockMinutes < 10) {
@@ -48,17 +55,6 @@ export class ClockTime {
       clockHours = clockTime.hours.toString();
     }
     return (clockHours + ':' + clockMinutes);
-  }
-
-  toClockTime(minutes: number): ClockTime {
-    let a: ClockTime = new ClockTime();
-    a.minutes = minutes % 60;
-    a.hours = Math.floor(minutes / 60);
-    return a;
-  }
-
-  toMinutesOnly(clockTime: ClockTime): number {
-    return (clockTime.hours * 60) + clockTime.minutes;
   }
 }
 

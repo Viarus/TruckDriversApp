@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { DataService, dataService } from 'src/app/shared/data/data.service';
+import { dataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from '../../shared/models/clockTime.model';
 import { DayInfo } from '../../shared/models/dayInfo.model';
 
@@ -13,7 +13,6 @@ export class GraphComponent implements DoCheck, OnInit {
   constructor() { }
 
   dayInfo: DayInfo = new DayInfo();
-  clockTime: ClockTime = new ClockTime();
   timeOfStartClockTime = '';
   timeOfStart2ClockTime = '';
   timeOfFinishClockTime = '';
@@ -30,10 +29,10 @@ export class GraphComponent implements DoCheck, OnInit {
 
 
   ngDoCheck(): void {
-    this.timeOfStartClockTime = this.clockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart);
-    this.timeOfStart2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
-    this.timeOfFinishClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
-    this.timeOfFinish2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish2);
+    this.timeOfStartClockTime = ClockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart);
+    this.timeOfStart2ClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
+    this.timeOfFinishClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
+    this.timeOfFinish2ClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish2);
     this.dayOfWeek = this.dayInfo.getDayOfWeek(this.dayInfo.DayOfWeek);
     this.dateToBeShown = this.dayOfWeek + ': ' + this.dayInfo.getDate(this.dayInfo.Day, this.dayInfo.Month, this.dayInfo.Year)
   }

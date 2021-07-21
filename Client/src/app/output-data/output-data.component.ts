@@ -1,6 +1,6 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
-import { DayInfo } from '../shared/models/dayInfo.model';
-import { dataService } from '../shared/data/data.service';
+import {Component, OnInit, DoCheck} from '@angular/core';
+import {DayInfo} from '../shared/models/dayInfo.model';
+import {dataService} from '../shared/data/data.service';
 
 @Component({
   selector: 'app-output-data',
@@ -10,7 +10,8 @@ import { dataService } from '../shared/data/data.service';
 export class OutputDataComponent implements OnInit, DoCheck {
   dayInfo: DayInfo = new DayInfo();
 
-  constructor() { }
+  constructor() {
+  }
 
   isDayInfoCorrect = false;
 
@@ -18,15 +19,10 @@ export class OutputDataComponent implements OnInit, DoCheck {
 
     if (this.dayInfo.TimeOfStart >= this.dayInfo.TimeOfFinish) {
       this.isDayInfoCorrect = false;
-    }
-    else if ((this.dayInfo.TimeOfStart2 >= this.dayInfo.TimeOfFinish2) && this.dayInfo.AddAfternoonTime) {
+    } else if ((this.dayInfo.TimeOfStart2 >= this.dayInfo.TimeOfFinish2) && this.dayInfo.AddAfternoonTime) {
       this.isDayInfoCorrect = false;
-    }
-    else if ((this.dayInfo.TimeOfStart2 <= this.dayInfo.TimeOfFinish) && this.dayInfo.AddAfternoonTime) {
-      this.isDayInfoCorrect = false;
-    }
-    else {
-      this.isDayInfoCorrect = true;
+    } else {
+      this.isDayInfoCorrect = !((this.dayInfo.TimeOfStart2 <= this.dayInfo.TimeOfFinish) && this.dayInfo.AddAfternoonTime);
     }
   }
 
@@ -36,7 +32,7 @@ export class OutputDataComponent implements OnInit, DoCheck {
     });
   }
 
-  resetTime(): void{
+  resetTime(): void {
     window.location.reload();
   }
 }

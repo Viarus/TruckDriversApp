@@ -1,4 +1,4 @@
-import { PublicConstants } from "../constants/public.constants";
+import {PublicConstants} from '../constants/public.constants';
 
 export class DayInfo {
   TimeOfStart: number;
@@ -30,15 +30,15 @@ export class DayInfo {
     this.DocId = PublicConstants.DEFAULT_INVALID;
     this.AddAfternoonTime = false;
   }
+
   getDayOfWeek(d: number): string {
 
-    //I think there is a better approach
-    let lang = localStorage.getItem('lang') || 'en';
+    // I think there is a better approach
+    const lang = localStorage.getItem('lang') || 'en';
     let daysOfWeek = new Array<string>();
-    if (lang == 'en'){
+    if (lang === 'en') {
       daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Please Enter a Day', 'Error'];
-    }
-    else if (lang == 'pl') {
+    } else if (lang === 'pl') {
       daysOfWeek = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela', 'Wprowadź dzień', 'Błąd'];
     }
 
@@ -70,22 +70,21 @@ export class DayInfo {
       default: {
         return daysOfWeek[8];
       }
-    } 
+    }
   }
+
   getDate(day: number, month: number, year: number): string {
     let dayToShow: string;
     let monthToShow: string;
-    let yearToShow: string = year.toString();
+    const yearToShow: string = year.toString();
     if (day < 10) {
       dayToShow = '0' + day.toString();
-    }
-    else {
+    } else {
       dayToShow = day.toString();
     }
     if (month < 10) {
       monthToShow = '0' + month.toString();
-    }
-    else {
+    } else {
       monthToShow = month.toString();
     }
 
