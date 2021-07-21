@@ -14,33 +14,37 @@ import { AuthResponseData, AuthService } from '../shared/services/authentication
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private router: Router, private toastrService: ToastrService, private publicConstants: PublicConstants) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastrService: ToastrService,
+    private publicConstants: PublicConstants) { }
 
   user = new User();
 
   userSubs = new Subscription();
   authObsSubs = new Subscription();
 
-  ngOnInit() {
+  isLoginMode = true;
+  isLoading = false;
+
+  ngOnInit(): void {
     this.userSubs = this.authService.userSub.subscribe(resData => {
       this.user = resData;
     });
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.userSubs.unsubscribe();
     this.authObsSubs.unsubscribe();
   }
 
-  isLoginMode: boolean = true;
-  isLoading: boolean = false;
-
-  SwitchLoginMode() {
+  SwitchLoginMode(): void {
     this.isLoginMode = !this.isLoginMode;
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     if (!form.valid) {
-      return
+      return;
     }
     const email = form.value.email;
     const password = form.value.password;
@@ -57,7 +61,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.authObsSubs = authObs.subscribe(
       resData => {
         this.isLoading = false;
-        this.router.navigate([PublicConstants.ROUTER_PATH_TO_INPUT]);
+        this.router.navigate([PublicConstants.ROUTER_PATH_TO_INPUT]).then();
         this.toastrService.success(this.publicConstants.loginSuccess);
       },
       error => {

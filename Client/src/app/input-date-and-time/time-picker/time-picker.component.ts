@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 import { PublicConstants } from 'src/app/shared/constants/public.constants';
-import { DataService, dataService } from 'src/app/shared/data/data.service';
+import { dataService } from 'src/app/shared/data/data.service';
 import { ClockTime } from 'src/app/shared/models/clockTime.model';
 
 @Component({
@@ -10,29 +10,38 @@ import { ClockTime } from 'src/app/shared/models/clockTime.model';
   styleUrls: ['./time-picker.component.css']
 })
 export class TimePickerComponent implements OnInit, OnDestroy {
-  timeOfStart = new ClockTime(null, null, PublicConstants.DEFAULT_TIME_OF_START);
-  timeOfFinish = new ClockTime(null, null, PublicConstants.DEFAULT_TIME_OF_FINISH);
+
+  // must be in dictionaries like that - otherwise timepicker will not assign the values
+  timeOfStart = { hour: 4, minute: 0 };
+  timeOfFinish = { hour: 8, minute: 0 };
+
+  timeOfStartClockTime = new ClockTime(this.timeOfStart.hour, this.timeOfStart.minute);
+  timeOfFinishClockTime = new ClockTime(this.timeOfFinish.hour, this.timeOfFinish.minute);
+
+  timeOfStartInMinutes = this.timeOfStartClockTime.toMinutesOnly(this.timeOfStartClockTime);
+  timeOfFinishInMinutes = this.timeOfStartClockTime.toMinutesOnly(this.timeOfFinishClockTime);
+
   numberSubscription: Subscription = new Subscription();
 
-  @Input() disableStartTime: boolean = true;
-  @Input() disableFinishTime: boolean = true;
+  @Input() disableStartTime = true;
+  @Input() disableFinishTime = true;
 
-  @Output() eventHandler = new EventEmitter<{ timeOfStart: ClockTime, timeOfFinish: ClockTime }>();
+  // @Output() eventHandler = new EventEmitter<{ timeOfStart: ClockTime, timeOfFinish: ClockTime }>();
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const myNumber = interval(30);
     this.numberSubscription = myNumber.subscribe(val => {
-      dataService.updateNewDayTimes(this.timeOfStart.toMinutesOnly(this.timeOfStart), this.timeOfFinish.toMinutesOnly(this.timeOfFinish));
-      console.log(this.timeOfStart);
-      console.log(dataService);
-      // this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
+        console.log(this.timeOfStartClockTime);
+        dataService.updateNewDayTimes(this.timeOfStartInMinutes, this.timeOfFinishInMinutes);
+        // this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish });
     }
     );
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.numberSubscription.unsubscribe();
   }
-  //timepicker needs to trigger something, but I used interval insted. Otherwise timepicker doesn't see maunaly entered data - just the one you "click/tap".
-  blankFunction() { }
+  // timepicker needs to trigger something, but I used interval instead.
+  // Otherwise timepicker doesn't see manually entered data - just the one you "click/tap".
+  blankFunction(): void { }
 }

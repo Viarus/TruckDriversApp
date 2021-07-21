@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { DayInfo } from '../shared/models/dayInfo.model';
-import { DataService } from '../shared/data/data.service';
+import { dataService } from '../shared/data/data.service';
 import { AuthService } from '../shared/services/authentication-service';
 import { PublicConstants } from '../shared/constants/public.constants';
 import { ToastrService } from 'ngx-toastr';
@@ -14,18 +14,18 @@ import { ClockTime } from '../shared/models/clockTime.model';
   styleUrls: ['./input-date-and-time.component.css']
 })
 export class InputDateAndTimeComponent implements OnDestroy, OnInit {
-  constructor(private dataService: DataService, private publicConstants: PublicConstants, private postingDataService: PostingDataService, private authService: AuthService, private toastrService: ToastrService) { }
+  constructor(private publicConstants: PublicConstants, private postingDataService: PostingDataService, private authService: AuthService, private toastrService: ToastrService) { }
 
   newDayInfoSubject: Subject<DayInfo> = new Subject<DayInfo>();
 
   newDayInfoSubscription: Subscription = this.newDayInfoSubject.subscribe(data => {
     if (this.showNewTimeRange) {
-      this.dataService.newDayInputEmmiter.next(this.newDayInfo);
+      dataService.newDayInputEmitter.next(this.newDayInfo);
     }
     else {
       this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
       this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
-      this.dataService.newDayInputEmmiter.next(this.newDayInfo);
+      dataService.newDayInputEmitter.next(this.newDayInfo);
     }
   })
 
@@ -54,8 +54,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   showNewTimeRangeButton: boolean = true;
 
   ngOnInit() {
-    this.newDayInfo = this.dataService.getNewDayInfo();
-    this.dataService.setTodayDate();
+    this.newDayInfo = dataService.getNewDayInfo();
+    dataService.setTodayDate();
   }
 
   ngOnDestroy() {
@@ -63,8 +63,8 @@ export class InputDateAndTimeComponent implements OnDestroy, OnInit {
   }
 
   //this is needed - html can't read it from the data.service class
-  setToday() { 
-    this.dataService.setTodayDate();
+  setToday() {
+    dataService.setTodayDate();
   }
 
   onStartedChecked() {

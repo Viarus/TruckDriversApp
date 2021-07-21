@@ -10,27 +10,26 @@ import { DayInfo } from '../../shared/models/dayInfo.model';
 })
 export class GraphComponent implements DoCheck, OnInit {
 
-  constructor(private dataService: DataService) { };
+  constructor() { }
 
-  ngOnInit() {
-    this.dataService.newDayInputEmmiter.subscribe(data => {
+  dayInfo: DayInfo = new DayInfo();
+  clockTime: ClockTime = new ClockTime();
+  timeOfStartClockTime = '';
+  timeOfStart2ClockTime = '';
+  timeOfFinishClockTime = '';
+  timeOfFinish2ClockTime = '';
+  dateToBeShown = '';
+  dayOfWeek = '';
+
+  ngOnInit(): void {
+    dataService.newDayInputEmitter.subscribe(data => {
       this.dayInfo = data;
     });
   }
 
-  dayInfo: DayInfo = new DayInfo();
-  clockTime: ClockTime = new ClockTime();
-  timeOfStartClockTime: string = '';
-  timeOfStart2ClockTime: string = '';
-  timeOfFinishClockTime: string = '';
-  timeOfFinish2ClockTime: string = '';
-  dateToBeShown: string = '';
-  dayOfWeek: string = '';
 
 
-
-  ngDoCheck() {
-    console.log(this.dataService.getNewDayInfo());
+  ngDoCheck(): void {
     this.timeOfStartClockTime = this.clockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart);
     this.timeOfStart2ClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
     this.timeOfFinishClockTime = this.clockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
@@ -40,39 +39,23 @@ export class GraphComponent implements DoCheck, OnInit {
   }
 
   doStart1andFinish1Collide(): boolean {
-    if (((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 80) || ((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 150) && this.dayInfo.TimeOfStart < 60) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 80)
+      || ((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 150)
+      && this.dayInfo.TimeOfStart < 60;
   }
 
   doStart2andFinish2Collide(): boolean {
-    if (((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime;
   }
 
   showFinishTime2(): boolean {
-    if (!((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return !((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime;
   }
 
   showFinishTime2BottomRight(): boolean {
-    if (((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 80) && this.dayInfo.AddAfternoonTime && ((1440 - this.dayInfo.TimeOfFinish2) > 60)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return ((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 80)
+      && this.dayInfo.AddAfternoonTime
+      && ((1440 - this.dayInfo.TimeOfFinish2) > 60);
   }
 
   getFirstNonWorkingTimeWidth(): string {
