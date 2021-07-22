@@ -19,14 +19,14 @@ export class DayInfo {
   DayOfWeekString?: string;
 
   constructor() {
-    this.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START;
-    this.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH;
-    this.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2;
-    this.TimeOfFinish2 = PublicConstants.DEFAULT_TIME_OF_FINISH_2;
-    this.DayOfWeek = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
-    this.Day = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
-    this.Month = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
-    this.Year = PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE;
+    this.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START_IN_MINUTES;
+    this.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH_IN_MINUTES;
+    this.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2_IN_MINUTES;
+    this.TimeOfFinish2 = PublicConstants.DEFAULT_TIME_OF_FINISH_2_IN_MINUTES;
+    this.DayOfWeek = PublicConstants.DEFAULT_BLANK_VALUE_FOR_TIME_AND_DATE;
+    this.Day = PublicConstants.DEFAULT_BLANK_VALUE_FOR_TIME_AND_DATE;
+    this.Month = PublicConstants.DEFAULT_BLANK_VALUE_FOR_TIME_AND_DATE;
+    this.Year = PublicConstants.DEFAULT_BLANK_VALUE_FOR_TIME_AND_DATE;
     this.DocId = PublicConstants.DEFAULT_INVALID;
     this.AddAfternoonTime = false;
   }

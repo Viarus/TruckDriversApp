@@ -1,7 +1,7 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { dataService } from 'src/app/shared/data/data.service';
-import { ClockTime } from '../../shared/models/clockTime.model';
-import { DayInfo } from '../../shared/models/dayInfo.model';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {dataService} from 'src/app/shared/data/data.service';
+import {ClockTime} from '../../shared/models/clockTime.model';
+import {DayInfo} from '../../shared/models/dayInfo.model';
 
 @Component({
   selector: 'app-graph',
@@ -10,9 +10,11 @@ import { DayInfo } from '../../shared/models/dayInfo.model';
 })
 export class GraphComponent implements DoCheck, OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
-  dayInfo: DayInfo = new DayInfo();
+  dayInfo: DayInfo = dataService.newDayInfo;
+
   timeOfStartClockTime = '';
   timeOfStart2ClockTime = '';
   timeOfFinishClockTime = '';
@@ -23,80 +25,83 @@ export class GraphComponent implements DoCheck, OnInit {
   ngOnInit(): void {
     dataService.newDayInputEmitter.subscribe(data => {
       this.dayInfo = data;
+      console.log(dataService.newDayInfo.TimeOfStart);
     });
   }
 
+  // TODO When graph is no longer visible (Entered Data is Invalid),
+  // it unsubscribes and it's not possible to read a new corrected data.
+
+  // ngOnDestroy(): void {
+  //   dataService.newDayInputEmitter.unsubscribe();
+  // }
 
 
   ngDoCheck(): void {
     this.timeOfStartClockTime = ClockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart);
-    this.timeOfStart2ClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfStart2);
-    this.timeOfFinishClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish);
-    this.timeOfFinish2ClockTime = ClockTime.showClockLikeFromMinutesOnly(this.dayInfo.TimeOfFinish2);
-    this.dayOfWeek = this.dayInfo.getDayOfWeek(this.dayInfo.DayOfWeek);
-    this.dateToBeShown = this.dayOfWeek + ': ' + this.dayInfo.getDate(this.dayInfo.Day, this.dayInfo.Month, this.dayInfo.Year)
+    this.timeOfStart2ClockTime = ClockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfStart2);
+    this.timeOfFinishClockTime = ClockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfFinish);
+    this.timeOfFinish2ClockTime = ClockTime.showClockLikeFromMinutesOnly(dataService.newDayInfo.TimeOfFinish2);
+    this.dayOfWeek = dataService.newDayInfo.getDayOfWeek(dataService.newDayInfo.DayOfWeek);
+    this.dateToBeShown = this.dayOfWeek + ': ' + dataService.newDayInfo.getDate(this.dayInfo.Day, this.dayInfo.Month, this.dayInfo.Year);
   }
 
   doStart1andFinish1Collide(): boolean {
-    return ((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 80)
-      || ((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) < 150)
-      && this.dayInfo.TimeOfStart < 60;
+    return ((dataService.newDayInfo.TimeOfFinish - dataService.newDayInfo.TimeOfStart) < 80)
+      || ((dataService.newDayInfo.TimeOfFinish - dataService.newDayInfo.TimeOfStart) < 150)
+      && dataService.newDayInfo.TimeOfStart < 60;
   }
 
   doStart2andFinish2Collide(): boolean {
-    return ((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime;
+    return ((dataService.newDayInfo.TimeOfFinish2 - dataService.newDayInfo.TimeOfStart2) < 150) && dataService.newDayInfo.AddAfternoonTime;
   }
 
   showFinishTime2(): boolean {
-    return !((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 150) && this.dayInfo.AddAfternoonTime;
+    return !((dataService.newDayInfo.TimeOfFinish2 - dataService.newDayInfo.TimeOfStart2) < 150) && dataService.newDayInfo.AddAfternoonTime;
   }
 
   showFinishTime2BottomRight(): boolean {
-    return ((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) < 80)
-      && this.dayInfo.AddAfternoonTime
-      && ((1440 - this.dayInfo.TimeOfFinish2) > 60);
+    return ((dataService.newDayInfo.TimeOfFinish2 - dataService.newDayInfo.TimeOfStart2) < 80)
+      && dataService.newDayInfo.AddAfternoonTime
+      && ((1440 - dataService.newDayInfo.TimeOfFinish2) > 60);
   }
 
   getFirstNonWorkingTimeWidth(): string {
-    return (((this.dayInfo.TimeOfStart) / (14.4)).toString() + '%');
+    return (((dataService.newDayInfo.TimeOfStart) / (14.4)).toString() + '%');
   }
 
   getFirstWorkingTimeWidth(): string {
-    return (((this.dayInfo.TimeOfFinish - this.dayInfo.TimeOfStart) / (14.4)).toString() + '%');
+    return (((dataService.newDayInfo.TimeOfFinish - dataService.newDayInfo.TimeOfStart) / (14.4)).toString() + '%');
   }
 
   getSecondNonWorkingTimeWidth(): string {
-    if (!this.dayInfo.AddAfternoonTime) {
-      return (((1440 - this.dayInfo.TimeOfFinish) / (14.4)).toString() + '%');
-    }
-    else {
-      return (((this.dayInfo.TimeOfStart2 - this.dayInfo.TimeOfFinish) / (14.4)).toString() + '%');
+    if (!dataService.newDayInfo.AddAfternoonTime) {
+      return (((1440 - dataService.newDayInfo.TimeOfFinish) / (14.4)).toString() + '%');
+    } else {
+      return (((dataService.newDayInfo.TimeOfStart2 - dataService.newDayInfo.TimeOfFinish) / (14.4)).toString() + '%');
     }
   }
 
   getSecondWorkingTimeWidth(): string {
-    if (this.dayInfo.AddAfternoonTime) {
-      return (((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) / (14.4)).toString() + '%');
-    }
-    else {
+    if (dataService.newDayInfo.AddAfternoonTime) {
+      return (((dataService.newDayInfo.TimeOfFinish2 - dataService.newDayInfo.TimeOfStart2) / (14.4)).toString() + '%');
+    } else {
       return ('0%');
     }
   }
 
   getSecondWorkingTimeWidthForText(): string {
-    if (this.dayInfo.AddAfternoonTime) {
-      return ((((this.dayInfo.TimeOfFinish2 - this.dayInfo.TimeOfStart2) / (14.4)) / 2).toString() + '%');
-    }
-    else {
+    if (dataService.newDayInfo.AddAfternoonTime) {
+      return ((((dataService.newDayInfo.TimeOfFinish2 - dataService.newDayInfo.TimeOfStart2) / (14.4)) / 2).toString() + '%');
+    } else {
       return ('0%');
     }
   }
 
   getThirdNonWorkingTimeWidth(): string {
-    if (this.dayInfo.AddAfternoonTime) {
-      return (((1440 - this.dayInfo.TimeOfFinish2) / (14.4)).toString() + '%');
-    }
-    else {
+    if (dataService.newDayInfo.AddAfternoonTime) {
+      return (((1440 - dataService.newDayInfo.TimeOfFinish2) / (14.4)).toString() + '%');
+    } else {
       return ('0%');
     }
   }

@@ -7,28 +7,17 @@ import {dataService} from '../shared/data/data.service';
   templateUrl: './output-data.component.html',
   styleUrls: ['./output-data.component.css']
 })
-export class OutputDataComponent implements OnInit, DoCheck {
-  dayInfo: DayInfo = new DayInfo();
+export class OutputDataComponent implements OnInit {
+  dayInfo: DayInfo = dataService.newDayInfo;
 
   constructor() {
   }
 
   isDayInfoCorrect = false;
 
-  ngDoCheck(): void {
-
-    if (this.dayInfo.TimeOfStart >= this.dayInfo.TimeOfFinish) {
-      this.isDayInfoCorrect = false;
-    } else if ((this.dayInfo.TimeOfStart2 >= this.dayInfo.TimeOfFinish2) && this.dayInfo.AddAfternoonTime) {
-      this.isDayInfoCorrect = false;
-    } else {
-      this.isDayInfoCorrect = !((this.dayInfo.TimeOfStart2 <= this.dayInfo.TimeOfFinish) && this.dayInfo.AddAfternoonTime);
-    }
-  }
-
   ngOnInit(): void {
     dataService.newDayInputEmitter.subscribe(data => {
-      this.dayInfo = data;
+      this.isDayInfoCorrect = dataService.isNewDayValid();
     });
   }
 

@@ -11,9 +11,17 @@ export class DataService {
 
   newDayInfo: DayInfo = new DayInfo();
 
-  updateNewDayTimes(TimeOfStart: number, TimeOfFinish: number, TimeOfStart2?: number, TimeOfFinish2?: number): void {
-    this.newDayInfo.TimeOfStart = TimeOfStart;
-    this.newDayInfo.TimeOfFinish = TimeOfFinish;
+  isNotTodayStartedChecked = false;
+  isNotTodayFinishedChecked = false;
+  isNotTodayFinishedChecked2 = false;
+
+  updateNewDayTimes(TimeOfStart?: number, TimeOfFinish?: number, TimeOfStart2?: number, TimeOfFinish2?: number): void {
+    if (!!TimeOfStart) {
+      this.newDayInfo.TimeOfStart = TimeOfStart;
+    }
+    if (!!TimeOfFinish) {
+      this.newDayInfo.TimeOfFinish = TimeOfFinish;
+    }
     if (!!TimeOfStart2) {
       this.newDayInfo.TimeOfStart2 = TimeOfStart2;
     }
@@ -39,10 +47,10 @@ export class DataService {
   }
 
   resetNewDayTime(): void {
-    this.newDayInfo.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START;
-    this.newDayInfo.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH;
-    this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2;
-    this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_TIME_OF_FINISH_2;
+    this.newDayInfo.TimeOfStart = PublicConstants.DEFAULT_TIME_OF_START_IN_MINUTES;
+    this.newDayInfo.TimeOfFinish = PublicConstants.DEFAULT_TIME_OF_FINISH_IN_MINUTES;
+    this.newDayInfo.TimeOfStart2 = PublicConstants.DEFAULT_TIME_OF_START_2_IN_MINUTES;
+    this.newDayInfo.TimeOfFinish2 = PublicConstants.DEFAULT_TIME_OF_FINISH_2_IN_MINUTES;
     this.newDayInfo.AddAfternoonTime = false;
   }
 
@@ -55,6 +63,23 @@ export class DataService {
 
   getNewDayInfo(): DayInfo {
     return this.newDayInfo;
+  }
+
+  setAddAfternoonTime(a: boolean): void {
+    this.newDayInfo.AddAfternoonTime = a;
+  }
+
+  isNewDayValid(): boolean {
+    if (this.newDayInfo.TimeOfStart >= this.newDayInfo.TimeOfFinish) {
+      return false;
+    } else if ((this.newDayInfo.TimeOfStart2 >= this.newDayInfo.TimeOfFinish2) && this.newDayInfo.AddAfternoonTime) {
+      return false;
+    } else if ((this.newDayInfo.TimeOfStart2 <= this.newDayInfo.TimeOfFinish) && this.newDayInfo.AddAfternoonTime) {
+      return false;
+    } else if (this.newDayInfo.TimeOfStart < 0 || this.newDayInfo.TimeOfFinish2 > 1440) {
+      return false;
+    }
+    return true;
   }
 
 }

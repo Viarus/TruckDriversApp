@@ -5,6 +5,7 @@ import {DayInfo} from '../shared/models/dayInfo.model';
 import {DeletingDataService} from '../shared/services/deletingData.service';
 import {FetchingDataService} from '../shared/services/fetchingData.service';
 import {ClockTime} from '../shared/models/clockTime.model';
+import {dataService} from '../shared/data/data.service';
 
 @Injectable()
 export class ConfigService {
@@ -24,7 +25,7 @@ export class ListOfAllDaysComponent implements OnInit, OnDestroy {
   isLoading = false;
   refreshButtonDisabled = false;
 
-  dayInfo = new DayInfo();
+  dayInfo = dataService.newDayInfo;
   dayInfoArray: Array<DayInfo>;
   dayInfoArrayToShow: Array<DayInfo>;
 

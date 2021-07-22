@@ -1,6 +1,7 @@
-import { Component, Output, EventEmitter, Input, OnInit, OnDestroy } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
-import { PublicConstants } from 'src/app/shared/constants/public.constants';
+import {Component, Input, DoCheck} from '@angular/core';
+import {PublicConstants} from 'src/app/shared/constants/public.constants';
+import {ClockTime} from '../../shared/models/clockTime.model';
+import {dataService} from '../../shared/data/data.service';
 
 @Component({
   selector: 'app-time-picker-second',
@@ -9,35 +10,26 @@ import { PublicConstants } from 'src/app/shared/constants/public.constants';
 })
 
 // TODO REFACTOR
-export class TimePickerSecondComponent implements OnInit, OnDestroy {
-  timeOfStart = { hour: 15, minute: 0 };
-  timeOfFinish = { hour: 21, minute: 0 };
+export class TimePickerSecondComponent implements DoCheck {
+  timeOfStart = {hour: PublicConstants.DEFAULT_TIME_OF_START_2_HOUR, minute: PublicConstants.DEFAULT_TIME_OF_START_2_MINUTE};
+  timeOfFinish = {hour: PublicConstants.DEFAULT_TIME_OF_FINISH_2_HOUR, minute: PublicConstants.DEFAULT_TIME_OF_FINISH_2_MINUTE};
 
-  numberSubscription: Subscription = new Subscription();
+  @Input() disableStartTime = true;
+  @Input() disableFinishTime = true;
 
-  @Input() disableStartTime: boolean = true;
-  @Input() disableFinishTime: boolean = true;
-
-  @Input() timeOfStartFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
-  @Input() timeOfFinishFromHolder = { hour: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE, minute: PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE };
-
-  @Output() eventHandler = new EventEmitter<{ timeOfStart: { hour: number, minute: number }, timeOfFinish: { hour: number, minute: number } }>();
-  constructor() { }
-
-  ngOnInit() {
-    if (!((this.timeOfStartFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) || (this.timeOfStartFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))) {
-      this.timeOfStart = this.timeOfStartFromHolder;
-    }
-    if (!((this.timeOfFinishFromHolder.hour == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE) || (this.timeOfFinishFromHolder.minute == PublicConstants.DEFAULT_VALUE_FOR_TIME_AND_DATE))) {
-      this.timeOfFinish = this.timeOfFinishFromHolder;
-    }
-    const myNumber = interval(30);
-    this.numberSubscription = myNumber.subscribe(val => this.eventHandler.emit({ timeOfStart: this.timeOfStart, timeOfFinish: this.timeOfFinish }));
+  constructor() {
   }
-  ngOnDestroy(): void {
-    this.numberSubscription.unsubscribe();
+
+  ngDoCheck(): void {
+    const timeOfStartClockTime = new ClockTime(this.timeOfStart.hour, this.timeOfStart.minute);
+    const timeOfFinishClockTime = new ClockTime(this.timeOfFinish.hour, this.timeOfFinish.minute);
+
+    const timeOfStartInMinutes = ClockTime.toMinutesOnly(timeOfStartClockTime);
+    const timeOfFinishInMinutes = ClockTime.toMinutesOnly(timeOfFinishClockTime);
+    if (dataService.isNotTodayFinishedChecked2){
+      dataService.updateNewDayTimes(null, null, timeOfStartInMinutes);
+    } else {
+      dataService.updateNewDayTimes(null, null, timeOfStartInMinutes, timeOfFinishInMinutes);
+    }
   }
-  // timepicker needs to trigger something, but I used interval instead.
-  // Otherwise timepicker doesn't see manually entered data - just the one you "click" or "tap".
-  blankFunction(): void { }
 }

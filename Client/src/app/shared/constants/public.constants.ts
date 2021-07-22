@@ -5,11 +5,23 @@ export class PublicConstants {
 
   // MODELS - DEFAULT DATA
   static readonly DEFAULT_INVALID = 'InvalidData';
-  static readonly DEFAULT_VALUE_FOR_TIME_AND_DATE = 2000;
-  static readonly DEFAULT_TIME_OF_START = 240;
-  static readonly DEFAULT_TIME_OF_START_2 = 900;
-  static readonly DEFAULT_TIME_OF_FINISH = 720;
-  static readonly DEFAULT_TIME_OF_FINISH_2 = 1260;
+  static readonly DEFAULT_BLANK_VALUE_FOR_TIME_AND_DATE = 2000;
+  static readonly DEFAULT_TIME_OF_START_IN_MINUTES = 240;
+  static readonly DEFAULT_TIME_OF_START_2_IN_MINUTES = 900;
+  static readonly DEFAULT_TIME_OF_FINISH_IN_MINUTES = 720;
+  static readonly DEFAULT_TIME_OF_FINISH_2_IN_MINUTES = 1260;
+
+  static readonly DEFAULT_TIME_OF_START_HOUR = 4;
+  static readonly DEFAULT_TIME_OF_START_MINUTE = 0;
+
+  static readonly DEFAULT_TIME_OF_START_2_HOUR = 15;
+  static readonly DEFAULT_TIME_OF_START_2_MINUTE = 0;
+
+  static readonly DEFAULT_TIME_OF_FINISH_HOUR = 8;
+  static readonly DEFAULT_TIME_OF_FINISH_MINUTE = 0;
+
+  static readonly DEFAULT_TIME_OF_FINISH_2_HOUR = 21;
+  static readonly DEFAULT_TIME_OF_FINISH_2_MINUTE = 0;
 
   // COMMUNICATION WITH API
   static readonly GUEST_ACCOUNT_EMAIL = 'guestAccount@guesttruckapp.com'; // cloud functions
